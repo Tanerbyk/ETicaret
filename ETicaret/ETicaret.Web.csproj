@@ -1,0 +1,63 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <UserSecretsId>7a5f2b5e-6756-4083-a167-4e30367026ae</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="RouteValueRequestCultureProvider.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Template Main\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\Template Main\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\Template Main\fonts\themify.svg" />
+    <None Include="wwwroot\Template Main\js\active.js" />
+    <None Include="wwwroot\Template Main\js\bootstrap.min.js" />
+    <None Include="wwwroot\Template Main\js\easing.js" />
+    <None Include="wwwroot\Template Main\js\facnybox.min.js" />
+    <None Include="wwwroot\Template Main\js\finalcountdown.min.js" />
+    <None Include="wwwroot\Template Main\js\flex-slider.js" />
+    <None Include="wwwroot\Template Main\js\gmap.min.js" />
+    <None Include="wwwroot\Template Main\js\jquery-migrate-3.0.0.js" />
+    <None Include="wwwroot\Template Main\js\jquery-ui.min.js" />
+    <None Include="wwwroot\Template Main\js\jquery.min.js" />
+    <None Include="wwwroot\Template Main\js\magnific-popup.js" />
+    <None Include="wwwroot\Template Main\js\map-script.js" />
+    <None Include="wwwroot\Template Main\js\nicesellect.js" />
+    <None Include="wwwroot\Template Main\js\onepage-nav.min.js" />
+    <None Include="wwwroot\Template Main\js\owl-carousel.js" />
+    <None Include="wwwroot\Template Main\js\popper.min.js" />
+    <None Include="wwwroot\Template Main\js\scrollup.js" />
+    <None Include="wwwroot\Template Main\js\slicknav.min.js" />
+    <None Include="wwwroot\Template Main\js\waypoints.min.js" />
+    <None Include="wwwroot\Template Main\js\ytplayer.min.js" />
+    <None Include="wwwroot\Template Main\mail\mail.php" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EFCore.NamingConventions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.2" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
+    <PackageReference Include="System.Diagnostics.Tools" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ETicaret.Management.Repository\ETicaret.Shared.Repository.csproj" />
+    <ProjectReference Include="..\ETicaret.Shared.Application\ETicaret.Shared.Application.csproj" />
+    <ProjectReference Include="..\ETicaret.Web.Dal\ETicaret.Shared.Dal.csproj" />
+  </ItemGroup>
+
+</Project>

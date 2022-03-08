@@ -1,0 +1,53 @@
+﻿@using ETicaret.Shared.Dal.Concrete
+@model List<Category>
+
+
+
+@{
+    ViewData["Title"] = "ListCategory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Adı</th>
+            <th scope="col">Durumu</th>
+            <th scope="col">Oluşturulma Tarihi</th>
+            <th scope="col">Değiştirilme Tarihi</th>
+            <th scope="col">Düzenle</th>
+            <th scope="col">Sil</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th scope="row">@item.CategoryID</th>
+                <td>@item.Name</td>
+                @if (item.IsActive == true)
+                {
+                    <td>Aktif</td>
+                }
+                else
+                {
+                    <td>Pasif</td>
+                }
+
+                <td>@item.CreateDate</td>
+                <td>@item.ModifiedDate</td>
+                <td><a href="~/Category/UpdateCategory/@item.CategoryID" class="btn btn-primary">Düzenle</a></td>
+                <td><a href="~/Category/DeleteCategory/@item.CategoryID" class="btn btn-warning">Sil</a></td>
+            </tr>
+        }
+
+
+    </tbody>
+
+
+</table>
+
+<button type="button" class="btn btn-success" ><a href="~/Category/AddCategory">Yeni Kategori Ekle</a></button>
+

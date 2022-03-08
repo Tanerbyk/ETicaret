@@ -1,0 +1,26 @@
+﻿@model ETicaret.Shared.Dal.Concrete.Category
+@{
+    ViewData["Title"] = "UpdateCategory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@using(Html.BeginForm("UpdateCategory","Category",FormMethod.Post))
+{
+    @Html.Label("Kategori ID")
+    @Html.TextBoxFor(x=>x.CategoryID, new {@class="form-control"})
+
+    @Html.Label("Kategori Adı")
+    @Html.TextBoxFor(x=>x.Name, new {@class="form-control"})
+
+     @Html.Label("Durumu")
+@Html.DropDownListFor(x => x.IsActive, (new[] { new SelectListItem { Text = "Aktif", Value = true.ToString() }, new SelectListItem { Text = "Pasif", Value = false.ToString() } }), new { @class = "form-control" } )
+
+
+
+    <br />
+    <button class="btn btn-success">Kaydet</button>
+
+
+}

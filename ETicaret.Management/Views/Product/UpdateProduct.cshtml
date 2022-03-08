@@ -1,0 +1,42 @@
+﻿@model ETicaret.Shared.Dal.Concrete.Product
+@{
+    ViewData["Title"] = "UpdateProduct";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>UpdateProduct</h1>
+
+@using (Html.BeginForm("UpdateProduct", "Product", FormMethod.Post))
+{
+    @Html.Label("Ürün  ID")
+    @Html.TextBoxFor(x=>x.ProductID, new {@class="form-control"})
+
+    @Html.Label("Ürünün Adı")
+    @Html.TextBoxFor(x=>x.Name, new {@class="form-control"})
+
+    @Html.Label("Kategori")
+    @Html.DropDownListFor(x=>x.CategoryID,(List<SelectListItem>) ViewBag.cv , new {@class="form-control"})
+
+    @Html.Label("Ürün Satışa Açık mı?")
+    @Html.DropDownListFor(x => x.IsActive, (new[] { new SelectListItem { Text = "Açık", Value = true.ToString() }, new SelectListItem { Text = "Kapalı", Value = false.ToString() } }), new { @class = "form-control" } )
+
+    @Html.Label("Ürünün Açıklaması")
+    @Html.TextBoxFor(x=>x.Description, new {@class="form-control"})
+
+    @Html.Label("Ürün Görseli")
+    @Html.TextBoxFor(x=>x.Image, new {@class="form-control"})
+
+    @Html.Label("Ürünün Fiyatı")
+    @Html.TextBoxFor(x=>x.Price, new {@class="form-control"})
+
+    @Html.Label("Ürünün Stok Miktarı")
+    @Html.TextBoxFor(x=>x.Stock, new {@class="form-control"})
+
+
+
+
+    <br />
+    <button class="btn btn-success">Kaydet</button>
+
+
+}

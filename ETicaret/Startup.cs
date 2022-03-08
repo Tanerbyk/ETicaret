@@ -1,8 +1,14 @@
+using ETicaret.Shared.Repository.Abstract;
+using ETicaret.Shared.Repository.EntityFramework;
+using ETicaret.Shared.Repository.UnitOfWork;
+using ETicaret.Shared.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Localization.Routing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -13,7 +19,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ETicaret
+namespace ETicaret.Web
 {
     public class Startup
     {
@@ -27,7 +33,12 @@ namespace ETicaret
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<WebDbContext>(options => options.UseSqlServer("server=DESKTOP-FT9GJRN;database=ETicaretDb;integrated security = true"));
+            services.AddIdentityCore<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<WebDbContext>();
             services.AddControllersWithViews();
+           
+            services.AddSingleton<IUnitOfWork, UnitOfWork>();
+ 
 
             services.AddLocalization(options =>
             {

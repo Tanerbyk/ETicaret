@@ -1,0 +1,68 @@
+﻿@using ETicaret.Shared.Dal.Concrete
+@model List<Product>
+@{
+    ViewData["Title"] = "ListProduct";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>ListProduct</h1>
+
+<table class="table table-hover table-dark">
+
+    <thead>
+        <tr>
+            <th>Ürün ID</th>
+            <th>Ürün Adı</th>
+            <th>Kategori Adı</th>
+            <th>Stok</th>
+            <th>Açıklama</th>
+            <th>Satış durumu</th>
+            <th>Fotoğraf</th>
+            <th>Fiyat</th>
+            <th>Düzenle</th>
+            <th>Sil</th>
+        </tr>
+
+
+    </thead>
+
+    @foreach (var x in Model)
+    {
+        <tr>
+            <td>@x.ProductID</td>
+            <td>@x.Name</td>
+            <td>@x.Category.Name</td>
+            <td>@x.Stock</td>
+            <td>@x.Description</td>
+            @if (x.IsActive == true)
+                {
+                    <td>Aktif</td>
+                }
+                else
+                {
+                    <td>Pasif</td>
+                }
+
+            <td>@x.Image</td>
+            <td>@x.Price</td>
+            <td><a href="~/Product/UpdateProduct/@x.ProductID" class="btn btn-primary">Düzenle</a></td>
+            <td><a href="~/Product/DeleteProduct/@x.ProductID" class="btn btn-warning">Sil</a></td>
+        </tr>
+    }
+
+
+
+
+</table>
+<button class="btn btn-success"><a href="~/Product/Create">Yeni Ürün Ekle</a></button>
+
+
+
+
+
+
+
+
+
+
+

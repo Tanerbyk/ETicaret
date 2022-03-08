@@ -1,0 +1,22 @@
+﻿@model ETicaret.Shared.Dal.Concrete.Category
+@{
+    ViewData["Title"] = "AddCategory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+    @using (Html.BeginForm("AddCategory", "Category", FormMethod.Post))
+    {
+
+        @Html.LabelFor(x=>x.Name)
+        @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+        @*   @Html.ValidationMessageFor(x => x.Stock,"", new { @class = "text-danger" })*@
+        @* <input type="text" class="form-control" id="validationDefault01" placeholder="" required="" name="Name">*@     
+            
+
+        <br />
+        <button class="btn btn-primary">Kaydet</button>
+
+    }
+
+
