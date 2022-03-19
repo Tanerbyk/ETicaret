@@ -18,6 +18,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.FileProviders;
+using ETicaret.Shared.Application;
+using Microsoft.AspNetCore.Http;
 
 namespace ETicaret.Web
 {
@@ -35,42 +38,23 @@ namespace ETicaret.Web
         {
             services.AddDbContext<WebDbContext>(options => options.UseSqlServer("server=DESKTOP-FT9GJRN;database=ETicaretDb;integrated security = true"));
             services.AddIdentityCore<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<WebDbContext>();
-            services.AddControllersWithViews();
-           
-            services.AddSingleton<IUnitOfWork, UnitOfWork>();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+
+
+            services.AddMvc();
+
+
  
-
-            services.AddLocalization(options =>
-            {
-
-                options.ResourcesPath = "Resources";
-            });
-            services.AddMvc().AddViewLocalization(Microsoft.AspNetCore.Mvc.Razor.LanguageViewLocationExpanderFormat.Suffix);
-
-            services.Configure<RequestLocalizationOptions>(options =>
-            {
-                var supportedCultures = new List<CultureInfo>
-                 {
-                     new CultureInfo("tr"),
-                     new CultureInfo("en"),
-                 };
-                options.DefaultRequestCulture = new RequestCulture("tr");
-                options.SupportedCultures = supportedCultures;
-                options.SupportedUICultures = supportedCultures;
-                options.RequestCultureProviders.Insert(0,new RouteDataRequestCultureProvider() { Options = options});
-
-                //www.site.com -->türkçe
-                //www.site.com/tr-->türkçe
-                //www.site.com/en-->ingilizce
-            });
-
-            
-           
+            services.AddHttpClient();
+            services.Configure<FilePathOptions>(Configuration.GetSection(FilePathOptions.ConfigurationPath));
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IOptions<FilePathOptions> options)
         {
             if (env.IsDevelopment())
             {
@@ -100,25 +84,24 @@ namespace ETicaret.Web
 
             app.UseRouting();
             app.UseAuthorization();
-            app.UseAuthentication();
-
-            #region localization
-
-            var localizationOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
-            app.UseRequestLocalization(localizationOptions.Value);
-
-            #endregion
-
+            app.UseAuthentication(); 
             app.UseHttpsRedirection();
+           
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(options.Value.RootPath),
+                RequestPath = new PathString(options.Value.ResponsePath)
+            });
             app.UseStaticFiles();
 
-          
 
-          
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(name: "default",pattern: "{culture=tr}/{controller=Home}/{action=Index}/{id?}");
-
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

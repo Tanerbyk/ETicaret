@@ -1,4 +1,5 @@
 ﻿
+using ETicaret.Shared.Application;
 using ETicaret.Shared.Repository.UnitOfWork;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,7 +7,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,15 +32,16 @@ namespace E_Ticaret.Management
             services.AddControllersWithViews();
 
             services.AddScoped<IUnitOfWork,UnitOfWork>();
-   
 
 
+            services.AddHttpClient();
+            services.Configure<FilePathOptions>(Configuration.GetSection(FilePathOptions.ConfigurationPath));
 
-
+ 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IOptions<FilePathOptions> options)
         {
             if (env.IsDevelopment())
             {
@@ -51,6 +55,13 @@ namespace E_Ticaret.Management
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(options.Value.RootPath),
+                RequestPath = new PathString(options.Value.ResponsePath)
+            });
+        
+
 
             app.UseRouting();
 

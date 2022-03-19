@@ -18,7 +18,15 @@ namespace ETicaret.Management
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
+            Host.CreateDefaultBuilder(args).ConfigureAppConfiguration((hostcontext, config) =>
+            {
+                var env = hostcontext.HostingEnvironment;
+
+                config.SetBasePath(AppContext.BaseDirectory).AddJsonFile("appsettings.json", false, reloadOnChange: true)
+                    .AddJsonFile($"appsettings.shared.json", true, true)
+                    .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true, true).AddEnvironmentVariables();
+                if (env.IsDevelopment()) config.AddUserSecrets<Program>(true);
+            })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<E_Ticaret.Management.Startup>();

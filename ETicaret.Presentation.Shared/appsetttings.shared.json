@@ -1,0 +1,15 @@
+{
+  "FilePath": "D:\\aaa",
+  "ResponsePath": "/sitecontent",
+  "FilePaths": [
+    {
+      "Key": "products",
+      "ResponsePath": "/sitecontent/products"
+    }, 
+    {
+      "Key": "sliders",
+      "ResponsePath": "/sitecontent/sliders"
+
+    } 
+  ]
+}

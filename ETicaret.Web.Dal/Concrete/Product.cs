@@ -21,6 +21,8 @@ namespace ETicaret.Shared.Dal.Concrete
         [NotMapped]
         public IFormFile Image { get; set; }
 
+        public string Path { get; set; }
+
         public int Stock { get; set; }
 
         public string Description { get; set; }

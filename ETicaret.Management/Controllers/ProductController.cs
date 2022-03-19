@@ -1,9 +1,14 @@
-﻿using ETicaret.Shared.Dal;
+﻿using ETicaret.Shared.Application;
+using ETicaret.Shared.BusinessLayer.Validators;
 using ETicaret.Shared.Dal.Concrete;
-using ETicaret.Shared.Repository.EntityFramework;
 using ETicaret.Shared.Repository.UnitOfWork;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+
 
 namespace ETicaret.Management.Controllers
 {
@@ -11,13 +16,14 @@ namespace ETicaret.Management.Controllers
     {
 
 
-     
+
         private readonly IUnitOfWork _unitOfWork;
-       
-        
-        public ProductController(IUnitOfWork unitOfWork)
-        {           
+        private readonly string _phsyicalPath;
+
+        public ProductController(IUnitOfWork unitOfWork, IOptions<FilePathOptions> options)
+        {
             _unitOfWork = unitOfWork;
+            _phsyicalPath = Path.Combine(options.Value.RootPath, options.Value.GetByKey(FileKeys.Products).Key);
         }
 
         public IActionResult ListProduct()
@@ -27,7 +33,7 @@ namespace ETicaret.Management.Controllers
         }
         [HttpGet]
         public IActionResult Create()
-        {         
+        {
             List<SelectListItem> categoryvalues = (from x in _unitOfWork.Category.GetAll()
                                                    select new SelectListItem
                                                    {
@@ -39,28 +45,47 @@ namespace ETicaret.Management.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Product p)
+        public IActionResult Create(Product p, [FromForm] IFormFile file)
         {
-           
-           
-          
-            
-          if(p.Image != null)
-            {
-                var ex = Path.GetExtension(p.Image.FileName);
-                var newname  = Guid.NewGuid() + ex;
-                var loc = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot/Image/", newname);
-                var stream = new FileStream(loc, FileMode.Create);
-                p.Image.CopyTo(stream);
-                
-            }
 
-            _unitOfWork.Products.Add(p);
-            
-            _unitOfWork.Save();
-            return RedirectToAction("Index","Home");
-            
+            ProductValidator pv = new ProductValidator();
+            ValidationResult result = pv.Validate(p);
+
+            if (result.IsValid)
+            {
+                if (file is not null)
+                { 
+                    var ex = Path.GetExtension(file.FileName);
+                    var newname = Guid.NewGuid() + ex;
+                    var filePath = Path.Combine(_phsyicalPath, newname); 
+                    p.Path = newname;
+
+                    using (var fileStream = new FileStream(filePath,FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                 
+
+                }
+
+                _unitOfWork.Products.Add(p);
+                _unitOfWork.Save();
+                return RedirectToAction("Create", "Product");
+
+            }
+            else
+            {
+
+                foreach (var item in result.Errors)
+                {
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+
+                }
+            }
+            return View();
+
         }
+
         [HttpGet]
         public IActionResult UpdateProduct(int id)
         {
@@ -71,11 +96,11 @@ namespace ETicaret.Management.Controllers
                                                        Value = x.CategoryID.ToString()
                                                    }).ToList();
             ViewBag.cv = categoryvalues;
-            var values = _unitOfWork.Products.Get(id);     
+            var values = _unitOfWork.Products.Get(id);
             return View(values);
         }
         [HttpPost]
-        public IActionResult UpdateProduct(Product p )
+        public IActionResult UpdateProduct(Product p)
         {
             p.ModifiedDate = DateTime.Parse(DateTime.Now.ToShortTimeString());
             _unitOfWork.Products.Update(p);
@@ -83,14 +108,8 @@ namespace ETicaret.Management.Controllers
             return RedirectToAction("ListProduct");
         }
 
-        public IActionResult ProductDetails(int id)
-        {
-            var value = _unitOfWork.Products.Get(id);
-            return View(value);
-        }
-
         public IActionResult DeleteProduct(int id)
-        {         
+        {
             var values = _unitOfWork.Products.Get(id);
             _unitOfWork.Products.Remove(values);
             _unitOfWork.Save();

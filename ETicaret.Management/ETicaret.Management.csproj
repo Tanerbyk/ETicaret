@@ -1,20 +1,23 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>deeebb6c-de1b-4fec-98b6-ee5050c63758</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentValidation.AspNetCore" Version="10.3.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.2">
+    <PackageReference Include="FluentValidation" Version="10.4.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="10.4.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.15" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.2">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -25,12 +28,15 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ETicaret.Management.Repository\ETicaret.Shared.Repository.csproj" />
+    <ProjectReference Include="..\ETicaret.Presentation.Shared\ETicaret.Presentation.Shared.csproj" />
+    <ProjectReference Include="..\ETicaret.Shared.Application\ETicaret.Shared.Application.csproj" />
     <ProjectReference Include="..\ETicaret.Shared.BusinessLayer\ETicaret.Shared.BusinessLayer.csproj" />
     <ProjectReference Include="..\ETicaret.Web.Dal\ETicaret.Shared.Dal.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\Image\" />
+    <Folder Include="wwwroot\site\images\" />
   </ItemGroup>
 
 </Project>
