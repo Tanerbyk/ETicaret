@@ -75,15 +75,21 @@ namespace ETicaret.Management.Controllers
             }
             else
             {
-
+                List<SharedErrors> errorList = new List<SharedErrors>();
                 foreach (var item in result.Errors)
                 {
-                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                    errorList.Add(new SharedErrors { Property = item.PropertyName, Message = item.ErrorMessage });
 
                 }
+                return Json(errorList);
             }
             return View();
 
+        }
+        public class SharedErrors
+        {
+            public string Property { get; set; }
+            public string Message { get; set; }
         }
 
         [HttpGet]
