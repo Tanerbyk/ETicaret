@@ -1,9 +1,12 @@
 ﻿
 using ETicaret.Shared.Application;
+using ETicaret.Shared.BusinessLayer.Validators;
 using ETicaret.Shared.Repository.UnitOfWork;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,17 +30,44 @@ namespace E_Ticaret.Management
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+        [Obsolete]
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddStackExchangeRedisCache(options => options.Configuration = Configuration.GetValue<string>("ConnectionStringsCache:Redis"));
             services.AddControllersWithViews();
 
             services.AddScoped<IUnitOfWork,UnitOfWork>();
 
+            services.AddMvc(config =>
+            {
+                config.CacheProfiles.Add("Create",
+         new CacheProfile()
+         {
+             Location = ResponseCacheLocation.None,
+             NoStore = true
+         });
+            }).AddFluentValidation(fv =>
+            {
+                fv.DisableDataAnnotationsValidation = true;
+               
+            });
 
+
+
+            services.AddMvc();
+            services.AddMemoryCache();
+             
             services.AddHttpClient();
             services.Configure<FilePathOptions>(Configuration.GetSection(FilePathOptions.ConfigurationPath));
 
- 
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            });
+
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,6 +103,8 @@ namespace E_Ticaret.Management
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+            app.UseCors(options => options.AllowAnyOrigin());
+
         }
     }
 }

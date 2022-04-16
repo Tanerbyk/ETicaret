@@ -18,7 +18,6 @@
             <th>Stok</th>
             <th>Açıklama</th>
             <th>Satış durumu</th>
-            <th>Fotoğraf</th>
             <th>Fiyat</th>
             <th>Düzenle</th>
             <th>Sil</th>
@@ -30,7 +29,7 @@
     @foreach (var x in Model)
     {
         <tr>
-            <td>@x.ProductID</td>
+            <td>@x.Id</td>
             <td>@x.Name</td>
             <td>@x.Category.Name</td>
             <td>@x.Stock</td>
@@ -44,10 +43,10 @@
                     <td>Pasif</td>
                 }
 
-            <td>@x.Image</td>
+          
             <td>@x.Price</td>
-            <td><a href="~/Product/UpdateProduct/@x.ProductID" class="btn btn-primary">Düzenle</a></td>
-            <td><a href="~/Product/DeleteProduct/@x.ProductID" class="btn btn-warning">Sil</a></td>
+            <td><a href="~/Product/UpdateProduct/@x.Id" class="btn btn-primary">Düzenle</a></td>
+            <td><a href="~/Product/DeleteProduct/@x.Id" class="btn btn-warning">Sil</a></td>
         </tr>
     }
 

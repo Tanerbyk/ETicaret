@@ -15,10 +15,10 @@ namespace ETicaret.Shared.Repository.UnitOfWork
         public IProductDal Products { get; private set; }
         public ICategoryDal Category { get; private set; }
 
-        private readonly Context _context;
+        private readonly MarketPlaceDbContext _context;
         public UnitOfWork ()
         {
-            _context = new Context ();
+            _context = new MarketPlaceDbContext ();
             Users = new EfUserRepository(_context);
             Products = new EfProductRepository(_context);
             Category = new EfCategoryRepository(_context);

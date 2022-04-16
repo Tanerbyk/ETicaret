@@ -1,69 +1,102 @@
-﻿@model ETicaret.Shared.Dal.Concrete.Product
-@{
+﻿@using ETicaret.Shared.Dal.Concrete
+@model List<Category>
+
+
+@{  
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
-<form class=form-group method="post" enctype="multipart/form-data">
+<form  onsubmit="return submitForm(this)"  class=form-group method="get"  asp-controller="Product" asp-action="Test" enctype="multipart/form-data" id="form1">
     <div class="col12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
                 <div class=form-sample>
                     <div>
-                        @Html.LabelFor(x=>x.Name)                      
+                        <label>Ürünün Adı</label>                        
+                        <input type="text" name="Name"  class="form-control" required/>
 
-                        @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.Name)
+
+                        
+                         
                     </div>
+                    
+                        <select name="CategoryID">
+                             @foreach (var item in Model)
+                             {
+                                 <option itemid="CategoryID" value="@item.Id">@item.Name</option>
+                             }
+                         </select>
+                                                                                 
+                  @* <div class=form-group>
 
-                       <div class=form-group>
-                        @Html.Label("Kategori")
+                        <label>Kategori</label>                                                
                         @Html.DropDownListFor(x=>x.CategoryID,(List<SelectListItem>) ViewBag.cv , new {@class="form-control"})
+                        
+                    </div>*@
+
+                                    
 
                         </div>
                     <div class=form-group>
 
+                        <label>Stok</label>                        
+                        <input type="number" name="Stock" id="Stock" class="form-control"  required/>
+                       
 
-                        <label>Stok</label>
-                        @*@Html.TextBoxFor(x => x.Stock, new { @class = "form-control" })*@
-                        <input type="number" name="Stock" class="form-control" required/>
-                        <label class="d-none text-danger" id="lbl_Stock"></label>
+                      @*  $("#lbl_"+result.Property).removeClass("d-none").addClass("class","d-block").empty().append(result.message + "<span class"text-danger">*</span>");*@
+                      @*$("#errors").append("<label>result.message</label>");*@
                     </div>
                     <div class=form-group>
 
-                        @Html.LabelFor(x=>x.Description)
-                        @Html.TextBoxFor(x => x.Description, new { @class = "form-control" })
+                        <label>Açıklama</label>                                                
+                        <textarea typeof="text" name="Description" id="Description" class="form-control" required></textarea>
                         
-                        @Html.ValidationMessageFor(x => x.Description,"", new { @class = "text-danger" })
-
-
                     </div>
                     <div class=form-group>
-                        @Html.LabelFor(x=>x.Price)
-                        @Html.TextBoxFor(x => x.Price, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.Price,"", new { @class = "text-danger" })
-
+                        <label>Fiyat</label>                        
+                        <input type="number" name="Price" id="Price"  class="form-control" required/>
+                         
 
                     </div>
+                    <label>Ürünün Görseli</label>      
                     <div class=form-group>
-
-                        @Html.LabelFor(x=>x.Image)
-                        <input type="file" name=file />
+                        
+                        <input type="file" name="file" id="Path" required />
+                         
+                    </div>
+              @*      <div id="errors">*@
 
                     </div>
-                    <button type="submit" class=btn-primary>Kaydet</button>
+                    <button type="submit" id="btn"  >Kaydet</button>
+
+                                <span id="lblName"></span>
+
 
                 </div>
             </div>
-        </div>
+       
 
-    </div>
+   
 </form>
+   
+         <script>
+
+      function submitForm(t) {
+           
+           $.post(t.action, $(t).serialize(), function(response) {
+                   console.log(response);
+               }).fail(function(xhr) {
+                    console.log(xhr);
+                });
+                return false;
+            }
 
 
 
-
+    </script>
+ 
 
 
 

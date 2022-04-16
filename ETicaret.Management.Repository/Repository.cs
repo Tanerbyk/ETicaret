@@ -7,10 +7,10 @@ namespace ETicaret.Shared.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly Context _context;
+        private readonly MarketPlaceDbContext _context;
         private DbSet<T> _dbset;
 
-        public Repository(Context context)
+        public Repository(MarketPlaceDbContext context)
         {
             _context = context;
             _dbset = _context.Set<T>();
@@ -50,9 +50,9 @@ namespace ETicaret.Shared.Repository
         {
             return _dbset.Find(id);
         }
-        public List<T> GetAll()
+        public async Task<List<T>> GetAll()
         {
-           return _dbset.ToList<T>();
+           return await _dbset.ToListAsync<T>();
         }
 
         public void Remove(T t)

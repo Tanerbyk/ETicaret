@@ -1,26 +1,20 @@
-using ETicaret.Shared.Repository.Abstract;
-using ETicaret.Shared.Repository.EntityFramework;
-using ETicaret.Shared.Repository.UnitOfWork;
+using ETicaret.Shared.Application;
 using ETicaret.Shared.Data;
+using ETicaret.Shared.Repository.UnitOfWork;
+using ETicaret.Web.IdentityContext;
+using ETicaret.Web.IdentityModel;
+using ETicaret.Shared.Application.Services;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Localization.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Extensions.FileProviders;
-using ETicaret.Shared.Application;
-using Microsoft.AspNetCore.Http;
 
 namespace ETicaret.Web
 {
@@ -36,21 +30,24 @@ namespace ETicaret.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<WebDbContext>(options => options.UseSqlServer("server=DESKTOP-FT9GJRN;database=ETicaretDb;integrated security = true"));
-            services.AddIdentityCore<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<WebDbContext>();
-            services.AddControllersWithViews().AddRazorRuntimeCompilation();
+         
+            services.AddDbContext<WebDbContext>(options => options.UseNpgsql(Configuration["ConnectionStrings:DefaultConnection"]));
+             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.Configure<MailSettings>(options => Configuration.GetSection("MailSettings").Bind(options));
+
+            services.AddTransient<IEmailSender, SMTPMailService>();
 
 
 
+
+            services.AddDbContext<WebIdentityContext>(_ => _.UseNpgsql(Configuration["ConnectionStrings:DefaultConnection"]));
+            services.AddIdentity<WebUser, IdentityRole>().AddEntityFrameworkStores<WebIdentityContext>().AddDefaultTokenProviders();
             services.AddMvc();
 
-
- 
             services.AddHttpClient();
             services.Configure<FilePathOptions>(Configuration.GetSection(FilePathOptions.ConfigurationPath));
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -102,6 +99,7 @@ namespace ETicaret.Web
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }

@@ -12,14 +12,11 @@ namespace ETicaret.Shared.Dal.Concrete
     public class Product : BaseEntity
     {
         [Key]
-        public int ProductID { get; set; }
+        public int Id { get; set; }
 
         public string Name { get; set; }
 
-        public int Price { get; set; }
-
-        [NotMapped]
-        public IFormFile Image { get; set; }
+        public int Price { get; set; }     
 
         public string Path { get; set; }
 

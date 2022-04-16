@@ -12,8 +12,8 @@ namespace ETicaret.Shared.Repository.EntityFramework
 {
     public class EfCategoryRepository : Repository<Category>, ICategoryDal
     {
-        Context _context;
-        public EfCategoryRepository(Context context) : base(context)
+        MarketPlaceDbContext _context;
+        public EfCategoryRepository(MarketPlaceDbContext context) : base(context)
         {
             _context = context;
 

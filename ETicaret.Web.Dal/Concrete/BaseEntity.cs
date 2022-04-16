@@ -10,9 +10,9 @@ namespace ETicaret.Shared.Dal.Concrete
     public class BaseEntity
     {
       
-        public DateTime CreateDate { get; set; } = DateTime.Parse(DateTime.Now.ToShortTimeString());
+        public DateTime CreateDate { get; set; } = DateTime.UtcNow;
 
-        public DateTime ModifiedDate { get; set; } 
+        public DateTime ModifiedDate { get; set; } =DateTime.UtcNow;
 
         public bool IsActive { get; set; } = true;
 

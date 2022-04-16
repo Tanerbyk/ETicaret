@@ -23,7 +23,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETicaret.Management", "ETic
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{6AC00315-C998-439D-81AD-61EFAA655227}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETicaret.Presentation.Shared", "ETicaret.Presentation.Shared\ETicaret.Presentation.Shared.csproj", "{85B4B630-C3B1-4B54-9346-79630239A1FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETicaret.Presentation.Shared", "ETicaret.Presentation.Shared\ETicaret.Presentation.Shared.csproj", "{85B4B630-C3B1-4B54-9346-79630239A1FC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D33A18E1-EEE2-4CFE-BB9D-F98AB2866A49} = {D33A18E1-EEE2-4CFE-BB9D-F98AB2866A49}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -14,7 +14,7 @@ namespace ETicaret.Shared.Repository.EntityFramework
     {
 
 
-        public EfOrderRepository(Context context) : base(context)
+        public EfOrderRepository(MarketPlaceDbContext context) : base(context)
         {
         }
     }

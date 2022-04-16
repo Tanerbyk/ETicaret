@@ -5,7 +5,7 @@ namespace ETicaret.Shared.Dal.Concrete
     public class Comment : BaseEntity
     {
         [Key]
-        public int CommentID { get; set; }
+        public int Id { get; set; }
 
         public string Content { get; set; }
 

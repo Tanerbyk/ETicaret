@@ -9,6 +9,6 @@ namespace ETicaret.Shared.Repository.Abstract
 {
     public interface IProductDal : IRepository<Product>
     {
-        List<Product> GetListWithCategory();
+        Task<List<Product>> GetListWithCategory();
     }
 }

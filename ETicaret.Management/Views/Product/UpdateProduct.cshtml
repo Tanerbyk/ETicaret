@@ -9,7 +9,7 @@
 @using (Html.BeginForm("UpdateProduct", "Product", FormMethod.Post))
 {
     @Html.Label("Ürün  ID")
-    @Html.TextBoxFor(x=>x.ProductID, new {@class="form-control"})
+    @Html.TextBoxFor(x=>x.Id, new {@class="form-control"})
 
     @Html.Label("Ürünün Adı")
     @Html.TextBoxFor(x=>x.Name, new {@class="form-control"})

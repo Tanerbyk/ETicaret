@@ -13,7 +13,7 @@ namespace ETicaret.Shared.Dal.Concrete
 
     {
         [Key]
-        public int UserID { get; set; }
+        public int Id { get; set; }
 
         public string Name { get; set; }
 

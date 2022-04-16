@@ -12,7 +12,7 @@ namespace ETicaret.Shared.Repository.EntityFramework
 {
     public class EfCommentRepository : Repository<Comment>, ICommentDal
     {
-        public EfCommentRepository(Context context) : base(context)
+        public EfCommentRepository(MarketPlaceDbContext context) : base(context)
         {
 
         }

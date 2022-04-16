@@ -17,48 +17,57 @@
     <br />
     <br />
 
-<div class="tab-content">
+    <section class="page-header">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li><a href="#">Ürünler</a></li>
+
+                <li><a href="#">Laptop</a></li>
+
+            </ul>
+        </div>
+    </section>
+    <div class="tab-content">
 
 
-    <div id="featured" class="tab-pane active">
-        <div class="owl-carousel owl-theme manual featured-products-carousel">
-           @foreach (var item in Model)
-          {
-               <div class="product">
-                <figure class="product-image-area">
-                    <a href="~/Product/ProductDetail/@item.ProductID" title="Product Name" class="product-image">
-                        <img src="@productPath.FileUrl(item.Path)" alt="Product Name" >
-                    </a>
+        <div id="featured" class="tab-pane active">
+            <div class="owl-carousel owl-theme manual featured-products-carousel">
+                @foreach (var item in Model)
+                {
+                    <div class="product">
+                        <figure class="product-image-area">
+                            <a href="~/Product/ProductDetail/@item.Id" title="Product Name" class="product-image">
+                                <img src="@productPath.FileUrl(item.Path)" alt="Product Name">
+                            </a>
 
-                    <a href="#" class="product-quickview">
-                        <i class="fa fa-share-square-o"></i>
-                        <span>Quick View</span>
-                    </a>
-                    <div class="product-label"><span class="new">New</span></div>
-                </figure>
-                <div class="product-details-area">
-                    <h2 class="product-name"><a href="~/Product/ProductDetail/@item.ProductID" title="Product Name">@item.Name</a></h2>
-                    <div class="product-ratings">
-                        <div class="ratings-box">
-                            <div class="rating" style="width:60%"></div>
+                            <a href="#" class="product-quickview">
+                                <i class="fa fa-share-square-o"></i>
+                                <span>Quick View</span>
+                            </a>
+                            <div class="product-label"><span class="new">New</span></div>
+                        </figure>
+                        <div class="product-details-area">
+                            <h2 class="product-name"><a href="~/Product/ProductDetail/@item.Id" title="Product Name">@item.Name</a></h2>
+                            <div class="product-ratings">
+                                <div class="ratings-box">
+                                    <div class="rating" style="width:60%"></div>
+                                </div>
+                            </div>
+
+                            <div class="product-price-box">
+                                <span class="old-price">$(@item.Price)</span>
+                                <span class="product-price">$@item.Price</span>
+                            </div>
                         </div>
                     </div>
+                }
 
-                    <div class="product-price-box">
-                        <span class="old-price">$(@item.Price)</span>
-                        <span class="product-price">$@item.Price</span>
-                    </div>
-                </div>
+
             </div>
-          }
-           
 
         </div>
-
     </div>
 </div>
-</div>
 
 
 
-            	

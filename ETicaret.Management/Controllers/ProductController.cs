@@ -8,7 +8,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Http;
 using System.IO;
-
+using Microsoft.Extensions.Caching.Memory;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using ETicaret.Shared.Application.Extensions;
+using Newtonsoft.Json;
 
 namespace ETicaret.Management.Controllers
 {
@@ -16,75 +20,124 @@ namespace ETicaret.Management.Controllers
     {
 
 
-
+        private readonly IMemoryCache _memoryCache;
         private readonly IUnitOfWork _unitOfWork;
         private readonly string _phsyicalPath;
 
-        public ProductController(IUnitOfWork unitOfWork, IOptions<FilePathOptions> options)
+        public ProductController(IUnitOfWork unitOfWork, IOptions<FilePathOptions> options, IMemoryCache memoryCache)
         {
             _unitOfWork = unitOfWork;
             _phsyicalPath = Path.Combine(options.Value.RootPath, options.Value.GetByKey(FileKeys.Products).Key);
+            _memoryCache = memoryCache;
         }
 
-        public IActionResult ListProduct()
+        public async Task<IActionResult> ListProduct()
         {
-            var values = _unitOfWork.Products.GetListWithCategory();
-            return View(values);
-        }
-        [HttpGet]
-        public IActionResult Create()
-        {
-            List<SelectListItem> categoryvalues = (from x in _unitOfWork.Category.GetAll()
-                                                   select new SelectListItem
-                                                   {
-                                                       Text = x.Name,
-                                                       Value = x.CategoryID.ToString()
-                                                   }).ToList();
-            ViewBag.cv = categoryvalues;
+            const string key = "Products";
 
-            return View();
-        }
-        [HttpPost]
-        public IActionResult Create(Product p, [FromForm] IFormFile file)
-        {
-
-            ProductValidator pv = new ProductValidator();
-            ValidationResult result = pv.Validate(p);
-
-            if (result.IsValid)
+            if (_memoryCache.TryGetValue(key, out object list))
             {
-                if (file is not null)
-                { 
-                    var ex = Path.GetExtension(file.FileName);
-                    var newname = Guid.NewGuid() + ex;
-                    var filePath = Path.Combine(_phsyicalPath, newname); 
-                    p.Path = newname;
-
-                    using (var fileStream = new FileStream(filePath,FileMode.Create))
-                    {
-                        file.CopyTo(fileStream);
-                    }
-                 
-
-                }
-
-                _unitOfWork.Products.Add(p);
-                _unitOfWork.Save();
-                return RedirectToAction("Create", "Product");
-
+                return View(list);
             }
             else
             {
-                List<SharedErrors> errorList = new List<SharedErrors>();
-                foreach (var item in result.Errors)
+                List<Product> values = await SetProductOnMemory(key);
+
+                return View(values);
+            }
+
+        }
+        private async Task<List<Product>> SetProductOnMemory(string key = "Products")
+        {
+            var values = await _unitOfWork.Products.GetListWithCategory();
+
+            _memoryCache.Set(key, values, new MemoryCacheEntryOptions
+            {
+                AbsoluteExpiration = DateTime.Now.AddSeconds(20),
+                Priority = CacheItemPriority.Normal
+            });
+            return values;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Create()
+        {
+            var values = await _unitOfWork.Category.GetAll();
+            return View(values);
+
+
+        }
+
+
+        public ActionResult Test()
+        {
+            return Json("OK");
+        }
+
+        [HttpPost]
+        //[ResponseCache(CacheProfileName = "Create")]
+
+        public ActionResult Ekle(Product p, [FromForm] IFormFile file)
+        {
+
+            try
+            {
+                ProductValidator pv = new ProductValidator();
+                FluentValidation.Results.ValidationResult result = pv.Validate(p);
+                if (result.IsValid)
                 {
-                    errorList.Add(new SharedErrors { Property = item.PropertyName, Message = item.ErrorMessage });
+                    if (file is not null)
+                    {
+                        var ex = Path.GetExtension(file.FileName);
+                        var newname = Guid.NewGuid() + ex;
+                        var filePath = Path.Combine(_phsyicalPath, newname);
+                        p.Path = newname;
+
+
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            file.CopyTo(fileStream);
+                        }
+                    }
+                    _unitOfWork.Products.Add(p);
+                    _unitOfWork.Save();
+                    //"spanErr_"+ item.PropertyName, "Ürün adı boş olamaz";
+                    //"spanErr_Name", "Ürün adı boş olamaz";
+                    //return Json(new Response { Data ="Ekleme işleminiz başarı ile tamamlandı.", Status = StatusCode.Success });
+
+                    return Json(new Response { Data = "ListProduct", Status = StatusCode.Success });
+                }
+                else
+                {
+                    foreach (var item in result.Errors)
+                    {
+                        ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                    }
+                    string strErr = string.Join("<br/>", result.Errors.Select(x => x.ErrorMessage));
+
+                    return Json(new Response { Data = result.Errors, Status = StatusCode.Error });
 
                 }
-                return Json(errorList);
             }
-            return View();
+            catch (Exception ex)
+            {
 
+                return Json(new Response { Data = "test" , Status = StatusCode.Error });
+
+            }
+
+
+        }
+        public class Response
+        {
+            public object Data { get; set; }
+            public StatusCode Status { get; set; }
+        }
+        public enum StatusCode
+        {
+
+            Error,
+            Success
         }
         public class SharedErrors
         {
@@ -93,13 +146,13 @@ namespace ETicaret.Management.Controllers
         }
 
         [HttpGet]
-        public IActionResult UpdateProduct(int id)
+        public async Task<IActionResult> UpdateProduct(int id)
         {
-            List<SelectListItem> categoryvalues = (from x in _unitOfWork.Category.GetAll()
+            List<SelectListItem> categoryvalues = (from x in await _unitOfWork.Category.GetAll()
                                                    select new SelectListItem
                                                    {
                                                        Text = x.Name,
-                                                       Value = x.CategoryID.ToString()
+                                                       Value = x.Id.ToString()
                                                    }).ToList();
             ViewBag.cv = categoryvalues;
             var values = _unitOfWork.Products.Get(id);
@@ -108,7 +161,7 @@ namespace ETicaret.Management.Controllers
         [HttpPost]
         public IActionResult UpdateProduct(Product p)
         {
-            p.ModifiedDate = DateTime.Parse(DateTime.Now.ToShortTimeString());
+
             _unitOfWork.Products.Update(p);
             _unitOfWork.Save();
             return RedirectToAction("ListProduct");

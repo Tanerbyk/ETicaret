@@ -25,7 +25,7 @@
         @foreach (var item in Model)
         {
             <tr>
-                <th scope="row">@item.CategoryID</th>
+                <th scope="row">@item.Id</th>
                 <td>@item.Name</td>
                 @if (item.IsActive == true)
                 {
@@ -38,8 +38,8 @@
 
                 <td>@item.CreateDate</td>
                 <td>@item.ModifiedDate</td>
-                <td><a href="~/Category/UpdateCategory/@item.CategoryID" class="btn btn-primary">Düzenle</a></td>
-                <td><a href="~/Category/DeleteCategory/@item.CategoryID" class="btn btn-warning">Sil</a></td>
+                <td><a href="~/Category/UpdateCategory/@item.Id" class="btn btn-primary">Düzenle</a></td>
+                <td><a href="~/Category/DeleteCategory/@item.Id" class="btn btn-warning">Sil</a></td>
             </tr>
         }
 

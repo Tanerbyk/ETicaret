@@ -1,15 +1,30 @@
 {
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=localhost;Port=5432;Database=MarketPlace_Db;User Id=postgres;Password=root"
+  },
+
+
+
   "FilePath": "D:\\aaa",
   "ResponsePath": "/sitecontent",
   "FilePaths": [
     {
       "Key": "products",
       "ResponsePath": "/sitecontent/products"
-    }, 
+    },
     {
       "Key": "sliders",
       "ResponsePath": "/sitecontent/sliders"
 
-    } 
-  ]
+    }
+
+  ],
+  "ConnectionStringsCache": {
+    "Redis": "127.0.0.1:6379"
+  }
+
+  
+
+
+
 }

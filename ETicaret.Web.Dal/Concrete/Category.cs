@@ -9,8 +9,8 @@ namespace ETicaret.Shared.Dal.Concrete
 {
     public class Category : BaseEntity
     {
-        [Key]
-        public int CategoryID { get; set; }
+       
+        public int Id { get; set; }
         public string Name { get; set; }
 
         public int? parent_Id { get; set; }

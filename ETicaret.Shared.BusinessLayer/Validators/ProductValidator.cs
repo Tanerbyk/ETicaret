@@ -14,7 +14,7 @@ namespace ETicaret.Shared.BusinessLayer.Validators
         public ProductValidator()
         {
             RuleFor(x => x.Name).NotEmpty().WithMessage("xd");
-
+            RuleFor(x => x.Stock).LessThan(100).WithMessage("Stok miktarı 100 den çok olamaz");
             RuleFor(x => x.Price).NotEmpty().WithMessage("Fiyat boş geçilemez");
             RuleFor(x => x.Description).NotEmpty().WithMessage("Ürün Açıklaması Boş geçilemez");
             RuleFor(x => x.Stock).NotEmpty().WithMessage("Stok Miktarı Boş geçilemez");

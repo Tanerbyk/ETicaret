@@ -10,7 +10,7 @@ namespace ETicaret.Shared.Dal.Concrete
     public class Order : BaseEntity
     {
         [Key]
-        public int OrderID { get; set; }
+        public int Id { get; set; }
         public User User { get; set; }
 
         public int Price { get; set; }
@@ -19,8 +19,8 @@ namespace ETicaret.Shared.Dal.Concrete
 
         public int Total { get; set; }
 
-        public int ProductID { get; set; }
-        public Product Product { get; set; }
+        public int  ProductID { get; set; }
+        public  Product Product { get; set; }
         
 
 

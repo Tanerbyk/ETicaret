@@ -13,9 +13,9 @@ namespace ETicaret.Shared.Repository.EntityFramework
 {
     public class EfUserRepository : Repository<User>, IUserDal
     {
-        private Context _context;
+        private MarketPlaceDbContext _context;
 
-        public EfUserRepository(Context context) : base(context)
+        public EfUserRepository(MarketPlaceDbContext context) : base(context)
         {
             _context = context; 
         }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient.Memcached;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace ETicaret.Web.Controllers
 {
@@ -15,10 +16,10 @@ namespace ETicaret.Web.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
 
-         var values =  _unitOfWork.Products.GetAll();        
+         var values =  await _unitOfWork.Products.GetAll();        
             return View(values);
 
         }

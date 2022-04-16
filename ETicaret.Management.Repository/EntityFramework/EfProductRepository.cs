@@ -15,16 +15,16 @@ namespace ETicaret.Shared.Repository.EntityFramework
     public class EfProductRepository : Repository<Product>, IProductDal
     {
 
-        private Context _context;
-        public EfProductRepository(Context context) : base(context)
+        private MarketPlaceDbContext _context;
+        public EfProductRepository(MarketPlaceDbContext context) : base(context)
         {
 
             _context = context;
         }
 
-        public List<Product> GetListWithCategory( )
+        public async Task<List<Product>> GetListWithCategory( )
         {
-            return _context.Products.Include(p => p.Category).ToList();
+            return await _context.Products.Include(p => p.Category).ToListAsync();
         }
     }
 }

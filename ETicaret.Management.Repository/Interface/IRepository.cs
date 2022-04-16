@@ -12,7 +12,7 @@ namespace ETicaret.Shared.Repository.Abstract
 
         T Get(string id);
         T Get(int id);
-        List<T> GetAll();
+        Task<List<T>> GetAll();
 
         T Find(Expression<Func<T, bool>> where = null);
 
