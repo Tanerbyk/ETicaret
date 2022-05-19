@@ -1,102 +1,67 @@
 ﻿using ETicaret.Shared.Application.Enums;
 using ETicaret.Shared.Application.Extensions;
+using ETicaret.Shared.Application.Features.Category.Commands;
+using ETicaret.Shared.Application.Features.Category.Queries;
 using ETicaret.Shared.Dal.Concrete;
 using ETicaret.Shared.Repository.UnitOfWork;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Caching.Distributed;
-using System.Text.Json;
 
 namespace ETicaret.Management.Controllers
 {
     public class CategoryController : Controller
     {
 
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IDistributedCache _distributedCache;
+      
+        private readonly IMediator _mediator;
 
-        public CategoryController(IUnitOfWork unitOfWork, IDistributedCache distributedCache)
+        public CategoryController( IMediator mediator)
         {
-            _unitOfWork = unitOfWork;
-            _distributedCache = distributedCache;
+            
+            _mediator = mediator;
         }
-
 
         [HttpGet]
 
-        public IActionResult AddCategory()
+        public  IActionResult AddCategory()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult AddCategory(Category c)
+        public async Task<string> AddCategory(CreateCategoryCommand c)
         {
-
-            _unitOfWork.Category.Add(c);
-            _unitOfWork.Save();
-            return View();
+            var data = await _mediator.Send(c);
+            return data;
         }
         public async Task<IActionResult> ListCategory()
         {
-            string key = CacheKeys.CategoryList.GetDisplayName();
- 
-            string cache = _distributedCache.GetString(key);
-
-            if (cache is not null)
-            {
-                 var  value  = Utf8Json.JsonSerializer.Deserialize<List<Category>>(cache.ToString());
-                return View(value);
-            }
-            else
-            {
-                var values = await _unitOfWork.Category.GetAll();
-                _distributedCache.SetString(key, Utf8Json.JsonSerializer.ToJsonString(values));
-
-                return View(values);
-
-            }
-
+            var values = await _mediator.Send(new GetAllCategoryQuery());
+            return View(values);
         }
 
-    
 
         [HttpGet]
-        public IActionResult UpdateCategory(int id)
+        public async Task<IActionResult> UpdateCategory(int id )
         {
-            string key = CacheKeys.Category.GetDisplayName();
-
-            var cache = _distributedCache.GetString(key);
-
-            if (cache is not null)
-            {
-                Category category = Utf8Json.JsonSerializer.Deserialize<Category>(cache);
-                return View(category);
-            }
-            else
-            {
-                var value = _unitOfWork.Category.Get(id);
-                _distributedCache.SetString(key, Utf8Json.JsonSerializer.ToJsonString(value));
-                return View(value);
-            }
+            var category = await _mediator.Send(new GetCategoryByIdQuery { Id = id});
+            return View(category);
 
         }
 
         [HttpPost]
-        public IActionResult UpdateCategory(Category c)
+        public async Task<string> UpdateCategory(UpdateCategoryCommand c)
         {
 
-            _unitOfWork.Category.Update(c);
-            _unitOfWork.Save();
-            return RedirectToAction("ListCategory");
+            var data = await _mediator.Send(c);
+            return data;
 
         }
-        public IActionResult DeleteCategory(int id)
+        public async Task<IActionResult> DeleteCategory(DeleteCategoryCommand c)
         {
-            var c = _unitOfWork.Category.Get(id);
-            _unitOfWork.Category.Remove(c);
-            _unitOfWork.Save();
-            return RedirectToAction("ListCategory");
+            var data = await _mediator.Send(c);
+            return RedirectToAction("ListCategory", "Category", new { data });
 
         }
 

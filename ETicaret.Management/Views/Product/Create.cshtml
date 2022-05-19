@@ -2,101 +2,126 @@
 @model List<Category>
 
 
-@{  
+@{
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<br />
 
-
-<form  onsubmit="return submitForm(this)"  class=form-group method="get"  asp-controller="Product" asp-action="Test" enctype="multipart/form-data" id="form1">
+<form onsubmit="return submitForm(this)" class=form-group method="post" asp-controller="Product" asp-action="Create" enctype="multipart/form-data" id="form1">
     <div class="col12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
                 <div class=form-sample>
-                    <div>
-                        <label>Ürünün Adı</label>                        
-                        <input type="text" name="Name"  class="form-control" required/>
+                    <div class="form-group">
+                        <label>Ürünün Adı</label>
+                        <input type="text" name="Name" class="form-control" required />
 
-
-                        
-                         
                     </div>
-                    
-                        <select name="CategoryID">
-                             @foreach (var item in Model)
-                             {
-                                 <option itemid="CategoryID" value="@item.Id">@item.Name</option>
-                             }
-                         </select>
-                                                                                 
-                  @* <div class=form-group>
 
-                        <label>Kategori</label>                                                
-                        @Html.DropDownListFor(x=>x.CategoryID,(List<SelectListItem>) ViewBag.cv , new {@class="form-control"})
-                        
-                    </div>*@
+                    <div class="form-group">
+                        <label>Kategori Adı</label>
+                        <select class="form-select " name="CategoryID">
+                            @foreach (var item in Model)
+                            {
+                                <option class="dropdown-item" itemid="CategoryID" value="@item.Id">@item.Name</option>
+                            }
+                        </select>
 
-                                    
+                    </div>
 
-                        </div>
+
                     <div class=form-group>
 
-                        <label>Stok</label>                        
-                        <input type="number" name="Stock" id="Stock" class="form-control"  required/>
-                       
+                        <label>Stok</label>
+                        <input type="number" name="Stock" id="Stock" class="form-control" required />
 
-                      @*  $("#lbl_"+result.Property).removeClass("d-none").addClass("class","d-block").empty().append(result.message + "<span class"text-danger">*</span>");*@
-                      @*$("#errors").append("<label>result.message</label>");*@
                     </div>
                     <div class=form-group>
 
-                        <label>Açıklama</label>                                                
+                        <label>Açıklama</label>
                         <textarea typeof="text" name="Description" id="Description" class="form-control" required></textarea>
-                        
+
                     </div>
                     <div class=form-group>
-                        <label>Fiyat</label>                        
-                        <input type="number" name="Price" id="Price"  class="form-control" required/>
-                         
+                        <label>Fiyat</label>
+                        <input type="number" name="Price" id="Price" class="form-control" required />
+
 
                     </div>
-                    <label>Ürünün Görseli</label>      
-                    <div class=form-group>
-                        
-                        <input type="file" name="file" id="Path" required />
-                         
-                    </div>
-              @*      <div id="errors">*@
+                    <label>Ürünün Görseli</label>
+                    <div class="custom-file">
 
-                    </div>
-                    <button type="submit" id="btn"  >Kaydet</button>
+                        <input type="file" class="custom-file-input" name="fileImage" id="Path" required />
+                        <label class="custom-file-label" for="customFile">Choose file</label>
 
-                                <span id="lblName"></span>
+                    </div><br /><br />
 
-
+                    <button class="btn-primary " type="submit" id="btn">Kaydet</button>
                 </div>
+
+
+
+
             </div>
-       
+        </div>
 
-   
+    </div>
+
 </form>
-   
-         <script>
-
-      function submitForm(t) {
-           
-           $.post(t.action, $(t).serialize(), function(response) {
-                   console.log(response);
-               }).fail(function(xhr) {
-                    console.log(xhr);
-                });
-                return false;
-            }
 
 
 
-    </script>
- 
+<script>
+
+            function submitForm(t) {
+               var formData = new FormData(document.getElementById("form1"));
+               $.ajax({
+                   url: "",
+               data: formData,
+               type: "POST",
+               processData: false,
+               contentType: false,
+               async: true,
+               beforeSend: function(item) {},
+               success: function(item) {
+      if(item=="success"){
+                      Swal.fire({
+      title: 'Başarılı?',
+      text: "Kategori Ekleme İşlemi Başarıyla Tamamlandı.Devam Etmek için Tamam'a Basın.",
+      icon: item,
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'Tamam'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.replace("/Category/ListCategory");
+      }
+    })
+      }
+      else{
+      Swal.fire({
+      icon: 'error',
+      title: 'HATA...',
+      text: 'Böyle Bir Kategori Zaten Mevcut'
+
+
+    })
+      }
+               },
+               error: function(jqXHR, textStatus, error) {
+                   Swal.fire({
+      icon: 'error',
+      title: 'Hata...',
+      text: 'Bir Hata Oluştu!'
+
+    })
+               },
+               });
+                      return false;
+                }
+
+</script>
+
 
 
 

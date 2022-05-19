@@ -1,4 +1,4 @@
-﻿using ETicaret.Shared.Repository.UnitOfWork;
+﻿ using ETicaret.Shared.Repository.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient.Memcached;
 using System.IO;

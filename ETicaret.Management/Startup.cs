@@ -1,22 +1,17 @@
 ﻿
+using ETicaret.Management;
 using ETicaret.Shared.Application;
-using ETicaret.Shared.BusinessLayer.Validators;
+using ETicaret.Shared.Application.Features.Category.Queries;
+using ETicaret.Shared.Dal;
 using ETicaret.Shared.Repository.UnitOfWork;
 using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Reflection;
+using static ETicaret.Shared.Application.Features.Category.Queries.GetAllCategoryQuery;
+
 
 namespace E_Ticaret.Management
 {
@@ -33,10 +28,33 @@ namespace E_Ticaret.Management
         [Obsolete]
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<MarketPlaceDbContext>();
+
+            services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
+
+
+
+
+            //services.AddMediatR(typeof(Startup));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+
+
             services.AddStackExchangeRedisCache(options => options.Configuration = Configuration.GetValue<string>("ConnectionStringsCache:Redis"));
             services.AddControllersWithViews();
+         
 
-            services.AddScoped<IUnitOfWork,UnitOfWork>();
+
+
+
+             
+
+
+
+
+
+
+
 
             services.AddMvc(config =>
             {

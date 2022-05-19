@@ -4,23 +4,66 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<form onsubmit="return submitForm(this)" class=form-group method="post" asp-controller="Category" asp-action="UpdateCategory" id="form2">
+
+    <div class="form-group">
+        <label>Kategori</label>
+        <input name="Name" class="form-control"  required="">
+    </div>
+    <button type="submit" class="btn btn-primary">Kaydet</button>
 
 
-@using(Html.BeginForm("UpdateCategory","Category",FormMethod.Post))
-{
-    @Html.Label("Kategori ID")
-    @Html.TextBoxFor(x=>x.Id, new {@class="form-control"})
-
-    @Html.Label("Kategori Adı")
-    @Html.TextBoxFor(x=>x.Name, new {@class="form-control"})
-
-     @Html.Label("Durumu")
-@Html.DropDownListFor(x => x.IsActive, (new[] { new SelectListItem { Text = "Aktif", Value = true.ToString() }, new SelectListItem { Text = "Pasif", Value = false.ToString() } }), new { @class = "form-control" } )
+</form>
 
 
+<script>
 
-    <br />
-    <button class="btn btn-success">Kaydet</button>
+            function submitForm(t) {
+               var formData = new FormData(document.getElementById("form2"));
+               $.ajax({
+                   url: "",
+               data: formData,
+               type: "POST",
+               processData: false,
+               contentType: false,
+               async: true,
+               beforeSend: function(item) {},
+               success: function(item) {
+      if(item=="success"){
+                      Swal.fire({
+      title: 'Başarılı?',
+      text: "Kategori Güncelleme İşlemi Başarıyla Tamamlandı.Devam Etmek için Tamam'a Basın.",
+      icon: item,
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'Tamam'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.replace("/Category/ListCategory");
+      }
+    })
+      }
+      else{
+      Swal.fire({
+      icon: 'error',
+      title: 'HATA...',
+      text: 'Kategori adını kontrol ediniz.'
 
 
-}
+    })
+      }
+               },
+               error: function(jqXHR, textStatus, error) {
+                   Swal.fire({
+      icon: 'error',
+      title: 'Hata...',
+      text: 'Bir Hata Oluştu!'
+
+    })
+               },
+               });
+                      return false;
+                }
+
+</script>
+
+

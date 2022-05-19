@@ -1,42 +1,126 @@
-﻿@model ETicaret.Shared.Dal.Concrete.Product
+﻿@model CategoriesWithProduct
+
+
 @{
     ViewData["Title"] = "UpdateProduct";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>UpdateProduct</h1>
-
-@using (Html.BeginForm("UpdateProduct", "Product", FormMethod.Post))
-{
-    @Html.Label("Ürün  ID")
-    @Html.TextBoxFor(x=>x.Id, new {@class="form-control"})
-
-    @Html.Label("Ürünün Adı")
-    @Html.TextBoxFor(x=>x.Name, new {@class="form-control"})
-
-    @Html.Label("Kategori")
-    @Html.DropDownListFor(x=>x.CategoryID,(List<SelectListItem>) ViewBag.cv , new {@class="form-control"})
-
-    @Html.Label("Ürün Satışa Açık mı?")
-    @Html.DropDownListFor(x => x.IsActive, (new[] { new SelectListItem { Text = "Açık", Value = true.ToString() }, new SelectListItem { Text = "Kapalı", Value = false.ToString() } }), new { @class = "form-control" } )
-
-    @Html.Label("Ürünün Açıklaması")
-    @Html.TextBoxFor(x=>x.Description, new {@class="form-control"})
-
-    @Html.Label("Ürün Görseli")
-    @Html.TextBoxFor(x=>x.Path, new {@class="form-control"})
-
-    @Html.Label("Ürünün Fiyatı")
-    @Html.TextBoxFor(x=>x.Price, new {@class="form-control"})
-
-    @Html.Label("Ürünün Stok Miktarı")
-    @Html.TextBoxFor(x=>x.Stock, new {@class="form-control"})
 
 
 
+<form onsubmit="return submitForm(this)" class="form-group" method="post" asp-controller="Product" asp-action="Test" enctype="multipart/form-data" id="form2">
+    <div class="col12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class=form-sample>
+                    <div class="form-group">
+                        <input type="hidden" name="Id" id="Id" value="@Model.Product.Id" />
+                        <label>Ürünün Adı</label>
+                        <input type="text" name="Name" class="form-control" required value="@Model.Product.Name" />
 
-    <br />
-    <button class="btn btn-success">Kaydet</button>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Kategori Adı</label>
+                        <!select class="form-select " name="CategoryID">
+                            @foreach (var item in Model.Categories)
+                            {
+                            <!option @(Model.Product.CategoryID==item.Id?"selected":"") class="dropdown-item" itemid="CategoryID" value="@item.Id">@item.Name</!option>
+                            }
+                        </!select>
+
+                    </div>
 
 
-}
+                    <div class=form-group>
+
+                        <label>Stok</label>
+                        <input type="number" name="Stock" id="Stock" class="form-control" required value="@Model.Product.Stock" />
+
+                    </div>
+                    <div class=form-group>
+
+                        <label>Açıklama</label>
+                        <textarea type="text" name="Description" id="Description" class="form-control" required>
+                          
+                        </textarea>
+
+                    </div>
+                    <div class=form-group>
+                        <label>Fiyat</label>
+                        <input type="number" name="Price" id="Price" class="form-control" required value="@Model.Product.Price" />
+                    </div>
+
+                     <label>Ürünün Görseli</label>
+                    <div class="custom-file">
+
+                        <input type="file" class="custom-file-input" name="fileImage" id="Path" required />
+                        <label class="custom-file-label" for="customFile">Choose file</label>
+
+                    </div><br /><br />
+
+                    <button class="btn-primary " type="submit" id="btn">Kaydet</button>
+                </div>
+
+
+
+
+            </div>
+        </div>
+
+    </div>
+
+</form>
+
+
+
+<script>
+
+            function submitForm(t) {
+               var formData = new FormData(document.getElementById("form2"));
+               $.ajax({
+                   url: "",
+               data: formData,
+               type: "POST",
+               processData: false,
+               contentType: false,
+               async: true,
+               beforeSend: function(item) {},
+               success: function(item) {
+      if(item=="success"){
+                      Swal.fire({
+      title: 'Başarılı?',
+      text: "Kategori Ekleme İşlemi Başarıyla Tamamlandı.Devam Etmek için Tamam'a Basın.",
+      icon: item,
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'Tamam'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.replace("/Category/ListCategory");
+      }
+    })
+      }
+      else{
+      Swal.fire({
+      icon: 'error',
+      title: 'HATA...',
+      text: 'Böyle Bir Kategori Zaten Mevcut'
+
+
+    })
+      }
+               },
+               error: function(jqXHR, textStatus, error) {
+                   Swal.fire({
+      icon: 'error',
+      title: 'Hata...',
+      text: 'Bir Hata Oluştu!'
+
+    })
+               },
+               });
+                      return false;
+                }
+
+</script>

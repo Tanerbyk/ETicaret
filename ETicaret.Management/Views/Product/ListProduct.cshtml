@@ -5,10 +5,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>ListProduct</h1>
+<br />
+<button class="btn btn-primary p-3"><a href="~/Product/Create" style="color:white">Yeni Ürün Ekle</a></button>
 
-
-<table class="table table-hover table-dark">
+<br /><br />
+    <table class="table table-hover">
 
     <thead>
         <tr>
@@ -45,7 +46,7 @@
 
           
             <td>@x.Price</td>
-            <td><a href="~/Product/UpdateProduct/@x.Id" class="btn btn-primary">Düzenle</a></td>
+            <td><a asp-controller="Product" asp-action="UpdateProduct" asp-route-id="@x.Id" class="btn btn-primary">Düzenle</a></td>
             <td><a href="~/Product/DeleteProduct/@x.Id" class="btn btn-warning">Sil</a></td>
         </tr>
     }
@@ -54,7 +55,8 @@
 
 
 </table>
-<button class="btn btn-success"><a href="~/Product/Create">Yeni Ürün Ekle</a></button>
+
+
 
 
 
