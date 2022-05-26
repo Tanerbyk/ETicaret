@@ -1,5 +1,6 @@
 ﻿using ETicaret.Shared.Dal;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.Extensions.Options;
 using System;
@@ -25,8 +26,9 @@ namespace ETicaret.Shared.Application.Features.Product.Commands
         public int CategoryID { get; set; }
 
         public int Price { get; set; }
+        public int Discount { get; set; }
 
-        public FormFile fileImage { get; set; }
+        public IFormFile fileImage { get; set; }
         public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, string>
         {
             private readonly MarketPlaceDbContext _db;
@@ -62,10 +64,11 @@ namespace ETicaret.Shared.Application.Features.Product.Commands
                     data.Stock = request.Stock;
                     data.Price = request.Price;
                     data.Path = request.Path;
+                    data.Discount = request.Discount;
                     data.CategoryID = request.CategoryID;
                    await  _db.SaveChangesAsync ();
 
-                    return "okay";
+                    return "success";
                     
                 }
                 else

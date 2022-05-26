@@ -1,9 +1,9 @@
 ﻿@using ETicaret.Shared.Application
-@using ETicaret.Shared.Dal.Concrete
+@using ETicaret.Shared.Application.DTOs
 @using Microsoft.Extensions.Options
 @inject IOptions<FilePathOptions> options
 
-@model List<Product>
+@model List<ProductDto>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";

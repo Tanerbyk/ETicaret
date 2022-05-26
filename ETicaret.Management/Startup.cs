@@ -36,18 +36,14 @@ namespace E_Ticaret.Management
 
 
             //services.AddMediatR(typeof(Startup));
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            //services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 
-
+            
             services.AddStackExchangeRedisCache(options => options.Configuration = Configuration.GetValue<string>("ConnectionStringsCache:Redis"));
             services.AddControllersWithViews();
-         
+            services.AddAutoMapper(typeof(Startup).Assembly);
 
-
-
-
-             
 
 
 

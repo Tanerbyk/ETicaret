@@ -22,6 +22,8 @@ namespace ETicaret.Shared.Dal.Concrete
 
         public int Stock { get; set; }
 
+        public int Discount { get; set; }
+
         public string Description { get; set; }
 
         public int CategoryID { get; set; }

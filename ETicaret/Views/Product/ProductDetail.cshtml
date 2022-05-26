@@ -1,7 +1,13 @@
-﻿@model ETicaret.Shared.Dal.Concrete.Product
+﻿@using ETicaret.Shared.Application
+@using ETicaret.Shared.Application.DTOs
+@using Microsoft.Extensions.Options
+@inject IOptions<FilePathOptions> options
+
+@model ETicaret.Shared.Application.DTOs.ProductDto
 @{
     ViewData["Title"] = "ProductDetail";
     Layout = "~/Views/Shared/_Layout.cshtml";
+	var productPath = options.Value.GetByKey(FileKeys.Products);
 }
 		<section class="page-header">
 				<div class="container">
@@ -9,7 +15,6 @@
 						<li><a href="#">Ürünler</a></li>
 
 						<li><a href="#">Laptop</a></li>
-						<li class="active">@Model.Name</li>
 					</ul>
 				</div>
 			</section>
@@ -23,7 +28,7 @@
 									<div class="product-img-box col-sm-5">
 										<div class="product-img-box-wrapper">
 	                                        <div class="product-img-wrapper">
-	                                        	<img id="product-zoom" src="@Model.Path" data-zoom-image="@Model.Path" alt="Product main image">
+	                                        	<img id="product-zoom" src="@productPath.FileUrl(@Model.Path)" " alt="Product main image">
 	                                        </div>
 
 											<a href="#" class="product-img-zoom" title="Zoom">
@@ -74,7 +79,7 @@
 											</div>
 										</div>
 										<h1 class="product-name">
-											@Model.Name
+											@Model.Category
 										</h1>
 
 										<div class="product-rating-container">

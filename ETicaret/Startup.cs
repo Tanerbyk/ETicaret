@@ -15,6 +15,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using ETicaret.Shared.Dal;
+using ETicaret.Shared.Application.Extensions;
+using ETicaret.Shared.Application.Mapping;
 
 namespace ETicaret.Web
 {
@@ -30,23 +33,27 @@ namespace ETicaret.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-         
+            services.AddApplicationCoreServices(Configuration, typeof(Startup), typeof(MappingProfile));
+
             services.AddDbContext<WebDbContext>(options => options.UseNpgsql(Configuration["ConnectionStrings:DefaultConnection"]));
              services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            //services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.Configure<MailSettings>(options => Configuration.GetSection("MailSettings").Bind(options));
 
             services.AddTransient<IEmailSender, SMTPMailService>();
 
 
-
+            services.AddTransient<MarketPlaceDbContext>();
 
             services.AddDbContext<WebIdentityContext>(_ => _.UseNpgsql(Configuration["ConnectionStrings:DefaultConnection"]));
+
             services.AddIdentity<WebUser, IdentityRole>().AddEntityFrameworkStores<WebIdentityContext>().AddDefaultTokenProviders();
             services.AddMvc();
 
             services.AddHttpClient();
+            services.AddAutoMapper(typeof(Startup).Assembly);
+
             services.Configure<FilePathOptions>(Configuration.GetSection(FilePathOptions.ConfigurationPath));
         }
 

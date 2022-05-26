@@ -24,6 +24,7 @@ namespace ETicaret.Shared.Application.Features.Product.Commands
         public int CategoryID { get; set; }
 
         public int Price { get; set; }
+        public int Discount { get; set; }
 
 
         public   IFormFile fileImage { get; set; }
@@ -64,7 +65,7 @@ namespace ETicaret.Shared.Application.Features.Product.Commands
                         }
 
 
-                        await _db.Products.AddAsync(new Dal.Concrete.Product { Name = request.Name, Description = request.Description, Stock = request.Stock, Path = request.Path, CategoryID = request.CategoryID, Price = request.Price });
+                        await _db.Products.AddAsync(new Dal.Concrete.Product { Name = request.Name, Description = request.Description, Stock = request.Stock, Path = request.Path, CategoryID = request.CategoryID, Price = request.Price , Discount = request.Discount });
                         await _db.SaveChangesAsync();
                         return "success";
                     }
