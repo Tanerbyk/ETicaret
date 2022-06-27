@@ -3,6 +3,7 @@ using System;
 using ETicaret.Web.IdentityContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ETicaret.Web.Migrations
 {
     [DbContext(typeof(WebIdentityContext))]
-    partial class WebIdentityContextModelSnapshot : ModelSnapshot
+    [Migration("20220610192503_sd")]
+    partial class sd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,9 +82,6 @@ namespace ETicaret.Web.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
-
-                    b.Property<string>("newpassword")
-                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

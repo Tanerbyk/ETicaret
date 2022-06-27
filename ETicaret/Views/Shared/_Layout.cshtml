@@ -1,4 +1,13 @@
-﻿<!DOCTYPE html>
+﻿@using ETicaret.Web.IdentityModel
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Identity
+@using ETicaret.Shared.Application.Extensions
+@inject UserManager<WebUser> _usermanager;
+
+	@{
+		var user = _usermanager.GetUserAsync(User).Result;
+	}
+<!DOCTYPE html>
 <html>
 	<head>
 
@@ -110,11 +119,27 @@
 							<div class="top-menu-area">
 								<a href="#">Links <i class="fa fa-caret-down"></i></a>
 								<ul class="top-menu">
-									<li><a href="demo-shop-9-myaccount.html">My Account</a></li>
-									<li><a href="#">Daily Deal</a></li>
+									@if (user!=null)
+								   {
+									<li><a href="/Account/UpdateAccount/@user.Id">@user.FirstName @user.LastName</a></li>
+								}
+								else
+								{
+									<li><a href="/Identity/Account/Login">Giriş Yapın Veya Kayıt Olun</a></li>
+
+								}
+								<li><a href="#">Daily Deal</a></li>
 									<li><a href="#">My Wishlist</a></li>
 									<li><a href="demo-shop-9-blog.html">Blog</a></li>
-									<li><a href="demo-shop-9-login.html">Log in</a></li>
+									@if(user!=null)
+									{
+										
+									<li><a href="/Identity/Account/Logout">Çıkış Yap</a></li>
+								}
+								
+
+
+									
 								</ul>
 							</div>
 							<p class="welcome-msg">DEFAULT WELCOME MSG!</p>
@@ -710,8 +735,10 @@
 	
 								
 			
-    
-		@RenderBody()
+    <div class = "container">
+				@RenderBody()
+
+	</div>
 			
 			
 

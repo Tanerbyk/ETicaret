@@ -5,25 +5,22 @@
 
 
 
-  "FilePath": "D:\\aaa",
-  "ResponsePath": "/sitecontent",
-  "FilePaths": [
-    {
-      "Key": "products",
-      "ResponsePath": "/sitecontent/products"
-    },
-    {
-      "Key": "sliders",
-      "ResponsePath": "/sitecontent/sliders"
+  "FilePath": {
+    "RootPath": "c:\\products",
+    "ResponsePath": "/sitecontent",
+    "FilePaths": [
+      {
+        "Key": "products",
+        "ResponsePath": "/sitecontent/products"
+      }
+    ]
 
-    }
-
-  ],
+  },
   "ConnectionStringsCache": {
     "Redis": "127.0.0.1:6379"
   }
 
-  
+
 
 
 

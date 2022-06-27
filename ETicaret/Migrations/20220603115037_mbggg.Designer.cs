@@ -3,6 +3,7 @@ using System;
 using ETicaret.Web.IdentityContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ETicaret.Web.Migrations
 {
     [DbContext(typeof(WebIdentityContext))]
-    partial class WebIdentityContextModelSnapshot : ModelSnapshot
+    [Migration("20220603115037_mbggg")]
+    partial class mbggg
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,12 +43,6 @@ namespace ETicaret.Web.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("boolean");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("text");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("boolean");
@@ -80,9 +76,6 @@ namespace ETicaret.Web.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
-
-                    b.Property<string>("newpassword")
-                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

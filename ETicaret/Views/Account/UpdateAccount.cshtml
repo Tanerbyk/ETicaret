@@ -1,0 +1,58 @@
+﻿@using ETicaret.Web.IdentityModel
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Identity
+@using ETicaret.Shared.Application.Extensions
+@inject UserManager<WebUser> _usermanager;
+
+@{
+    var user = _usermanager.GetUserAsync(User).Result;
+}
+@{
+    ViewData["Title"] = "UpdateAccount";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<form  class=form-group method="post" asp-controller="Account" asp-action="UpdateAccount" id="form2">
+
+    <h4 class="heading-primary text-uppercase mb-lg">ACCOUNT INFORMATION</h4>
+    <div class="row">
+        <div class="col-sm-4 col-md-3">
+            <div class="form-group">
+                <label class="font-weight-normal">First Name <span class="required">*</span></label>
+                <input type="text" class="form-control" name= "FirstName" value="@user.FirstName" required>
+            </div>
+        </div>
+
+        <div class="col-sm-4 col-md-5">
+            <div class="form-group">
+                <label class="font-weight-normal">Last Name <span class="required">*</span></label>
+                <input type="text" class="form-control" name= "LastName" value="@user.LastName" required>
+            </div>
+        </div>
+    </div>
+
+  
+        <div class="col-xs-12">
+            <div class="form-group">
+                <label class="font-weight-normal">@user.Email <span class="required">*</span></label>
+                 
+            </div>
+        </div>
+ @*       <div class="col-xs-12">
+            <div class="form-group">
+                <label class="font-weight-normal">Email Address <span class="required">*</span></label>
+                                <input type="text" class="form-control" name= "newpassword"  required>
+            </div>
+        </div>*@
+
+      
+
+     
+
+
+
+
+        <input type="submit" class="btn btn-primary">
+   
+
+</form>
+

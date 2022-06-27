@@ -36,7 +36,7 @@ namespace ETicaret.Web
             services.AddApplicationCoreServices(Configuration, typeof(Startup), typeof(MappingProfile));
 
             services.AddDbContext<WebDbContext>(options => options.UseNpgsql(Configuration["ConnectionStrings:DefaultConnection"]));
-             services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
             //services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.Configure<MailSettings>(options => Configuration.GetSection("MailSettings").Bind(options));
@@ -49,6 +49,10 @@ namespace ETicaret.Web
             services.AddDbContext<WebIdentityContext>(_ => _.UseNpgsql(Configuration["ConnectionStrings:DefaultConnection"]));
 
             services.AddIdentity<WebUser, IdentityRole>().AddEntityFrameworkStores<WebIdentityContext>().AddDefaultTokenProviders();
+            //services.AddDefaultIdentity<WebUser>().AddRoles<IdentityRole>().
+            //    AddEntityFrameworkStores<WebIdentityContext>().AddDefaultTokenProviders();
+
+
             services.AddMvc();
 
             services.AddHttpClient();
@@ -88,9 +92,9 @@ namespace ETicaret.Web
 
             app.UseRouting();
             app.UseAuthorization();
-            app.UseAuthentication(); 
+            app.UseAuthentication();
             app.UseHttpsRedirection();
-           
+
 
             app.UseStaticFiles(new StaticFileOptions
             {

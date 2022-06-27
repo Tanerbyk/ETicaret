@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ETicaret.Shared.Dal.Migrations
 {
     [DbContext(typeof(MarketPlaceDbContext))]
-    [Migration("20220525155200_mg")]
-    partial class mg
+    [Migration("20220610192401_mg1")]
+    partial class mg1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

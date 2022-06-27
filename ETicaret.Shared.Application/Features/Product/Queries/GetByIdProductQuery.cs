@@ -1,4 +1,5 @@
-﻿using ETicaret.Shared.Dal;
+﻿
+using ETicaret.Shared.Dal;
 using MediatR;
 using System;
 using System.Collections.Generic;

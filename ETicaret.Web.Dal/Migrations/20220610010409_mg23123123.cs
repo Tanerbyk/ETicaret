@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace ETicaret.Shared.Dal.Migrations
 {
-    public partial class mg : Migration
+    public partial class mg23123123 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -25,6 +25,24 @@ namespace ETicaret.Shared.Dal.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Persons",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<string>(type: "text", nullable: false),
+                    FirstName = table.Column<string>(type: "text", nullable: false),
+                    LastName = table.Column<string>(type: "text", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Persons", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -180,6 +198,9 @@ namespace ETicaret.Shared.Dal.Migrations
 
             migrationBuilder.DropTable(
                 name: "Orders");
+
+            migrationBuilder.DropTable(
+                name: "Persons");
 
             migrationBuilder.DropTable(
                 name: "Users");
