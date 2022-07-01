@@ -18,6 +18,9 @@ using Microsoft.Extensions.Options;
 using ETicaret.Shared.Dal;
 using ETicaret.Shared.Application.Extensions;
 using ETicaret.Shared.Application.Mapping;
+using ETicaret.Web.Application.Basket;
+using MediatR;
+using System;
 
 namespace ETicaret.Web
 {
@@ -42,10 +45,13 @@ namespace ETicaret.Web
             services.Configure<MailSettings>(options => Configuration.GetSection("MailSettings").Bind(options));
 
             services.AddTransient<IEmailSender, SMTPMailService>();
+            services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 
-
+            services.AddTransient<IBasketService, BasketService>();
             services.AddTransient<MarketPlaceDbContext>();
 
+            var connstr = Configuration.GetValue<string>("RedisConfiguration:Connection") + ",password=" + Configuration.GetValue<string>("RedisConfiguration:Password");
+            services.AddStackExchangeRedisCache(options => { options.Configuration = connstr; });
             services.AddDbContext<WebIdentityContext>(_ => _.UseNpgsql(Configuration["ConnectionStrings:DefaultConnection"]));
 
             services.AddIdentity<WebUser, IdentityRole>().AddEntityFrameworkStores<WebIdentityContext>().AddDefaultTokenProviders();
@@ -54,6 +60,7 @@ namespace ETicaret.Web
 
 
             services.AddMvc();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddHttpClient();
             services.AddAutoMapper(typeof(Startup).Assembly);

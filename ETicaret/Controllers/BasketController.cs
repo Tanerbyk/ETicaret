@@ -1,4 +1,6 @@
 ﻿using ETicaret.Web.Application.Basket;
+using ETicaret.Web.IdentityModel;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -7,6 +9,8 @@ namespace ETicaret.Web.Controllers
     public class BasketController : Controller
     {
         private readonly IBasketService _basketService;
+        private readonly UserManager<WebUser> _userManager;
+
 
         public BasketController(IBasketService basketService)
         {
@@ -18,10 +22,29 @@ namespace ETicaret.Web.Controllers
             return View();
         }
 
+
+
         [HttpPost]
-        public async Task<IActionResult> AddBasketProduct()
+        public async Task<string> AddBasketProduct(string userid,int productid,int quantity)
+
         {
-            await _basketService.Add("8361bae0-9133-4417-9f33-672e784f9439", 2, 1);
+            await _basketService.Add(userid, productid, quantity);
+            return "success";
+        }
+
+        public async Task<IActionResult> GetAllProductBasket(string userid)
+        {
+
+
+           var values = await _basketService.Get("8361bae0-9133-4417-9f33-672e784f9439");
+            return View(values);
+        }
+
+        public async Task<IActionResult> RemoveAllProductBasket(string userid)
+        {
+
+         
+             await _basketService.RemoveAll(userid);
             return View();
         }
     }

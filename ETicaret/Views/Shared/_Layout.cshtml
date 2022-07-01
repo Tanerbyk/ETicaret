@@ -185,7 +185,7 @@
 							</div>
 							<div class="header-column header-column-center">
 								<div class="header-logo">
-									<a href="~/demo-shop-9.html">
+									<a href="#">
 										<img alt="Porto" width="140" height="65" src="../img/demos/shop/logo-shop-green-plus.png">
 									</a>
 								</div>
@@ -201,7 +201,7 @@
 										</div>
 
 										<div class="cart-dropdown">
-											<a href="#" class="cart-dropdown-icon">
+											<a href="/Basket/GetAllProductBasket" class="cart-dropdown-icon">
 												<i class="minicart-icon"></i>
 												<span class="cart-info">
 													<span class="cart-qty">2</span>
@@ -255,8 +255,11 @@
 													</div>
 
 													<div class="cart-actions">
-														<a href="demo-shop-9-cart.html" class="btn btn-primary">View Cart</a>
+														<form asp-action="GetA">
+															<a name="userid" href="/Basket/GetAllProductBasket/@user.Id" class="btn btn-primary">View Cart</a>
 														<a href="demo-shop-9-checkout.html" class="btn btn-primary">Checkout</a>
+														</form>
+														
 													</div>
 												</div>
 											</div>
@@ -390,8 +393,8 @@
 																		
 																		<a href="#" class="dropdown-mega-sub-title">Smart Tvs</a>
 																		<ul class="dropdown-mega-sub-nav">
-																			<li><a href="demo-shop-9-category-4col.html">TV, Audio</a></li>
-																			<li><a href="demo-shop-9-category-4col.html">Computers &amp; Tablets</a></li>
+																			<li><a href="/Product/ProductGetByIdCategory/1">TV, Audio</a></li>
+																			<li><a href="/Product/ProductGetByIdCategory/36">Computers &amp; Tablets</a></li>
 																			<li><a href="demo-shop-9-category-4col.html">Home Office Equipments</a></li>
 																			<li><a href="demo-shop-9-category-4col.html">GPS Navigation</a></li>
 																			<li><a href="demo-shop-9-category-4col.html">Car Video, Audio &amp; GPS</a></li>
@@ -855,41 +858,41 @@
 		</div>
 
 		<!-- Vendor -->
-		<script src="../vendor/jquery/jquery.min.js"></script>
-		<script src="../vendor/jquery.appear/jquery.appear.min.js"></script>
-		<script src="../vendor/jquery.easing/jquery.easing.min.js"></script>
-		<script src="../vendor/jquery-cookie/jquery-cookie.min.js"></script>
-		<script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
-		<script src="../vendor/common/common.min.js"></script>
-		<script src="../vendor/jquery.validation/jquery.validation.min.js"></script>
-		<script src="../vendor/jquery.easy-pie-chart/jquery.easy-pie-chart.min.js"></script>
-		<script src="../vendor/jquery.gmap/jquery.gmap.min.js"></script>
-		<script src="../vendor/jquery.lazyload/jquery.lazyload.min.js"></script>
-		<script src="../vendor/isotope/jquery.isotope.min.js"></script>
-		<script src="../vendor/owl.carousel/owl.carousel.min.js"></script>
-		<script src="../vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
-		<script src="../vendor/vide/vide.min.js"></script>
+		<script src="~/vendor/jquery/jquery.min.js"></script>
+		<script src="~/vendor/jquery.appear/jquery.appear.min.js"></script>
+		<script src="~/vendor/jquery.easing/jquery.easing.min.js"></script>
+		<script src="~/vendor/jquery-cookie/jquery-cookie.min.js"></script>
+		<script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="~/vendor/common/common.min.js"></script>
+		<script src="~/vendor/jquery.validation/jquery.validation.min.js"></script>
+		<script src="~/vendor/jquery.easy-pie-chart/jquery.easy-pie-chart.min.js"></script>
+		<script src="~/vendor/jquery.gmap/jquery.gmap.min.js"></script>
+		<script src="~/vendor/jquery.lazyload/jquery.lazyload.min.js"></script>
+		<script src="~/vendor/isotope/jquery.isotope.min.js"></script>
+		<script src="~/vendor/owl.carousel/owl.carousel.min.js"></script>
+		<script src="~/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+		<script src="~/vendor/vide/vide.min.js"></script>
 		
 		<!-- Theme Base, Components and Settings -->
-		<script src="../js/theme.js"></script>
+		<script src="~/js/theme.js"></script>
 
 
-		<script src="../vendor/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
-		<script src="../vendor/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
+		<script src="~/vendor/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
+		<script src="~/vendor/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
 
 		<!-- Current Page Vendor and Views -->
-		<script src="../js/views/view.contact.js"></script>
+		<script src="~/js/views/view.contact.js"></script>
 
 
 
 		<!-- Demo -->
-		<script src="../js/demos/demo-shop-9.js"></script>
+		<script src="~/js/demos/demo-shop-9.js"></script>
 		
 		<!-- Theme Custom -->
-		<script src="../js/custom.js"></script>
+		<script src="~/js/custom.js"></script>
 		
 		<!-- Theme Initialization Files -->
-		<script src="../js/theme.init.js"></script>
+		<script src="~/js/theme.init.js"></script>
 
 
 

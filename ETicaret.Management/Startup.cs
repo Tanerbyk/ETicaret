@@ -39,8 +39,8 @@ namespace E_Ticaret.Management
             //services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 
-            var connstr = Configuration.GetValue<string>("RedisConfiguration:Connection") + ",password=" + Configuration.GetValue<string>("RedisConfiguration:Password");
-            services.AddStackExchangeRedisCache(options => { options.Configuration = connstr; });
+            //var connstr = Configuration.GetValue<string>("RedisConfiguration:Connection") + ",password=" + Configuration.GetValue<string>("RedisConfiguration:Password");
+            //services.AddStackExchangeRedisCache(options => { options.Configuration = connstr; });
 
              services.AddControllersWithViews();
             services.AddAutoMapper(typeof(Startup).Assembly);

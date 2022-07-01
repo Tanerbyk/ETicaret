@@ -2,14 +2,15 @@
 @using ETicaret.Shared.Application.DTOs
 @using Microsoft.Extensions.Options
 @inject IOptions<FilePathOptions> options
+
 @model List<ProductDto>
-
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "ProductGetByIdCategory";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var productPath = options.Value.GetByKey(FileKeys.Products);
 
+    var productPath = options.Value.GetByKey(FileKeys.Products);
 }
+
 
 
 <div class="container">
@@ -22,7 +23,7 @@
             <ul class="breadcrumb">
                 <li><a href="#">Ürünler</a></li>
 
-                <li><a href="#"></a></li>
+                <li><a href="#">Laptop</a></li>
 
             </ul>
         </div>
@@ -67,6 +68,3 @@
         </div>
     </div>
 </div>
-
-
-

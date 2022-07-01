@@ -13,8 +13,6 @@ namespace ETicaret.Web.Controllers
     {
         
         private readonly UserManager<WebUser> _userManager;
-        private readonly WebDbContext _context;
-        private readonly SignInManager<WebUser> _signInManager;
 
         public AccountController( UserManager<WebUser> userManager)
         {      

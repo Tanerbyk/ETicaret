@@ -2,19 +2,28 @@
 @using ETicaret.Shared.Application.DTOs
 @using Microsoft.Extensions.Options
 @inject IOptions<FilePathOptions> options
+@using ETicaret.Web.IdentityModel
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Identity
+@using ETicaret.Shared.Application.Extensions
+@inject UserManager<WebUser> _usermanager;
 
 @model ETicaret.Shared.Application.DTOs.ProductDto
 @{
     ViewData["Title"] = "ProductDetail";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var productPath = options.Value.GetByKey(FileKeys.Products);
+    var user = _usermanager.GetUserAsync(User).Result;
+
+
 }
+
 <section class="page-header">
     <div class="container">
         <ul class="breadcrumb">
             <li><a href="#">Ürünler</a></li>
 
-            <li><a href="#">Laptop</a></li>
+            <li><a href="Laptop"></a></li>
         </ul>
     </div>
 </section>
@@ -28,7 +37,7 @@
                         <div class="product-img-box col-sm-5">
                             <div class="product-img-box-wrapper">
                                 <div class="product-img-wrapper">
-                                    <img id="product-zoom" src="@productPath.FileUrl(@Model.Path)" alt="Product main image">
+                                    <img id="product-zoom" src="@productPath.FileUrl(@Model?.Path)" alt="Product main image">
                                 </div>
 
                                 <a href="#" class="product-img-zoom" title="Zoom">
@@ -36,29 +45,29 @@
                                 </a>
                             </div>
 
-                            <div class="owl-carousel manual" id="productGalleryThumbs">
-                                <div class="product-img-wrapper">
-                                    <a href="#" data-image="#" data-zoom-image="#" class="product-gallery-item">
-                                        <img src="@productPath.FileUrl(@Model.Path)" alt="product">
-                                    </a>
-                                </div>
-                                <div class="product-img-wrapper">
-                                    <a href="#" data-image="#" data-zoom-image="#" class="product-gallery-item">
-                                        <img src="@productPath.FileUrl(@Model.Path)" alt="product">
-                                    </a>
-                                </div>
-                                <div class="product-img-wrapper">
-                                    <a href="#" data-image="#" data-zoom-image="#" class="product-gallery-item">
-                                        <img src="@productPath.FileUrl(@Model.Path)" alt="product">
-                                    </a>
-                                </div>
+                            @* <div class="owl-carousel manual" id="productGalleryThumbs">
+                            <div class="product-img-wrapper">
+                            <a href="#" data-image="#" data-zoom-image="#" class="product-gallery-item">
+                            <img src="@productPath.FileUrl(@Model.Path)" alt="product">
+                            </a>
                             </div>
+                            <div class="product-img-wrapper">
+                            <a href="#" data-image="#" data-zoom-image="#" class="product-gallery-item">
+                            <img src="@productPath.FileUrl(@Model.Path)" alt="product">
+                            </a>
+                            </div>
+                            <div class="product-img-wrapper">
+                            <a href="#" data-image="#" data-zoom-image="#" class="product-gallery-item">
+                            <img src="@productPath.FileUrl(@Model.Path)" alt="product">
+                            </a>
+                            </div>
+                            </div>*@
                         </div>
 
                         <div class="product-details-box col-sm-7">
 
                             <h1 class="product-name">
-                                @Model.Name
+                                @Model?.Name
 
                             </h1>
 
@@ -75,15 +84,15 @@
                             </div>
 
                             <div class="product-short-desc">
-                                <p>@Model.Description</p>
+                                <p>@Model?.Description</p>
 
                             </div>
 
                             <div class="product-detail-info">
                                 <div class="product-price-box">
-                                    <span class="old-price">₺@Model.TaxPrice.00 </span>
-                                    <span>%@Model.Discount.00 İndirim</span>
-                                    <span class="product-price">₺@Model.Price.00</span>
+                                    <span class="old-price">₺@Model?.TaxPrice.00 </span>
+                                    <span>%@Model?.Discount.00 İndirim</span>
+                                    <span class="product-price">₺@Model?.Price.00</span>
                                 </div>
                                 <p class="availability">
                                     <span class="font-weight-semibold"></span>
@@ -93,15 +102,26 @@
                             </div>
 
                             <div class="product-actions">
-                                <div class="product-detail-qty">
-                                    <input type="text" value="1" class="vertical-spinner" id="product-vqty">
-                                </div>
-                                <a href="#" class="addtocart" title="Add to Cart">
-                                    <i class="fa fa-shopping-cart"></i>
-                                   
-    
 
-                                </a>
+                                <form onsubmit="return submitForm(this)" class=form-group method="post" asp-controller="Basket" asp-action="AddBasketProduct" id="form1">
+
+                                    <div class="form-group">
+                                        <input type="hidden" id="productid" name="productid" value="@Model?.Id">
+                                        @if(user!=null)
+                                        {
+                                        <input type="hidden" id="userid" name="userid" value="@user.Id">
+
+
+                                        }
+
+                                        <label>Adet</label>
+                                        <input value=1 name="quantity" class="form-control" required="">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Sepete Ekle</button>
+
+
+                                </form>
+
 
 
 
@@ -441,7 +461,7 @@
                             <a href="#" class="addtowishlist" title="Add to Wishlist">
                                 <i class="fa fa-heart"></i>
                             </a>
-                            <a href="#" class="addtocart" title="Add to Cart" onclick="addToCart(@Model.Id)">
+                            <a href="#" class="addtocart" title="Add to Cart" onclick="addToCart(@Model?.Id)">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>Add to Cart</span>
                             </a>
@@ -536,31 +556,25 @@
             <hr>
         </aside>
     </div>
+
 </div>
 
 
+@section scripts{
+    <script>
 
-          @*  <script>
-                function addToCart(productid){
-                    alert(productid);
-                }
-            </script>
-*@
-
-
-   <img src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/24/sign-check-icon.png" id="addToCart" />
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#btnGonder").click(function () {
-            $.ajax({
-                url: ',
-                dataType: 'json',
-                type: 'POST',               
-                contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-                    alert(data.d);
-                }
+        function submitForm(t) {
+            $.post(t.action, $(t).serialize(), function(response) {
+                toastr["success"]("İşleminiz Başarılı.")
+            }).fail(function(xhr) {
+                swal.fire({ icon: 'error', text: "" + xhr.responseText });
             });
-        });
-    });
-</script>
+            return false;
+        }
+
+    </script>
+
+}
+
+
+

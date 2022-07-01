@@ -69,7 +69,21 @@ namespace ETicaret.Web.Application.Basket
 
         public Task<BasketDTO> RemoveAll(string userId)
         {
-            throw new NotImplementedException();
+            string data = "";
+
+            data = _distributedCache.GetString("basket_" + userId);
+            
+            if (data!=null)
+            {
+                _distributedCache.Remove(userId);
+
+            }
+
+            var result = JsonSerializer.Deserialize<BasketDTO>(data);
+
+
+            return Task.FromResult(result);
+
         }
 
         public Task<BasketDTO> Update(string userId, int productId, int quantity)

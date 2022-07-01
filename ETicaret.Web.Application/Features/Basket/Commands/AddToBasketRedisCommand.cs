@@ -39,8 +39,7 @@ namespace ETicaret.Web.Application.Features.Basket.Commands
                     redisBasket = Utf8Json.JsonSerializer.Deserialize<BasketDTO>(redisData);
                 }
                 var product = await _db.Products 
-                    .Include(x => x.Price)
-                    .Include(x => x.Path)
+                    
                     .FirstOrDefaultAsync(x => x.Id == request.ProductId);
 
                 if (!redisBasket.BasketProducts.Any())//Count()==0
@@ -53,6 +52,7 @@ namespace ETicaret.Web.Application.Features.Basket.Commands
                              new BasketProducts  {
                             ProductId = request.ProductId,
                             Quantity = request.Quantity,
+                            ProductName = product.Name,
                             Path = product.Path,
 
                             ProductPrice = product.Price,
