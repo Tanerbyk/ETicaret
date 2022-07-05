@@ -9,15 +9,28 @@ namespace ETicaret.Web.Application.Cookie
 {
     public class CookieService : ICookieService
     {
-        private readonly CookieOptions _cookieOptions;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CookieService(CookieOptions cookieOptions)
+        public CookieService(IHttpContextAccessor httpContextAccessor)
         {
-            _cookieOptions = cookieOptions;
+            _httpContextAccessor = httpContextAccessor;
             
         }
 
-        
+        public void SetCookie(string key,string value)
+        {
+            _httpContextAccessor.HttpContext.Response.Cookies.Append(key,value);
+        }
+
+        public string GetCookie(string key)
+        {
+          var values =   _httpContextAccessor.HttpContext.Request.Cookies[key];
+            return values;
+        }
+
+
+
+
     }
 
 }

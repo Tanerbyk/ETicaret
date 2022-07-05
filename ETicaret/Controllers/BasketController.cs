@@ -36,7 +36,7 @@ namespace ETicaret.Web.Controllers
         {
 
 
-           var values = await _basketService.Get("8361bae0-9133-4417-9f33-672e784f9439");
+           var values = await _basketService.Get(userid);
             return View(values);
         }
 

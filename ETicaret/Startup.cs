@@ -21,6 +21,7 @@ using ETicaret.Shared.Application.Mapping;
 using ETicaret.Web.Application.Basket;
 using MediatR;
 using System;
+using ETicaret.Web.Application.Cookie;
 
 namespace ETicaret.Web
 {
@@ -49,6 +50,8 @@ namespace ETicaret.Web
 
             services.AddTransient<IBasketService, BasketService>();
             services.AddTransient<MarketPlaceDbContext>();
+
+            services.AddScoped<ICookieService,CookieService>();
 
             var connstr = Configuration.GetValue<string>("RedisConfiguration:Connection") + ",password=" + Configuration.GetValue<string>("RedisConfiguration:Password");
             services.AddStackExchangeRedisCache(options => { options.Configuration = connstr; });
