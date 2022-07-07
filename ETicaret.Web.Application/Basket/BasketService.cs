@@ -33,12 +33,10 @@ namespace ETicaret.Web.Application.Basket
 
             if (userId is null)
             {
-                var cookie = _cookieService.GetCookie("basket");
-                if (cookie is not null)
-                {
+                var cookie = _cookieService.GetCookie("basket");             
                      await _mediator.Send(new AddToBasketCookieCommand { ProductId = productId, Quantity = quantity });
 
-                }
+                
             }
             else
             {
@@ -80,6 +78,7 @@ namespace ETicaret.Web.Application.Basket
             else
             {
                 data = _distributedCache.GetString("basket_" + userId);
+
                 if (data is null)
                 {
                     data = Utf8Json.JsonSerializer.ToJsonString(new BasketDTO

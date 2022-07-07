@@ -52,6 +52,7 @@ namespace ETicaret.Web.Application.Features.Basket.Commands
                             ProductId = request.ProductId,
                             Quantity = request.Quantity,
                                 Path = product.Path,
+                                ProductName = product.Name,
 
                             ProductPrice = product.Price,
 
@@ -73,6 +74,7 @@ namespace ETicaret.Web.Application.Features.Basket.Commands
                             ProductId = request.ProductId,
                             Quantity = request.Quantity,
                             Path = product.Path,
+                            ProductName= product.Name,
 
                             ProductPrice = product.Price,
 
@@ -84,12 +86,15 @@ namespace ETicaret.Web.Application.Features.Basket.Commands
                     else
                     {
                         int currentQuantity = cookieProduct.Quantity + request.Quantity;
+
+                        cookieProduct.ProductPrice = product.Price;
                       
                         cookieProduct.Quantity = currentQuantity;
 
                     }
-
                     _cookieService.SetCookie("basket", JsonSerializer.ToJsonString(cookieModel));
+
+
                 }
 
                 return "success";

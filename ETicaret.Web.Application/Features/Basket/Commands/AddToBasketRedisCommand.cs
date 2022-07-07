@@ -75,7 +75,6 @@ namespace ETicaret.Web.Application.Features.Basket.Commands
                             ProductId = request.ProductId,
                             Quantity = request.Quantity,
                             ProductName = product.Name,
-
                             Path = product.Path,
                             ProductPrice = product.Price,
 
