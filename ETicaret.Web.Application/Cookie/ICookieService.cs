@@ -14,5 +14,10 @@ namespace ETicaret.Web.Application.Cookie
 
         public string GetCookie(string key);
 
+        public void RemoveCookie(string key);
+
+
+
+
     }
 }

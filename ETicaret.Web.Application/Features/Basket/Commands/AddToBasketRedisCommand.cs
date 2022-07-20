@@ -94,7 +94,6 @@ namespace ETicaret.Web.Application.Features.Basket.Commands
 
 
                 }
-                var generalBasket = await _distributedCache.GetStringAsync("general_Basket", token: cancellationToken);
                 return "success";
             }
         }

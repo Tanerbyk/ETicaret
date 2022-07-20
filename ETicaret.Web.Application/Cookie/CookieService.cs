@@ -19,7 +19,9 @@ namespace ETicaret.Web.Application.Cookie
 
         public void SetCookie(string key,string value)
         {
-            _httpContextAccessor.HttpContext.Response.Cookies.Append(key,value);
+            CookieOptions option = new CookieOptions();
+            option.Expires = DateTime.Now.AddDays(7);
+            _httpContextAccessor.HttpContext.Response.Cookies.Append(key,value,option);
         }
 
         public string GetCookie(string key)
@@ -27,6 +29,15 @@ namespace ETicaret.Web.Application.Cookie
           var values =   _httpContextAccessor.HttpContext.Request.Cookies[key];
             return values;
         }
+
+        public void RemoveCookie(string key)
+        {
+            _httpContextAccessor.HttpContext.Response.Cookies.Delete(key);
+            
+        }
+
+
+
 
 
 

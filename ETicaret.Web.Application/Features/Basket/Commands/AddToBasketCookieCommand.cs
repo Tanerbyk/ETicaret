@@ -92,8 +92,8 @@ namespace ETicaret.Web.Application.Features.Basket.Commands
                         cookieProduct.Quantity = currentQuantity;
 
                     }
-                    _cookieService.SetCookie("basket", JsonSerializer.ToJsonString(cookieModel));
 
+                    _cookieService.SetCookie("basket", JsonSerializer.ToJsonString(cookieModel));
 
                 }
 

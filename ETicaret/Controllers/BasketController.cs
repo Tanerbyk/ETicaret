@@ -45,7 +45,15 @@ namespace ETicaret.Web.Controllers
 
          
              await _basketService.RemoveAll(userid);
-            return View();
+            return RedirectToAction("GetAllProductBasket");
+        }
+
+        public async Task<IActionResult> RemoveItemBasket(string userid,int ProductId)
+        {
+
+
+            await _basketService.Remove(userid,ProductId);
+            return RedirectToAction("GetAllProductBasket");
         }
     }
 }

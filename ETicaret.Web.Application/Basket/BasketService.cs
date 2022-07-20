@@ -33,10 +33,13 @@ namespace ETicaret.Web.Application.Basket
 
             if (userId is null)
             {
-                var cookie = _cookieService.GetCookie("basket");             
-                     await _mediator.Send(new AddToBasketCookieCommand { ProductId = productId, Quantity = quantity });
-
+                       
                 
+                
+                    await _mediator.Send(new AddToBasketCookieCommand { ProductId = productId, Quantity = quantity });
+                
+
+
             }
             else
             {
@@ -101,27 +104,67 @@ namespace ETicaret.Web.Application.Basket
 
         }
 
-        public Task<BasketDTO> Remove(string userId, int productId)
+        public async Task<BasketDTO> Remove(string userId, int productId)
         {
-            throw new NotImplementedException();
+            if (userId is null)
+            {
+                var cookie = _cookieService.GetCookie("basket");
+                if (cookie is not null)
+                {
+                    await _mediator.Send(new RemoveItemBasketCookieCommand { ProductId = productId });
+
+                    var items = Utf8Json.JsonSerializer.Deserialize<BasketDTO>(cookie);
+                    var product = items.BasketProducts.FirstOrDefault(x => x.ProductId == productId  );
+
+                    if (product is not null)
+                    {
+                        items.BasketProducts.Remove(product);
+                        return items;
+                    }
+
+                }
+            }
+            else
+            {
+                var cache = _distributedCache.Get("basket_"+userId);
+                if(cache is not null)
+                {
+                    await _mediator.Send(new RemoveItemBasketRedisCommand { ProductId = productId, UserId = userId });
+                    var items = Utf8Json.JsonSerializer.Deserialize<BasketDTO>(cache);
+                    var product = items.BasketProducts.FirstOrDefault(x => x.ProductId == productId);
+
+                    if (product is not null)
+                    {
+                        items.BasketProducts.Remove(product);
+                        return items;
+                    }
+                }
+            }
+           
+            return await Get(userId);
         }
 
-        public Task<BasketDTO> RemoveAll(string userId)
+        public async Task<BasketDTO> RemoveAll(string userId)
         {
-            string data = "";
+            BasketDTO basketDTO = new BasketDTO();
 
-            data = _distributedCache.GetString("basket_" + userId);
-            
-            if (data!=null)
+            if (userId is null)
             {
-                _distributedCache.Remove(userId);
+                _cookieService.SetCookie("basket", Utf8Json.JsonSerializer.ToJsonString(basketDTO));
+            }
+           
+
+            else
+            {
+                _distributedCache.SetString("basket_"+userId, Utf8Json.JsonSerializer.ToJsonString(basketDTO));
+
 
             }
+           
 
-            var result = JsonSerializer.Deserialize<BasketDTO>(data);
+            return await Get(userId);
 
-
-            return Task.FromResult(result);
+      
 
         }
 
