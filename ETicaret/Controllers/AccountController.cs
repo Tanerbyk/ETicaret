@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace ETicaret.Web.Controllers
 {
     public class AccountController : Controller
@@ -22,6 +23,7 @@ namespace ETicaret.Web.Controllers
 
         public IActionResult Index()
         {
+           
             return View();
         }
 

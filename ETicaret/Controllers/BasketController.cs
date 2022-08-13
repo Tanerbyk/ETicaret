@@ -1,4 +1,5 @@
 ﻿using ETicaret.Web.Application.Basket;
+using ETicaret.Web.Application.DTOs;
 using ETicaret.Web.IdentityModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -25,11 +26,12 @@ namespace ETicaret.Web.Controllers
 
 
         [HttpPost]
-        public async Task<string> AddBasketProduct(string userid,int productid,int quantity)
+        public async Task<BasketDTO> AddBasketProduct(string userid,int productid,int quantity)
 
         {
             await _basketService.Add(userid, productid, quantity);
-            return "success";
+            var data  = await _basketService.Get(userid);
+            return data;
         }
 
         public async Task<IActionResult> GetAllProductBasket(string userid)

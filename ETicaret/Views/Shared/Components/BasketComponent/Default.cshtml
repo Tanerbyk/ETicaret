@@ -1,0 +1,92 @@
+﻿@using ETicaret.Shared.Application
+@using ETicaret.Shared.Application.DTOs
+@using ETicaret.Web.Application.DTOs
+@using ETicaret.Web.IdentityModel
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.Extensions.Options
+@inject IOptions<FilePathOptions> options
+@model BasketDTO
+@inject UserManager<WebUser> _usermanager;
+
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = null;
+    var productPath = options.Value.GetByKey(FileKeys.Products);
+
+    var user = _usermanager.GetUserAsync(User).Result;
+
+
+}
+
+
+
+
+<div class="cart-dropdown">
+    <a href="/Basket/GetAllProductBasket" class="cart-dropdown-icon">
+        <i class="minicart-icon"></i>
+        <span class="cart-info">
+            <span class="cart-qty">2</span>
+            <span class="cart-text">item(s)</span>
+        </span>
+    </a>
+
+    <div class="cart-dropdownmenu right">
+        <div class="dropdownmenu-wrapper">
+            <div class="cart-products">
+                <div class="cart-productss">
+                    @foreach (var item in Model.BasketProducts)
+                    {
+                        <div class="product product-sm">
+                            <a href="#" class="btn-remove" title="Remove Product">
+                                <i class="fa fa-times"></i>
+                            </a>
+                            <figure class="product-image-area">
+                                <a href="demo-shop-9-product-details.html" title="Product Name" class="product-image">
+                                    <img src="@productPath.FileUrl(@item.Path)" alt="Product Name">
+                                </a>
+                            </figure>
+                            <div class="product-details-area">
+                                <h2 class="product-name"><a href="demo-shop-9-product-details.html" title="Product Name">@item.ProductName</a></h2>
+
+                                <div class="cart-qty-price">
+                                    @item.Quantity X
+                                    <span class="product-price">@item.ProductPrice</span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    }
+                    </div>
+
+
+                <div class="cart-totals">
+                    Total: <span>@Model.SubTotal</span>
+                </div>
+
+                <div class="cart-actions">
+                        @if (user != null)
+                        {
+                        <form asp-action="GetAllProductBasket" asp-controller="Basket">
+                            <input type="hidden" id="userid" name="userid" value="@user.Id" />
+                            <button type="submit" class="btn btn-primary">View Cart</button>
+                            <a href="demo-shop-9-checkout.html" class="btn btn-primary">Checkout</a>
+
+
+                        </form>
+                        }
+                        else
+                        {
+                        <a href="/Basket/GetAllProductBasket" class="btn btn-primary">View Cart</a>
+                        <a href="demo-shop-9-checkout.html" class="btn btn-primary">Checkout</a>
+
+                        }
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

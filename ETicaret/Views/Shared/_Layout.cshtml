@@ -1,4 +1,5 @@
-﻿@using ETicaret.Web.IdentityModel
+﻿@using ETicaret.Web.Application.DTOs
+@using ETicaret.Web.IdentityModel
 @using Microsoft.AspNetCore.Http
 @using Microsoft.AspNetCore.Identity
 @using ETicaret.Shared.Application.Extensions
@@ -6,6 +7,8 @@
 
 @{
     var user = _usermanager.GetUserAsync(User).Result;
+    var sex = 2;
+
 }
 <!DOCTYPE html>
 <html>
@@ -22,8 +25,9 @@
     <meta name="author" content="okler.net">
 
     <!-- Favicon -->
-@*    <link rel="shortcut icon" href="~/img/favicon.ico" type="image/x-icon" />
-*@    <link rel="apple-touch-icon" href="~/img/apple-touch-icon.png">
+    @*    <link rel="shortcut icon" href="~/img/favicon.ico" type="image/x-icon" />
+    *@
+    <link rel="apple-touch-icon" href="~/img/apple-touch-icon.png">
 
     <!-- Mobile Metas -->
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -91,6 +95,7 @@
                                 <ul class="header-dropdownmenu">
                                     <li><a href="#"><img src="~/img/demos/shop/en.png" alt="English">English</a></li>
                                     <li><a href="#"><img src="~/img/demos/shop/fr.png" alt="French">French</a></li>
+
                                 </ul>
                             </div>
 
@@ -203,84 +208,10 @@
                                         <a href="#">CONTACT US</a>
                                     </div>
 
-                                    <div class="cart-dropdown">
-                                        <a href="/Basket/GetAllProductBasket" class="cart-dropdown-icon">
-                                            <i class="minicart-icon"></i>
-                                            <span class="cart-info">
-                                                <span class="cart-qty">2</span>
-                                                <span class="cart-text">item(s)</span>
-                                            </span>
-                                        </a>
-
-                                        <div class="cart-dropdownmenu right">
-                                            <div class="dropdownmenu-wrapper">
-                                                <div class="cart-products">
-                                                    <div class="product product-sm">
-                                                        <a href="#" class="btn-remove" title="Remove Product">
-                                                            <i class="fa fa-times"></i>
-                                                        </a>
-                                                        <figure class="product-image-area">
-                                                            <a href="demo-shop-9-product-details.html" title="Product Name" class="product-image">
-                                                                <img src="../img/demos/shop/products/thumbs/cart-product1.jpg" alt="Product Name">
-                                                            </a>
-                                                        </figure>
-                                                        <div class="product-details-area">
-                                                            <h2 class="product-name"><a href="demo-shop-9-product-details.html" title="Product Name">Blue Women Top</a></h2>
-
-                                                            <div class="cart-qty-price">
-                                                                1 X
-                                                                <span class="product-price">$65.00</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product product-sm">
-                                                        <a href="#" class="btn-remove" title="Remove Product">
-                                                            <i class="fa fa-times"></i>
-                                                        </a>
-                                                        <figure class="product-image-area">
-                                                            <a href="demo-shop-9-product-details.html" title="Product Name" class="product-image">
-                                                                <img src="../img/demos/shop/products/thumbs/cart-product2.jpg" alt="Product Name">
-                                                            </a>
-                                                        </figure>
-                                                        <div class="product-details-area">
-                                                            <h2 class="product-name"><a href="demo-shop-9-product-details.html" title="Product Name">Black Utility Top</a></h2>
-
-                                                            <div class="cart-qty-price">
-                                                                1 X
-                                                                <span class="product-price">$39.00</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="cart-totals">
-                                                    Total: <span>$104.00</span>
-                                                </div>
-
-                                                <div class="cart-actions">
-                                                    @if (user != null)
-                                                    {
-                                                        <form asp-action="GetAllProductBasket" asp-controller="Basket">
-                                                            <input type="hidden" id="userid" name="userid" value="@user.Id" />
-                                                            <button type="submit" class="btn btn-primary">View Cart</button>
-
-                                                        </form>
-                                                    }
-                                                    else
-                                                    {
-                                                         <a href="/Basket/GetAllProductBasket" class="btn btn-primary">View Cart</a>
-                                                    }
-
-                                                   
+                                                     @await Component.InvokeAsync("BasketComponent")
 
 
-                                                    <a href="demo-shop-9-checkout.html" class="btn btn-primary">Checkout</a>
-
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -726,6 +657,7 @@
                     </li>
                     <li>
                         <a href="demo-shop-9-about-us.html">About Us</a>
+                       
                     </li>
                     <li>
                         <span class="mmenu-toggle"></span>
@@ -757,6 +689,7 @@
 
             <div class="container">
                 @RenderBody()
+                                                                                           
 
             </div>
 

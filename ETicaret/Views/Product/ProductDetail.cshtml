@@ -90,8 +90,12 @@
 
                             <div class="product-detail-info">
                                 <div class="product-price-box">
-                                    <span class="old-price">₺@Model?.TaxPrice.00 </span>
-                                    <span>%@Model?.Discount.00 İndirim</span>
+                                    @if(Model?.Discount!=0)
+                                    {
+                                                                            <span class="old-price">₺@Model?.TaxPrice.00 </span>
+
+                                    }
+                                    <span class="product-discount">%@Model?.Discount.00</span>
                                     <span class="product-price">₺@Model?.Price.00</span>
                                 </div>
                                 <p class="availability">
@@ -565,7 +569,23 @@
 
         function submitForm(t) {
             $.post(t.action, $(t).serialize(), function(response) {
+                console.log(response);
                 toastr["success"]("İşleminiz Başarılı.")
+                $(".cart-productss").empty()
+                for (let i = 0; i <= response.basketProducts.length; i++) {
+                  
+                    var item = response.basketProducts[i];
+
+
+                    
+                    $(".cart-productss").append('<div class="product product-sm"><a href="#" class="btn-remove" title="Remove Product"><i class="fa fa-times"></i></a><figure class="product-image-area"><a href="demo-shop-9-product-details.html" title="Product Name" class="product-image"><img src="" alt="Product Name"></a></figure><div class="product-details-area"><h2 class="product-name"><a href="demo-shop-9-product-details.html" title="Product Name">' + item.productName + '</a></h2><div class="cart-qty-price">' + item.Quantity + ' X <span class="product-price">' + item.productPRİCE + '</span></div></div></div>');
+                  
+
+
+
+                   
+                  
+}
             }).fail(function(xhr) {
                 swal.fire({ icon: 'error', text: "" + xhr.responseText });
             });
