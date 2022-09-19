@@ -33,11 +33,15 @@ namespace ETicaret.Web.Application.Basket
 
             if (userId is null)
             {
-                       
-                
-                
+
+
+                var cookie = _cookieService.GetCookie("basket");
+                if(cookie is not null)
+                {
                     await _mediator.Send(new AddToBasketCookieCommand { ProductId = productId, Quantity = quantity });
-                
+
+                }
+
 
 
             }
@@ -90,12 +94,10 @@ namespace ETicaret.Web.Application.Basket
                     });
                     _distributedCache.SetString("basket_" + userId, data);
 
-                }
-
-               
-
+                }             
 
             }
+
             var result = JsonSerializer.Deserialize<BasketDTO>(data);
 
             result.BasketProducts = result.BasketProducts.OrderBy(x => x.ProductId).ToList();

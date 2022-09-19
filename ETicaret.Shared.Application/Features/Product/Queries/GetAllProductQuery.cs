@@ -22,7 +22,9 @@ namespace ETicaret.Shared.Application.Features.Product.Queries
 
             public async  Task<List<Dal.Concrete.Product>> Handle(GetAllProductQuery request, CancellationToken cancellationToken)
             {
+                
                 var data = await _db.Products.Include(x=>x.Category).ToListAsync();
+                //_db.Addresses.FirstOrDefault(x => x.city == "Ankara");
                 return data;
             }
         }

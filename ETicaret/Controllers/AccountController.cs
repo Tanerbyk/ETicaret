@@ -19,7 +19,7 @@ namespace ETicaret.Web.Controllers
         {      
             _userManager = userManager;
 
-        }
+        } 
 
         public IActionResult Index()
         {
@@ -37,6 +37,7 @@ namespace ETicaret.Web.Controllers
         [HttpPost] 
         public async Task<IActionResult> UpdateAccount(WebUser webUser , string id )
         {
+            
             var value = _userManager.Users.FirstOrDefault(x=>x.Id==id);
             
             value.FirstName = webUser.FirstName;

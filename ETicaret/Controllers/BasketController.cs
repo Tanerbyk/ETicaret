@@ -35,7 +35,7 @@ namespace ETicaret.Web.Controllers
         }
 
         public async Task<IActionResult> GetAllProductBasket(string userid)
-        {
+          {
 
 
            var values = await _basketService.Get(userid);

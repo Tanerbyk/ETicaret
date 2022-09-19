@@ -3,6 +3,7 @@ using System;
 using ETicaret.Shared.Dal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ETicaret.Shared.Dal.Migrations
 {
     [DbContext(typeof(MarketPlaceDbContext))]
-    partial class MarketPlaceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220831132958_wqeqwwqewqewq")]
+    partial class wqeqwwqewqewq
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,9 +61,11 @@ namespace ETicaret.Shared.Dal.Migrations
 
                     b.HasKey("AddressId");
 
-                    b.HasIndex("CityId");
+                    b.HasIndex("CityId")
+                        .IsUnique();
 
-                    b.HasIndex("DistrictId");
+                    b.HasIndex("DistrictId")
+                        .IsUnique();
 
                     b.ToTable("Addresses");
                 });
@@ -377,14 +381,14 @@ namespace ETicaret.Shared.Dal.Migrations
             modelBuilder.Entity("ETicaret.Shared.Dal.Concrete.Address", b =>
                 {
                     b.HasOne("ETicaret.Shared.Dal.Concrete.City", "city")
-                        .WithMany()
-                        .HasForeignKey("CityId")
+                        .WithOne("Address")
+                        .HasForeignKey("ETicaret.Shared.Dal.Concrete.Address", "CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ETicaret.Shared.Dal.Concrete.District", "district")
-                        .WithMany()
-                        .HasForeignKey("DistrictId")
+                        .WithOne("Address")
+                        .HasForeignKey("ETicaret.Shared.Dal.Concrete.Address", "DistrictId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -463,7 +467,16 @@ namespace ETicaret.Shared.Dal.Migrations
 
             modelBuilder.Entity("ETicaret.Shared.Dal.Concrete.City", b =>
                 {
+                    b.Navigation("Address")
+                        .IsRequired();
+
                     b.Navigation("District");
+                });
+
+            modelBuilder.Entity("ETicaret.Shared.Dal.Concrete.District", b =>
+                {
+                    b.Navigation("Address")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ETicaret.Shared.Dal.Concrete.Product", b =>

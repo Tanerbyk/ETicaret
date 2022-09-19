@@ -3,6 +3,7 @@ using System;
 using ETicaret.Shared.Dal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ETicaret.Shared.Dal.Migrations
 {
     [DbContext(typeof(MarketPlaceDbContext))]
-    partial class MarketPlaceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220822210849_mg222222222222")]
+    partial class mg222222222222
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,18 +32,8 @@ namespace ETicaret.Shared.Dal.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("AddressId"));
 
-                    b.Property<string>("AddressDetail")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("CityId")
-                        .HasColumnType("integer");
-
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("DistrictId")
-                        .HasColumnType("integer");
 
                     b.Property<string>("FullAddress")
                         .IsRequired()
@@ -53,15 +45,7 @@ namespace ETicaret.Shared.Dal.Migrations
                     b.Property<DateTime>("ModifiedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.HasKey("AddressId");
-
-                    b.HasIndex("CityId");
-
-                    b.HasIndex("DistrictId");
 
                     b.ToTable("Addresses");
                 });
@@ -372,25 +356,6 @@ namespace ETicaret.Shared.Dal.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("ETicaret.Shared.Dal.Concrete.Address", b =>
-                {
-                    b.HasOne("ETicaret.Shared.Dal.Concrete.City", "city")
-                        .WithMany()
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ETicaret.Shared.Dal.Concrete.District", "district")
-                        .WithMany()
-                        .HasForeignKey("DistrictId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("city");
-
-                    b.Navigation("district");
                 });
 
             modelBuilder.Entity("ETicaret.Shared.Dal.Concrete.Comment", b =>

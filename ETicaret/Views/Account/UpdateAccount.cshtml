@@ -28,6 +28,16 @@
                 <input type="text" class="form-control" name= "LastName" value="@user.LastName" required>
             </div>
         </div>
+
+        <div class="col-sm-12 col-md-5">
+            <div class="form-group">
+                <label class="font-weight-normal">Address <span class="required">*</span></label>
+                <textarea type="text" class="form-control" name= "Address" value="@user.LastName" required></textarea>
+            </div>
+        </div>
+
+    
+        
     </div>
 
   
@@ -51,8 +61,13 @@
 
 
 
-        <input type="submit" class="btn btn-primary">
+       
    
 
+</form > 
+
+<form method="get" asp-action="ListCity" asp-controller="Address">
+    <input  type="hidden" value="@user.Id" name="userid"/>
+    <button type="submit">Adreslerim</button>
 </form>
 

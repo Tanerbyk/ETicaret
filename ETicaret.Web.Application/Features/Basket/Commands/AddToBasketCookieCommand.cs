@@ -2,6 +2,7 @@
 using ETicaret.Web.Application.Cookie;
 using ETicaret.Web.Application.DTOs;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,9 +37,9 @@ namespace ETicaret.Web.Application.Features.Basket.Commands
                     cookieModel = JsonSerializer.Deserialize<BasketDTO>(cookie);
                 }
 
-                var product =  _db.Products
+                var product = await  _db.Products
 
-                    .FirstOrDefault(x => x.Id == request.ProductId);
+                    .FirstOrDefaultAsync(x => x.Id == request.ProductId);
 
             
                 if (!cookieModel.BasketProducts.Any())

@@ -23,13 +23,30 @@
 
 
 <div class="cart-dropdown">
-    <a href="/Basket/GetAllProductBasket" class="cart-dropdown-icon">
-        <i class="minicart-icon"></i>
-        <span class="cart-info">
-            <span class="cart-qty">2</span>
-            <span class="cart-text">item(s)</span>
-        </span>
-    </a>
+
+    
+        <form asp-action="GetAllProductBasket" asp-controller="Basket">
+        @if (user != null)
+        {
+                    <input type="hidden" id="userid" name="userid" value="@user.Id" />
+
+        }
+            <button  class="cart-dropdown-icon">
+                <i class="minicart-icon"></i>
+                <span class="cart-info">
+                    <span class="cart-qty">@Model.BasketProducts.Count</span>
+                    <span class="cart-text">item(s)</span>
+                </span>
+            </button>
+
+
+        </form>
+    
+
+
+
+
+
 
     <div class="cart-dropdownmenu right">
         <div class="dropdownmenu-wrapper">
@@ -55,9 +72,9 @@
                                 </div>
                             </div>
                         </div>
-                    
+
                     }
-                    </div>
+                </div>
 
 
                 <div class="cart-totals">
@@ -65,22 +82,21 @@
                 </div>
 
                 <div class="cart-actions">
-                        @if (user != null)
-                        {
+                    
+                    
                         <form asp-action="GetAllProductBasket" asp-controller="Basket">
-                            <input type="hidden" id="userid" name="userid" value="@user.Id" />
+                            @if (user != null)
+                        {
+                              <input type="hidden" id="userid" name="userid" value="@user.Id" />
+
+                        }
                             <button type="submit" class="btn btn-primary">View Cart</button>
                             <a href="demo-shop-9-checkout.html" class="btn btn-primary">Checkout</a>
 
 
                         </form>
-                        }
-                        else
-                        {
-                        <a href="/Basket/GetAllProductBasket" class="btn btn-primary">View Cart</a>
-                        <a href="demo-shop-9-checkout.html" class="btn btn-primary">Checkout</a>
-
-                        }
+                    
+                  
 
 
                 </div>

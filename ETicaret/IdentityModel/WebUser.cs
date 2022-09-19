@@ -8,6 +8,6 @@ namespace ETicaret.Web.IdentityModel
 
         public string LastName { get; set; }
 
-        public string newpassword { get; set; }
+        public string Address { get; set; }
     }
 }

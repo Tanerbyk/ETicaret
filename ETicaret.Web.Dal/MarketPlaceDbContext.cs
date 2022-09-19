@@ -14,21 +14,26 @@ namespace ETicaret.Shared.Dal
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseNpgsql(connectionString);
-        
 
 
 
-            public DbSet<Category> Categories { get; set; }
-            public DbSet<Comment> Comments { get; set; }
-            public DbSet<Order> Orders { get; set; }
-            public DbSet<Product> Products { get; set; }
-            public DbSet<User> Users { get; set; }
-            public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<District> Districts { get; set; }
+
 
 
 
     }
-    }
+}
 
 
 
