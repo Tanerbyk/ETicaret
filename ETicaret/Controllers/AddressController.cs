@@ -39,7 +39,8 @@ namespace ETicaret.Web.Controllers
                 Districts = await _db.Districts.Where(x=>x.CityId==userAddress.CityId).ToListAsync(),
                 CityId = userAddress.CityId,
                 DistrictId = userAddress.DistrictId,
-                FullAddress = userAddress.FullAddress
+                FullAddress = userAddress.FullAddress,
+                AddressTitle = userAddress.AddressTitle,
 
 
             };
@@ -56,6 +57,7 @@ namespace ETicaret.Web.Controllers
             cid.AddressDetail = a.AddressDetail;
             cid.CityId = a.CityId;
             cid.DistrictId = a.DistrictId;
+            cid.AddressTitle = a.AddressTitle;
            
 
             _db.SaveChanges();

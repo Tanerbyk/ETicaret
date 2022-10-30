@@ -11,6 +11,8 @@ namespace ETicaret.Shared.Dal.Concrete
 
         public int AddressId { get; set; }
 
+
+        public string AddressTitle { get; set; }
         public string FullAddress { get; set; }
         public City city { get; set; }
         public int CityId { get; set; }

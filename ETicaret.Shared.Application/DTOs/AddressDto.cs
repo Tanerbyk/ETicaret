@@ -14,6 +14,7 @@ namespace ETicaret.Shared.Application.DTOs
         public int DistrictId { get; set; }
 
         public string FullAddress { get; set; }
+        public string AddressTitle { get; set; }
 
         public List<City> Cities { get; set; }
         public List<District> Districts { get; set; }

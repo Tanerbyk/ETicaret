@@ -9,6 +9,15 @@
 <form  class=form-group method="post"  >
 
     <h4 class="heading-primary text-uppercase mb-lg">ACCOUNT INFORMATION</h4>
+
+
+    <div class="col-sm-12 col-md-5">
+        <div class="form-group">
+            <label for="AddressTitle">Adres Başlığı </label>
+            <input type="text"  name="AddressTitle" value="@Model.AddressTitle" >
+        </div>
+    </div>
+  
     <div class="row">
         <div class="col-sm-4 col-md-3">
             <div class="form-group">
@@ -18,7 +27,7 @@
                         if (item.CityId==Model.CityId)
                         {
                             <option value="@item.CityId" selected>@item.Name</option>
-                        }
+                         }
                         else{
                             <option value="@item.CityId" >@item.Name</option>
                         }
@@ -59,6 +68,8 @@
     </div>
 
         <input type="submit" class="btn btn-primary">
+
+
    
 
 </form>
