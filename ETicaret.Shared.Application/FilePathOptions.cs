@@ -21,7 +21,7 @@ namespace ETicaret.Shared.Application
 
         public FilePath GetByKey(FileKeys key)
         {
-            return FilePaths.FirstOrDefault(x => x.Key.ToLower() == key.ToString().ToLower());
+           return FilePaths.FirstOrDefault(x => x.Key.ToLower() == key.ToString().ToLower());
         }
 
     }

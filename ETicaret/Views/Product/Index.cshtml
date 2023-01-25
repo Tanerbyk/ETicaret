@@ -2,8 +2,8 @@
 @using ETicaret.Shared.Application.DTOs
 @using Microsoft.Extensions.Options
 @inject IOptions<FilePathOptions> options
-
 @model List<ProductDto>
+
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -12,7 +12,7 @@
 }
 
 
-<div class="container">
+<div class="body">
 
     <br />
     <br />
@@ -22,13 +22,12 @@
             <ul class="breadcrumb">
                 <li><a href="#">Ürünler</a></li>
 
-                <li><a href="#">Laptop</a></li>
+                <li><a href="#"></a></li>
 
             </ul>
         </div>
     </section>
     <div class="tab-content">
-
 
         <div id="featured" class="tab-pane active">
             <div class="owl-carousel owl-theme manual featured-products-carousel">
@@ -55,8 +54,8 @@
                             </div>
 
                             <div class="product-price-box">
-                                <span class="old-price">$(@item.Price)</span>
-                                <span class="product-price">$@item.Price</span>
+                                <span class="old-price">$(@item.TaxPrice)</span>
+                                <span class="product-price">$@item.TotalPrice</span>
                             </div>
                         </div>
                     </div>

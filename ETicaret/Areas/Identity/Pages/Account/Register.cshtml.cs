@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using ETicaret.Shared.Application.Services;
+using MediatR;
+using ETicaret.Shared.Application.Helpers;
 
 namespace ETicaret.Web.Areas.Identity.Pages.Account
 {
@@ -24,17 +26,21 @@ namespace ETicaret.Web.Areas.Identity.Pages.Account
         private readonly UserManager<WebUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IMediator _mediator;
+        private readonly RabbitMqHelper _rabbit;
 
-        public RegisterModel(
+       public RegisterModel(
             UserManager<WebUser> userManager,
             SignInManager<WebUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender, IMediator mediator,RabbitMqHelper rabbit)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _mediator = mediator;
+            _rabbit = rabbit;
         }
 
         [BindProperty]
@@ -47,10 +53,17 @@ namespace ETicaret.Web.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
+            [Display(Name = "FirstName")]
+            public string FirstName { get; set; }
+
+            [Required]
+            [Display(Name = "LastName")]
+            public string LastName { get; set; }
+
+            [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
-
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
@@ -75,11 +88,12 @@ namespace ETicaret.Web.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new WebUser { UserName = Input.Email, Email = Input.Email };
+                var user = new WebUser { UserName = Input.Email, Email = Input.Email ,FirstName=Input.FirstName,LastName=Input.LastName};
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+                    //await _mediator.Send(new CreatePersonCommand { FirstName = Input.FirstName,LastName=Input.LastName,UserId=user.Id });
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
@@ -88,11 +102,12 @@ namespace ETicaret.Web.Areas.Identity.Pages.Account
                         pageHandler: null,
                         values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
-                   
-                    await _emailSender.SendAsync(new MailRequest
+
+                await _rabbit.SendMail(new MailRequest
                     {
+
                         To = Input.Email,
-                        Subject = "Confirm your email",
+                        Subject = "Confirm Your Email",
                         Body = $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>."
 
                     });

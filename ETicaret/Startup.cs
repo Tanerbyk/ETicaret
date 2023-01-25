@@ -18,6 +18,11 @@ using Microsoft.Extensions.Options;
 using ETicaret.Shared.Dal;
 using ETicaret.Shared.Application.Extensions;
 using ETicaret.Shared.Application.Mapping;
+using ETicaret.Web.Application.Basket;
+using MediatR;
+using System;
+using ETicaret.Web.Application.Cookie;
+using ETicaret.Shared.Application.Helpers;
 
 namespace ETicaret.Web
 {
@@ -36,20 +41,31 @@ namespace ETicaret.Web
             services.AddApplicationCoreServices(Configuration, typeof(Startup), typeof(MappingProfile));
 
             services.AddDbContext<WebDbContext>(options => options.UseNpgsql(Configuration["ConnectionStrings:DefaultConnection"]));
-             services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
             //services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.Configure<MailSettings>(options => Configuration.GetSection("MailSettings").Bind(options));
 
             services.AddTransient<IEmailSender, SMTPMailService>();
+            services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 
-
+            services.AddTransient<IBasketService, BasketService>();
             services.AddTransient<MarketPlaceDbContext>();
+            services.AddTransient<RabbitMqHelper>();
 
+            services.AddScoped<ICookieService,CookieService>();
+
+            var connstr = Configuration.GetValue<string>("RedisConfiguration:Connection") + ",password=" + Configuration.GetValue<string>("RedisConfiguration:Password");
+            services.AddStackExchangeRedisCache(options => { options.Configuration = connstr; });
             services.AddDbContext<WebIdentityContext>(_ => _.UseNpgsql(Configuration["ConnectionStrings:DefaultConnection"]));
 
             services.AddIdentity<WebUser, IdentityRole>().AddEntityFrameworkStores<WebIdentityContext>().AddDefaultTokenProviders();
+            //services.AddDefaultIdentity<WebUser>().AddRoles<IdentityRole>().
+            //    AddEntityFrameworkStores<WebIdentityContext>().AddDefaultTokenProviders();
+
+
             services.AddMvc();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddHttpClient();
             services.AddAutoMapper(typeof(Startup).Assembly);
@@ -88,9 +104,11 @@ namespace ETicaret.Web
 
             app.UseRouting();
             app.UseAuthorization();
-            app.UseAuthentication(); 
+            app.UseAuthentication();
             app.UseHttpsRedirection();
-           
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
+
 
             app.UseStaticFiles(new StaticFileOptions
             {

@@ -47,7 +47,7 @@
           
             <td>@x.Price</td>
             <td><a asp-controller="Product" asp-action="UpdateProduct" asp-route-id="@x.Id" class="btn btn-primary">Düzenle</a></td>
-            <td><a href="~/Product/DeleteProduct/@x.Id" class="btn btn-warning">Sil</a></td>
+            <td><a asp-controller="Product" asp-action="DeleteProduct" asp-route-id="@x.Id" class="btn btn-warning">Sil</a></td>
         </tr>
     }
 

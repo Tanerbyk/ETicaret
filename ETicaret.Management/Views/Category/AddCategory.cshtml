@@ -21,52 +21,52 @@
 
 <script>
 
-            function submitForm(t) {
-               var formData = new FormData(document.getElementById("form1"));
-               $.ajax({
-                   url: "",
-               data: formData,
-               type: "POST",
-               processData: false,
-               contentType: false,
-               async: true,
-               beforeSend: function(item) {},
-               success: function(item) {
-      if(item=="success"){
-                      Swal.fire({
-      title: 'Başarılı?',
-      allowOutsideClick: false,
-      text: "Kategori Ekleme İşlemi Başarıyla Tamamlandı.Devam Etmek için Tamam'a Basın.",
-      icon: item,
-      confirmButtonColor: '#3085d6',
-      confirmButtonText: 'Tamam'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        window.location.replace("/Category/ListCategory");
-      }
-    })
-      }
-      else{
-      Swal.fire({
-      icon: 'error',
-      title: 'HATA...',
-      text: 'Böyle Bir Kategori Zaten Mevcut'
-
-
-    })
-      }
-               },
-               error: function(jqXHR, textStatus, error) {
-                   Swal.fire({
-      icon: 'error',
-      title: 'Hata...',
-      text: 'Bir Hata Oluştu!'
-
-    })
-               },
-               });
-                      return false;
+    function submitForm(t) {
+        var formData = new FormData(document.getElementById("form1"));
+        $.ajax({
+            url: "",
+            data: formData,
+            type: "POST",
+            processData: false,
+            contentType: false,
+            async: true,
+            beforeSend: function(item) { },
+            success: function(item) {
+                if (item == "success") {
+                    Swal.fire({
+                        title: 'Başarılı?',
+                        allowOutsideClick: false,
+                        text: "Kategori Ekleme İşlemi Başarıyla Tamamlandı.Devam Etmek için Tamam'a Basın.",
+                        icon: item,
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Tamam'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.replace("/Category/ListCategory");
+                        }
+                    })
                 }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'HATA...',
+                        text: 'Böyle Bir Kategori Zaten Mevcut'
+
+
+                    })
+                }
+            },
+            error: function(jqXHR, textStatus, error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Hata...',
+                    text: 'Bir Hata Oluştu!'
+
+                })
+            },
+        });
+        return false;
+    }
 
 </script>
 

@@ -1,0 +1,123 @@
+﻿@model ETicaret.Shared.Application.DTOs.AddressDto
+@using ETicaret.Web.IdentityModel
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Identity
+@using ETicaret.Shared.Application.Extensions
+@inject UserManager<WebUser> _usermanager;
+@{
+    var user = _usermanager.GetUserAsync(User).Result;
+    ViewData["Title"] = "ListCity";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<form class=form-group method="post" asp-action="ListCity">
+    <input type="hidden" name="userid" value="@user.Id">
+    <h4 class="heading-primary text-uppercase mb-lg">ACCOUNT INFORMATION</h4>
+
+    <div class="col-sm-12 col-md-5">
+        <div class="form-group">
+            <label for="AddressTitle">Adres Başlığı </label>
+            <input type="text" name="AddressTitle" value="@Model.AddressTitle">
+        </div>
+    </div>
+    <div class="form-group">
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4 col-md-3">
+            <div class="form-group">
+                <select id="CityList" asp-items="@ViewBag.City" name="CityId">
+                    @foreach (var item in Model.Cities)
+                    {
+                        if (item.CityId == Model.CityId)
+                        {
+                            <option value="@item.CityId" selected>@item.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@item.CityId">@item.Name</option>
+                        }
+                    }
+
+
+                </select>
+            </div>
+        </div>
+      
+            <div class="col-sm-4 col-md-5">
+                <div class="form-group">
+                    @if (Model.Districts != null)
+                    {
+                    <select id="DistrictList" name="DistrictId">
+
+                        @foreach (var item in Model.Districts)
+                        {
+                        if (item.DistrictId == Model.DistrictId)
+                        {
+                        <option value="@item.DistrictId" selected>@item.CityName</option>
+                        }
+                        else
+                        {
+                        <option value="@item.DistrictId">@item.CityName</option>
+                        }
+                        }
+
+
+
+                    </select>
+                }
+                </div>
+            </div>
+    
+        <div class="col-sm-12 col-md-5">
+            <div class="form-group">
+                <label class="font-weight-normal">Address <span class="required">*</span></label>
+                <textarea type="text" class="form-control" name="AddressDetail" required> @Model.AdressDetail </textarea>
+            </div>
+        </div>
+
+    </div>
+
+    <input type="submit" class="btn btn-primary">
+
+
+
+
+</form>
+
+@section Scripts{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#CityList").change(function () {
+                $("#DistrictList").empty();
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("LoadDistrict")',
+
+                    dataType: 'json',
+
+                    data: { id: $("#CityList").val() },
+
+                    success: function (districts) {
+                        $("#DistrictList").empty();
+                        console.log(districts)
+                        $.each(districts, function (i, district) {
+                            $("#DistrictList").append('<option value="' + district.value + '">' + district.text + '</option>');
+                        });
+
+
+
+
+                    },
+                    error: function (ex) { }
+                });
+                return false;
+            })
+        })
+
+    </script>
+}
+

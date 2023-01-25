@@ -1,0 +1,501 @@
+﻿@using ETicaret.Shared.Application
+@using ETicaret.Web.Application.DTOs
+@using Microsoft.Extensions.Options
+@inject IOptions<FilePathOptions> options
+@using ETicaret.Web.IdentityModel
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Identity
+@using ETicaret.Shared.Application.Extensions
+@inject UserManager<WebUser> _usermanager;
+@model BasketDTO
+
+
+@{
+    ViewData["Title"] = "GetAllProductBasket";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var user = _usermanager.GetUserAsync(User).Result;
+    var productPath = options.Value.GetByKey(FileKeys.Products);
+
+}
+
+<div class="body">
+
+
+    <div class="mobile-nav">
+        <div class="mobile-nav-wrapper">
+            <ul class="mobile-side-menu">
+                <li><a href="demo-shop-9.html">Home</a></li>
+                <li>
+                    <span class="mmenu-toggle"></span>
+                    <a href="#">Fashion <span class="tip tip-new">New</span></a>
+
+                    <ul>
+                        <li>
+                            <span class="mmenu-toggle"></span>
+                            <a href="#">Women</a>
+                            <ul>
+                                <li>
+                                    <a href="#">Tops &amp; Blouses</a>
+                                </li>
+                                <li>
+                                    <a href="#">Accessories</a>
+                                </li>
+                                <li>
+                                    <a href="#">Dresses &amp; Skirts</a>
+                                </li>
+                                <li>
+                                    <a href="#">Shoes &amp; Boots</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <span class="mmenu-toggle"></span>
+                            <a href="#">Men</a>
+
+                            <ul>
+                                <li>
+                                    <a href="#">Accessories</a>
+                                </li>
+                                <li>
+                                    <a href="#">Watch &amp; Fashion <span class="tip tip-new">New</span></a>
+                                </li>
+                                <li>
+                                    <a href="#">Tees, Knits &amp; Polos</a>
+                                </li>
+                                <li>
+                                    <a href="#">Pants &amp; Denim</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <span class="mmenu-toggle"></span>
+                            <a href="#">Jewellery <span class="tip tip-hot">Hot</span></a>
+
+                            <ul>
+                                <li>
+                                    <a href="#">Sweaters</a>
+                                </li>
+                                <li>
+                                    <a href="#">Heels &amp; Sandals</a>
+                                </li>
+                                <li>
+                                    <a href="#">Jeans &amp; Shorts</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <span class="mmenu-toggle"></span>
+                            <a href="#">Kids Fashion</a>
+
+                            <ul>
+                                <li>
+                                    <a href="#">Casual Shoes</a>
+                                </li>
+                                <li>
+                                    <a href="#">Spring &amp; Autumn</a>
+                                </li>
+                                <li>
+                                    <a href="#">Winter Sneakers</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <span class="mmenu-toggle"></span>
+                    <a href="#">Pages <span class="tip tip-hot">Hot!</span></a>
+
+                    <ul>
+                        <li>
+                            <span class="mmenu-toggle"></span>
+                            <a href="#">Category</a>
+                            <ul>
+                                <li>
+                                    <a href="demo-shop-9-category-2col.html">2 Columns</a>
+                                </li>
+                                <li>
+                                    <a href="demo-shop-9-category-3col.html">3 Columns</a>
+                                </li>
+                                <li>
+                                    <a href="demo-shop-9-category-4col.html">4 Columns</a>
+                                </li>
+                                <li>
+                                    <a href="demo-shop-9-category-5col.html">5 Columns</a>
+                                </li>
+                                <li>
+                                    <a href="demo-shop-9-category-6col.html">6 Columns</a>
+                                </li>
+                                <li>
+                                    <a href="demo-shop-9-category-7col.html">7 Columns</a>
+                                </li>
+                                <li>
+                                    <a href="demo-shop-9-category-8col.html">8 Columns</a>
+                                </li>
+                                <li>
+                                    <a href="demo-shop-9-category-right-sidebar.html">Right Sidebar</a>
+                                </li>
+                                <li>
+                                    <a href="demo-shop-9-category-list.html">Category List</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <span class="mmenu-toggle"></span>
+                            <a href="#">Category Banners</a>
+                            <ul>
+                                <li>
+                                    <a href="demo-shop-9-category-banner-boxed-slider.html">Boxed slider</a>
+                                </li>
+                                <li>
+                                    <a href="demo-shop-9-category-banner-boxed-image.html">Boxed Image</a>
+                                </li>
+                                <li>
+                                    <a href="demo-shop-9-category-banner-fullwidth.html">Fullwidth</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <span class="mmenu-toggle"></span>
+                            <a href="#">Product Details</a>
+                            <ul>
+                                <li>
+                                    <a href="demo-shop-9-product-details.html">Product Details 1</a>
+                                </li>
+                                <li>
+                                    <a href="demo-shop-9-product-details2.html">Product Details 2</a>
+                                </li>
+                                <li>
+                                    <a href="demo-shop-9-product-details3.html">Product Details 3</a>
+                                </li>
+                                <li>
+                                    <a href="demo-shop-9-product-details4.html">Product Details 4</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="demo-shop-9-cart.html">Shopping Cart</a>
+                        </li>
+                        <li>
+                            <a href="demo-shop-9-checkout.html">Checkout</a>
+                        </li>
+                        <li>
+                            <span class="mmenu-toggle"></span>
+                            <a href="#">Loign &amp; Register</a>
+                            <ul>
+                                <li>
+                                    <a href="demo-shop-9-login.html">Login</a>
+                                </li>
+                                <li>
+                                    <a href="demo-shop-9-register.html">Register</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <span class="mmenu-toggle"></span>
+                            <a href="#">Dashboard</a>
+                            <ul>
+                                <li>
+                                    <a href="demo-shop-9-dashboard.html">Dashboard</a>
+                                </li>
+                                <li>
+                                    <a href="demo-shop-9-myaccount.html">My Account</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="demo-shop-9-about-us.html">About Us</a>
+                </li>
+                <li>
+                    <span class="mmenu-toggle"></span>
+                    <a href="#">Blog</a>
+                    <ul>
+                        <li><a href="demo-shop-9-blog.html">Blog</a></li>
+                        <li><a href="demo-shop-9-blog-post.html">Blog Post</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="demo-shop-9-contact-us.html">Contact Us</a>
+                </li>
+                <li>
+                    <a href="#">Buy Porto!</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="mobile-menu-overlay"></div>
+
+    <div role="main" class="main">
+        <div class="cart">
+            <div class="container">
+                <h1 class="h2 heading-primary mt-lg clearfix">
+                    <span>Shopping Cart</span>
+                    <a href="#" class="btn btn-primary pull-right">Proceed to Checkout</a>
+                </h1>
+
+                <div class="row">
+                    <div class="col-md-8 col-lg-9">
+                        <div class="cart-table-wrap">
+                            <table class="cart-table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th>Product Name</th>
+                                        <th>Unit Price</th>
+                                        <th>Qty</th>
+                                        <th>Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.BasketProducts.ToList())
+                                    {
+                                        <tr>
+                                            <td class="product-action-td">
+                                                <form method="post">
+                                                    <input type="hidden" value="@user?.Id" name="userId">
+                                                    <input type="hidden" value="@item.ProductId" name="ProductId" id="ProductId">
+
+                                                    <button asp-action="RemoveItemBasket" asp-controller="Basket"><i class="fa fa-times"></i></button>
+                                                </form>
+
+                                            </td>
+                                            <td class="product-image-td">
+                                                <a href="#" title="Product Name">
+                                                    <img src="@productPath.FileUrl(@item.Path)" alt="Product Name">
+                                                </a>
+                                            </td>
+                                            <td class="product-name-td">
+                                                <h2 class="product-name"><a href="/Product/ProductDetail/@item.ProductId" title="Product Name">@item.ProductName</a></h2>
+                                            </td>
+                                            <td>@item.ProductPrice</td>
+                                            <td>
+                                                <div class="qty-holder">
+                                                    <a href="#" class="qty-dec-btn" title="Dec">-</a>
+                                                    <input type="text" class="qty-input" value="@item.Quantity">
+                                                    <a href="#" class="qty-inc-btn" title="Inc">+</a>
+                                                    <a href="#" class="edit-qty"><i class="fa fa-pencil"></i></a>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span class="text-primary">@item.SubTotal</span>
+                                            </td>
+                                        </tr>
+
+                                    }
+
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="6" class="clearfix">
+
+                                            <form method="post">
+                                                @if (user?.Id != null)
+                                                {
+                                                    <input type="hidden" name="userid" value="@user.Id" />
+
+                                                }
+                                                else
+                                                {
+
+                                                    <input type="hidden" name="userid" value="@user?.Id" />
+                                                }
+
+
+
+                                                <button class="btn btn-default hover-primary btn-continue">Continue Shopping</button>
+                                                <button class="btn btn-default hover-primary btn-update">Update Shopping Cart</button>
+                                                <button asp-action="RemoveAllProductBasket" asp-controller="Basket" class="btn btn-default hover-primary btn-clear">Clear Shopping Cart</button>
+                                            </form>
+
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                    <aside class="col-md-4 col-lg-3 sidebar shop-sidebar">
+                        <div class="panel-group">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a class="accordion-toggle collapsed" data-toggle="collapse" href="#panel-cart-discount">
+                                            Discount Code
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="panel-cart-discount" class="accordion-body collapse">
+                                    <div class="panel-body">
+                                        <p class="mb-sm">Enter your coupon code if you have one.</p>
+                                        <form action="#">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" required>
+                                            </div>
+                                            <input type="submit" class="btn btn-primary btn-block" value="Apply Coupon">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a class="accordion-toggle collapsed" data-toggle="collapse" href="#panel-cart-ship">
+                                            ESTIMATE SHIPPING AND TAX
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="panel-cart-ship" class="accordion-body collapse">
+                                    <div class="panel-body">
+                                        <p class="mb-sm">Enter your destination to get a shipping estimate.</p>
+                                        <form action="#">
+                                            <div class="form-group">
+                                                <label>Contry <span class="required">*</span></label>
+                                                <select name="#" class="form-control">
+                                                    <option value="United States">United States</option>
+                                                    <option value="United Kingdon">United Kingdon</option>
+                                                    <option value="China">China</option>
+                                                    <option value="Russia">Russia</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>State/Province</label>
+                                                <select name="#" class="form-control">
+                                                    <option value="United States">Please select region, state</option>
+                                                    <option value="Alabama">Alabama</option>
+                                                    <option value="Alaska">Alaska</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Zip Code</label>
+                                                <input type="text" class="form-control">
+                                            </div>
+                                            <input type="submit" class="btn btn-primary btn-block" value="Get a Quote">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a class="accordion-toggle" data-toggle="collapse" href="#panel-cart-total">
+                                            Cart Totals
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="panel-cart-total" class="accordion-body collapse in">
+                                    <div class="panel-body">
+                                        <table class="totals-table">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Subtotal</td>
+                                                    <td>$159.00</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Grand Total</td>
+                                                    <td>$159.00</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="totals-table-action">
+                                            <a href="#" class="btn btn-primary btn-block">Proceed to Checkout</a>
+                                            <a href="#" class="btn btn-link btn-block">Checkout with Multiple Addresses</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+
+                <div class="crosssell-products">
+                    <h2 class="h4"><strong>Based on your selection, you may be interested in the following items:</strong></h2>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3">
+                            <div class="product product-sm">
+                                <figure class="product-image-area">
+                                    <a href="#" title="Product Name" class="product-image">
+                                        <img src="../img/demos/shop/products/cart-product3.jpg" alt="Product Name">
+                                    </a>
+                                </figure>
+                                <div class="product-details-area">
+                                    <h2 class="product-name"><a href="#" title="Product Name">Jane Dress</a></h2>
+
+                                    <div class="product-price-box">
+                                        <span class="old-price">$120.00</span>
+                                        <span class="product-price">$90.00</span>
+                                    </div>
+
+                                    <a href="#" class="btn btn-default hover-primary">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="product product-sm">
+                                <figure class="product-image-area">
+                                    <a href="#" title="Product Name" class="product-image">
+                                        <img src="../img/demos/shop/products/cart-product4.jpg" alt="Product Name">
+                                    </a>
+                                </figure>
+                                <div class="product-details-area">
+                                    <h2 class="product-name"><a href="#" title="Product Name">Jane Dress - S</a></h2>
+
+                                    <div class="product-price-box">
+                                        <span class="old-price">$100.00</span>
+                                        <span class="product-price">$89.00</span>
+                                    </div>
+
+                                    <a href="#" class="btn btn-default hover-primary">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix visible-sm"></div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="product product-sm">
+                                <figure class="product-image-area">
+                                    <a href="#" title="Product Name" class="product-image">
+                                        <img src="../img/demos/shop/products/cart-product1.jpg" alt="Product Name">
+                                    </a>
+                                </figure>
+                                <div class="product-details-area">
+                                    <h2 class="product-name"><a href="#" title="Product Name">Jane Dress - XL</a></h2>
+
+                                    <div class="product-price-box">
+                                        <span class="old-price">$100.00</span>
+                                        <span class="product-price">$69.00</span>
+                                    </div>
+
+                                    <a href="#" class="btn btn-default hover-primary">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="product product-sm">
+                                <figure class="product-image-area">
+                                    <a href="#" title="Product Name" class="product-image">
+                                        <img src="../img/demos/shop/products/cart-product2.jpg" alt="Product Name">
+                                    </a>
+                                </figure>
+                                <div class="product-details-area">
+                                    <h2 class="product-name"><a href="#" title="Product Name">Jane Dress - M</a></h2>
+
+                                    <div class="product-price-box">
+                                        <span class="old-price">$110.00</span>
+                                        <span class="product-price">$79.00</span>
+                                    </div>
+
+                                    <a href="#" class="btn btn-default hover-primary">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+

@@ -1,4 +1,5 @@
-﻿using ETicaret.Shared.Dal;
+﻿using ETicaret.Shared.Application.Validators.Product;
+using ETicaret.Shared.Dal;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -48,9 +49,11 @@ namespace ETicaret.Shared.Application.Features.Product.Commands
              
             public async Task<string> Handle(CreateProductCommand request, CancellationToken cancellationToken)
             {
-
-           
-
+                var validator = new CreateProductRequestValidator();
+                var result = validator.Validate(new Dal.Concrete.Product());
+               
+                try
+                {
                     if (request.fileImage is not null)
                     {
                         var ex = System.IO.Path.GetExtension(request.fileImage.FileName);
@@ -65,14 +68,28 @@ namespace ETicaret.Shared.Application.Features.Product.Commands
                         }
 
 
-                        await _db.Products.AddAsync(new Dal.Concrete.Product { Name = request.Name, Description = request.Description, Stock = request.Stock, Path = request.Path, CategoryID = request.CategoryID, Price = request.Price , Discount = request.Discount });
+                        await _db.Products.AddAsync(new Dal.Concrete.Product { Name = request.Name, Description = request.Description, Stock = request.Stock, Path = request.Path, CategoryID = request.CategoryID, Price = request.Price, Discount = request.Discount });
                         await _db.SaveChangesAsync();
                         return "success";
                     }
                     else
                     {
-                        return  "error";
+                        foreach (var failure in result.Errors)
+                        {
+                            Console.WriteLine($"Property: {failure.PropertyName} Error Code: {failure.ErrorCode}");
+                        }
+                        return "error"; ;
                     }
+                }
+                catch (Exception)
+                {
+
+                    return "error"; ;
+                }
+           
+
+                
+                    
                        
 
 

@@ -70,7 +70,7 @@ namespace ETicaret.Management.Controllers
         }
 
 
-        [HttpPost]
+        
         public async Task<IActionResult> DeleteProduct(int id)
         {
             await _mediator.Send(new DeleteProductCommand { Id = id });

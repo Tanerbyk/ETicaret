@@ -17,10 +17,128 @@ namespace ETicaret.Shared.Dal.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.5")
+                .HasAnnotation("ProductVersion", "6.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("ETicaret.Shared.Dal.Concrete.Address", b =>
+                {
+                    b.Property<int>("AddressId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("AddressId"));
+
+                    b.Property<string>("AddressDetail")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("AddressTitle")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("CityId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("DistrictId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("FullAddress")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("AddressId");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("DistrictId");
+
+                    b.ToTable("Addresses");
+                });
+
+            modelBuilder.Entity("ETicaret.Shared.Dal.Concrete.ApplicationUser", b =>
+                {
+                    b.Property<int>("LoyoutId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("LoyoutId"));
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasColumnType("text");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("text");
+
+                    b.HasKey("LoyoutId");
+
+                    b.ToTable("ApplicationUsers");
+                });
 
             modelBuilder.Entity("ETicaret.Shared.Dal.Concrete.Category", b =>
                 {
@@ -49,6 +167,23 @@ namespace ETicaret.Shared.Dal.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("ETicaret.Shared.Dal.Concrete.City", b =>
+                {
+                    b.Property<int>("CityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CityId"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("CityId");
+
+                    b.ToTable("Cities");
                 });
 
             modelBuilder.Entity("ETicaret.Shared.Dal.Concrete.Comment", b =>
@@ -89,6 +224,28 @@ namespace ETicaret.Shared.Dal.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("ETicaret.Shared.Dal.Concrete.District", b =>
+                {
+                    b.Property<int>("DistrictId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("DistrictId"));
+
+                    b.Property<int>("CityId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("CityName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("DistrictId");
+
+                    b.HasIndex("CityId");
+
+                    b.ToTable("Districts");
                 });
 
             modelBuilder.Entity("ETicaret.Shared.Dal.Concrete.Order", b =>
@@ -221,6 +378,25 @@ namespace ETicaret.Shared.Dal.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("ETicaret.Shared.Dal.Concrete.Address", b =>
+                {
+                    b.HasOne("ETicaret.Shared.Dal.Concrete.City", "city")
+                        .WithMany()
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ETicaret.Shared.Dal.Concrete.District", "district")
+                        .WithMany()
+                        .HasForeignKey("DistrictId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("city");
+
+                    b.Navigation("district");
+                });
+
             modelBuilder.Entity("ETicaret.Shared.Dal.Concrete.Comment", b =>
                 {
                     b.HasOne("ETicaret.Shared.Dal.Concrete.Product", "Product")
@@ -234,6 +410,17 @@ namespace ETicaret.Shared.Dal.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("ETicaret.Shared.Dal.Concrete.District", b =>
+                {
+                    b.HasOne("ETicaret.Shared.Dal.Concrete.City", "City")
+                        .WithMany("District")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("City");
                 });
 
             modelBuilder.Entity("ETicaret.Shared.Dal.Concrete.Order", b =>
@@ -276,6 +463,11 @@ namespace ETicaret.Shared.Dal.Migrations
             modelBuilder.Entity("ETicaret.Shared.Dal.Concrete.Category", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("ETicaret.Shared.Dal.Concrete.City", b =>
+                {
+                    b.Navigation("District");
                 });
 
             modelBuilder.Entity("ETicaret.Shared.Dal.Concrete.Product", b =>

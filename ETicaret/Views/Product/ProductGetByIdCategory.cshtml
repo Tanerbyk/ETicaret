@@ -1,0 +1,70 @@
+﻿@using ETicaret.Shared.Application
+@using ETicaret.Shared.Application.DTOs
+@using Microsoft.Extensions.Options
+@inject IOptions<FilePathOptions> options
+
+@model List<ProductDto>
+@{
+    ViewData["Title"] = "ProductGetByIdCategory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var productPath = options.Value.GetByKey(FileKeys.Products);
+}
+
+
+
+<div class="container">
+
+    <br />
+    <br />
+
+    <section class="page-header">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li><a href="#">Ürünler</a></li>
+
+                <li><a href="#">Laptop</a></li>
+
+            </ul>
+        </div>
+    </section>
+    <div class="tab-content">
+
+        <div id="featured" class="tab-pane active">
+            <div class="owl-carousel owl-theme manual featured-products-carousel">
+                @foreach (var item in Model)
+                {
+                    <div class="product">
+                        <figure class="product-image-area">
+                            <a href="~/Product/ProductDetail/@item.Id" title="Product Name" class="product-image">
+                                <img src="@productPath.FileUrl(item.Path)" alt="Product Name">
+                            </a>
+
+                            <a href="#" class="product-quickview">
+                                <i class="fa fa-share-square-o"></i>
+                                <span>Quick View</span>
+                            </a>
+                            <div class="product-label"><span class="new">New</span></div>
+                        </figure>
+                        <div class="product-details-area">
+                            <h2 class="product-name"><a href="~/Product/ProductDetail/@item.Id" title="Product Name">@item.Name</a></h2>
+                            <div class="product-ratings">
+                                <div class="ratings-box">
+                                    <div class="rating" style="width:60%"></div>
+                                </div>
+                            </div>
+
+                            <div class="product-price-box">
+                                <span class="old-price">$(@item.TaxPrice)</span>
+                                <span class="product-price">$@item.TotalPrice</span>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
