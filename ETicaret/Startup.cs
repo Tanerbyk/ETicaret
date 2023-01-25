@@ -22,6 +22,7 @@ using ETicaret.Web.Application.Basket;
 using MediatR;
 using System;
 using ETicaret.Web.Application.Cookie;
+using ETicaret.Shared.Application.Helpers;
 
 namespace ETicaret.Web
 {
@@ -50,6 +51,7 @@ namespace ETicaret.Web
 
             services.AddTransient<IBasketService, BasketService>();
             services.AddTransient<MarketPlaceDbContext>();
+            services.AddTransient<RabbitMqHelper>();
 
             services.AddScoped<ICookieService,CookieService>();
 
@@ -104,6 +106,8 @@ namespace ETicaret.Web
             app.UseAuthorization();
             app.UseAuthentication();
             app.UseHttpsRedirection();
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 
 
             app.UseStaticFiles(new StaticFileOptions

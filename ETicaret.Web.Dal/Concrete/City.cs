@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -14,7 +14,6 @@ namespace ETicaret.Shared.Dal.Concrete
         public int CityId { get; set; }
 
         public string Name { get; set; }
-
 
         public List<District> District { get; set; }
 

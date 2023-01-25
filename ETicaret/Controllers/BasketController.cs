@@ -1,4 +1,4 @@
-﻿using ETicaret.Web.Application.Basket;
+﻿  using ETicaret.Web.Application.Basket;
 using ETicaret.Web.Application.DTOs;
 using ETicaret.Web.IdentityModel;
 using Microsoft.AspNetCore.Identity;
@@ -34,6 +34,7 @@ namespace ETicaret.Web.Controllers
             return data;
         }
 
+   
         public async Task<IActionResult> GetAllProductBasket(string userid)
           {
 

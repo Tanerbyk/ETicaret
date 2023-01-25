@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using ETicaret.Shared.Application.Services;
 using MediatR;
-
+using ETicaret.Shared.Application.Helpers;
 
 namespace ETicaret.Web.Areas.Identity.Pages.Account
 {
@@ -27,18 +27,20 @@ namespace ETicaret.Web.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly IMediator _mediator;
+        private readonly RabbitMqHelper _rabbit;
 
-        public RegisterModel(
+       public RegisterModel(
             UserManager<WebUser> userManager,
             SignInManager<WebUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender, IMediator mediator)
+            IEmailSender emailSender, IMediator mediator,RabbitMqHelper rabbit)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
             _mediator = mediator;
+            _rabbit = rabbit;
         }
 
         [BindProperty]
@@ -101,7 +103,7 @@ namespace ETicaret.Web.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                await _emailSender.SendAsync(new MailRequest
+                await _rabbit.SendMail(new MailRequest
                     {
 
                         To = Input.Email,
