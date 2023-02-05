@@ -93,7 +93,7 @@ namespace ETicaret.Web.Controllers
                 s.CreateDate = DateTime.Now;
                 s.ModifiedDate = DateTime.Now;
                 s.IsActive = true;
-                s.FullAddress =$"{a.city.Name} {a.district.CityName} {a.AddressDetail}";
+                s.FullAddress =$"{s.CityId} {s.DistrictId} {s.AddressDetail}";
 
                 _db.Addresses.Add(s);
 
