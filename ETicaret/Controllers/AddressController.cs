@@ -36,7 +36,7 @@ namespace ETicaret.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ListCity(string userid)
+        public async Task<IActionResult> Address(string userid)
         {
             var userAddress = await _db.Addresses.FirstOrDefaultAsync(x => x.UserId == userid);
             AddressDto ad = new();
@@ -64,7 +64,7 @@ namespace ETicaret.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult ListCity(Address a, string userid)
+        public IActionResult Address(Address a, string userid)
         {
             var cid = _db.Addresses.FirstOrDefault(x => x.UserId == userid);
 

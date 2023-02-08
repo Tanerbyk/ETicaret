@@ -6,14 +6,14 @@
 @inject UserManager<WebUser> _usermanager;
 @{
     var user = _usermanager.GetUserAsync(User).Result;
-    ViewData["Title"] = "ListCity";
+    ViewData["Title"] = "Address";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
 
-<form class=form-group method="post" asp-action="ListCity">
-    <input type="hidden" name="userid" value="@user.Id">
+<form class=form-group method="post" asp-action="Address">
+ 
     <h4 class="heading-primary text-uppercase mb-lg">ACCOUNT INFORMATION</h4>
 
     <div class="col-sm-12 col-md-5">
