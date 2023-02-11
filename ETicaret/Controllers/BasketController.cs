@@ -3,6 +3,7 @@ using ETicaret.Web.Application.DTOs;
 using ETicaret.Web.IdentityModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ETicaret.Web.Controllers
@@ -35,11 +36,12 @@ namespace ETicaret.Web.Controllers
         }
 
    
-        public async Task<IActionResult> GetAllProductBasket(string userid)
+        public async Task<IActionResult> GetAllProductBasket()
           {
 
+            string x = GetUserId(User);
 
-           var values = await _basketService.Get(userid);
+            var values = await _basketService.Get(x);
             return View(values);
         }
 
@@ -57,6 +59,15 @@ namespace ETicaret.Web.Controllers
 
             await _basketService.Remove(userid,ProductId);
             return RedirectToAction("GetAllProductBasket");
+        }
+
+        private string GetUserId(ClaimsPrincipal identity)
+        {
+            if (identity == null)
+                return null;
+
+            var first = identity.FindFirst(ClaimTypes.NameIdentifier);
+            return first?.Value;
         }
     }
 }
