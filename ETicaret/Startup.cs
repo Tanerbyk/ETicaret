@@ -23,6 +23,8 @@ using MediatR;
 using System;
 using ETicaret.Web.Application.Cookie;
 using ETicaret.Shared.Application.Helpers;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Threading.Tasks;
 
 namespace ETicaret.Web
 {
@@ -62,15 +64,20 @@ namespace ETicaret.Web
             services.AddIdentity<WebUser, IdentityRole>().AddEntityFrameworkStores<WebIdentityContext>().AddDefaultTokenProviders();
             //services.AddDefaultIdentity<WebUser>().AddRoles<IdentityRole>().
             //    AddEntityFrameworkStores<WebIdentityContext>().AddDefaultTokenProviders();
+           
+         
 
 
             services.AddMvc();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+  
             services.AddHttpClient();
             services.AddAutoMapper(typeof(Startup).Assembly);
 
             services.Configure<FilePathOptions>(Configuration.GetSection(FilePathOptions.ConfigurationPath));
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
