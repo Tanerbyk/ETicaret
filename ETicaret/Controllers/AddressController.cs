@@ -17,11 +17,13 @@ using System.Threading.Tasks;
 
 namespace ETicaret.Web.Controllers
 {
+    [Authorize]
     public class AddressController : Controller
     {
         private readonly MarketPlaceDbContext _db;
         private readonly IMediator _mediator;
         private readonly UserManager<WebUser> _userManager;
+
 
 
         public AddressController(IMediator mediator, MarketPlaceDbContext db, UserManager<WebUser> userManager)
@@ -35,8 +37,9 @@ namespace ETicaret.Web.Controllers
         {
             return View();
         }
-        [Authorize]
+
         [HttpGet]
+
         public async Task<IActionResult> Address(string userid)
         {
             var userAddress = await _db.Addresses.FirstOrDefaultAsync(x => x.UserId == userid);

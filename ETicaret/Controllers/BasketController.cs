@@ -1,4 +1,4 @@
-﻿  using ETicaret.Web.Application.Basket;
+﻿using ETicaret.Web.Application.Basket;
 using ETicaret.Web.Application.DTOs;
 using ETicaret.Web.IdentityModel;
 using Microsoft.AspNetCore.Identity;
@@ -27,37 +27,50 @@ namespace ETicaret.Web.Controllers
 
 
         [HttpPost]
-        public async Task<BasketDTO> AddBasketProduct(string userid,int productid,int quantity)
+        public async Task<BasketDTO> AddBasketProduct(string userid, int productid, int quantity)
 
         {
             await _basketService.Add(userid, productid, quantity);
-            var data  = await _basketService.Get(userid);
+            var data = await _basketService.Get(userid);
             return data;
         }
 
-   
+
         public async Task<IActionResult> GetAllProductBasket()
-          {
+        {
 
             string x = GetUserId(User);
 
             var values = await _basketService.Get(x);
-            return View(values);
+            if (values.BasketProducts.Count > 0)
+            {
+                return View(values);
+
+            }
+            else
+            {
+                return RedirectToAction("EmptyBasket");
+            }
         }
+        public async Task<IActionResult> EmptyBasket()
+        {
+            
+             return View();
+         }
 
         public async Task<IActionResult> RemoveAllProductBasket(string userid)
         {
 
-         
-             await _basketService.RemoveAll(userid);
+
+            await _basketService.RemoveAll(userid);
             return RedirectToAction("GetAllProductBasket");
         }
 
-        public async Task<IActionResult> RemoveItemBasket(string userid,int ProductId)
+        public async Task<IActionResult> RemoveItemBasket(string userid, int ProductId)
         {
 
 
-            await _basketService.Remove(userid,ProductId);
+            await _basketService.Remove(userid, ProductId);
             return RedirectToAction("GetAllProductBasket");
         }
 

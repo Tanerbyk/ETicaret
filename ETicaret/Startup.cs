@@ -1,4 +1,4 @@
-using ETicaret.Shared.Application;
+﻿using ETicaret.Shared.Application;
 using ETicaret.Shared.Data;
 using ETicaret.Shared.Repository.UnitOfWork;
 using ETicaret.Web.IdentityContext;
@@ -25,6 +25,9 @@ using ETicaret.Web.Application.Cookie;
 using ETicaret.Shared.Application.Helpers;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Threading.Tasks;
+using ETicaret.Web.Application.Startup;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace ETicaret.Web
 {
@@ -69,6 +72,13 @@ namespace ETicaret.Web
 
 
             services.AddMvc();
+            //services.AddMvc(config =>
+            //{
+            //    var policy = new AuthorizationPolicyBuilder()
+            //       .RequireAuthenticatedUser()
+            //       .Build();
+            //    config.Filters.Add(new AuthorizeFilter(policy));
+            //});
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
   
@@ -77,7 +87,27 @@ namespace ETicaret.Web
 
             services.Configure<FilePathOptions>(Configuration.GetSection(FilePathOptions.ConfigurationPath));
 
-            
+
+            //services.AddScoped<XCookieAuthEvents>();
+
+            //// optional: customize cookie expiration time
+            //services.ConfigureApplicationCookie(ops =>
+            //{
+            //    ops.EventsType = typeof(XCookieAuthEvents);
+            //    ops.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+            //    ops.SlidingExpiration = true;
+            //});
+
+            services.ConfigureApplicationCookie(_ =>
+            {
+                _.LoginPath = new PathString("/Identity/Account/Login");
+             
+             
+            });
+
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -110,8 +140,9 @@ namespace ETicaret.Web
             //});
 
             app.UseRouting();
-            app.UseAuthorization();
             app.UseAuthentication();
+
+            app.UseAuthorization();
             app.UseHttpsRedirection();
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
