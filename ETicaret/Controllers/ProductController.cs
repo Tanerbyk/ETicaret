@@ -5,6 +5,7 @@ using ETicaret.Shared.Dal;
 using ETicaret.Shared.Dal.Concrete;
 using ETicaret.Shared.Repository.UnitOfWork;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient.Memcached;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace ETicaret.Web.Controllers
 {
+    [AllowAnonymous]
     public class ProductController : Controller
     {
         private readonly IMediator _mediator;
