@@ -40,8 +40,10 @@ namespace ETicaret.Web.Controllers
 
         [HttpGet]
 
-        public async Task<IActionResult> Address(string userid)
+        public async Task<IActionResult> Address( )
         {
+          var userid=   _userManager.GetUserId(User);
+
             var userAddress = await _db.Addresses.FirstOrDefaultAsync(x => x.UserId == userid);
             AddressDto ad = new();
             ad.Cities = await _db.Cities.ToListAsync();
@@ -111,14 +113,6 @@ namespace ETicaret.Web.Controllers
 
         }
 
-        public async Task<IActionResult> CascadeList()
-        {
-            var data = await _mediator.Send(new GetAllCityQuery());
-            return View(data);
-            
-            
-
-        }
         public JsonResult LoadDistrict(int Id)
         {
             var districts = _db.Districts.Where(x => x.CityId == Id).ToList();

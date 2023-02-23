@@ -1,4 +1,5 @@
-﻿using ETicaret.Web.Application.Basket;
+﻿using ETicaret.Shared.Application.Extensions;
+using ETicaret.Web.Application.Basket;
 using ETicaret.Web.Application.DTOs;
 using ETicaret.Web.IdentityModel;
 using Microsoft.AspNetCore.Identity;
@@ -10,21 +11,14 @@ namespace ETicaret.Web.Controllers
 {
     public class BasketController : Controller
     {
-        private readonly IBasketService _basketService;
+        private readonly IBasketService _basketService; 
         private readonly UserManager<WebUser> _userManager;
 
-
-        public BasketController(IBasketService basketService)
+        public BasketController(IBasketService basketService, UserManager<WebUser> userManager)
         {
             _basketService = basketService;
+            _userManager = userManager;
         }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-
 
         [HttpPost]
         public async Task<BasketDTO> AddBasketProduct(string userid, int productid, int quantity)
@@ -39,9 +33,7 @@ namespace ETicaret.Web.Controllers
         public async Task<IActionResult> GetAllProductBasket()
         {
 
-            string x = GetUserId(User);
-
-            var values = await _basketService.Get(x);
+            var values = await _basketService.Get(User.GetUserId());
             if (values.BasketProducts.Count > 0)
             {
                 return View(values);
@@ -52,7 +44,7 @@ namespace ETicaret.Web.Controllers
                 return RedirectToAction("EmptyBasket");
             }
         }
-        public async Task<IActionResult> EmptyBasket()
+        public  IActionResult EmptyBasket()
         {
             
              return View();
