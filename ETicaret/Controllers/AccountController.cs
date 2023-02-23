@@ -28,16 +28,16 @@ namespace ETicaret.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> UpdateAccount(string id)
+        public  IActionResult UpdateAccount()
         {
-            var value = await _userManager.FindByIdAsync(id);
-            return View(value);
+           
+            return View();
         }
 
         [HttpPost] 
-        public async Task<IActionResult> UpdateAccount(WebUser webUser , string id )
+        public async Task<IActionResult> UpdateAccount(WebUser webUser )
         {
-            
+            var id = _userManager.GetUserId(User);
             var value = _userManager.Users.FirstOrDefault(x=>x.Id==id);
             
             value.FirstName = webUser.FirstName;
@@ -49,7 +49,7 @@ namespace ETicaret.Web.Controllers
             await _userManager.UpdateAsync(value);
             
 
-            return RedirectToAction("Index","Product");
+            return RedirectToAction("UpdateAccount", "Account");
 
             
            

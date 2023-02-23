@@ -8,5 +8,8 @@ namespace ETicaret.Web.Controllers
         {
             return View();
         } 
+
+
+        
     }
 }
