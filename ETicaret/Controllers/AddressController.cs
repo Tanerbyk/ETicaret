@@ -109,7 +109,7 @@ namespace ETicaret.Web.Controllers
 
 
             _db.SaveChanges();
-            return RedirectToAction("Index", "Product");
+            return RedirectToAction("Address", "Address");
 
         }
 
