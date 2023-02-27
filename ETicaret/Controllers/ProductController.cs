@@ -52,7 +52,6 @@ namespace ETicaret.Web.Controllers
             return View(filter);
 
         }
-   
      
         public async Task<IActionResult> ProductDetail(int id)
         {

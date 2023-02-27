@@ -49,10 +49,7 @@ namespace ETicaret.Web.Controllers
             await _userManager.UpdateAsync(value);
             
 
-            return RedirectToAction("UpdateAccount", "Account");
-
-            
-           
+            return RedirectToAction("UpdateAccount", "Account");               
             
         }
         private void Errors(IdentityResult result)
