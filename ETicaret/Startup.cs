@@ -28,6 +28,8 @@ using System.Threading.Tasks;
 using ETicaret.Web.Application.Startup;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using FluentValidation.AspNetCore;
+using ETicaret.Shared.Application.Features.Category.Commands;
 
 namespace ETicaret.Web
 {
@@ -67,8 +69,6 @@ namespace ETicaret.Web
             services.AddIdentity<WebUser, IdentityRole>().AddEntityFrameworkStores<WebIdentityContext>().AddDefaultTokenProviders();
             //services.AddDefaultIdentity<WebUser>().AddRoles<IdentityRole>().
             //    AddEntityFrameworkStores<WebIdentityContext>().AddDefaultTokenProviders();
-           
-         
 
 
             services.AddMvc();
@@ -81,7 +81,11 @@ namespace ETicaret.Web
             //});
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-  
+            services.AddControllers()
+          .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateCategoryCommand>());
+
+
+
             services.AddHttpClient();
             services.AddAutoMapper(typeof(Startup).Assembly);
 

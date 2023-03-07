@@ -12,13 +12,14 @@ namespace ETicaret.Shared.Application.Features.Address.Queries
 {
     public class GetDistrictByCityId : IRequest<List<District>>
     {
+        public int CityId { get; set; }
 
         public class GetDistrictByCityIdHandler : IRequestHandler<GetDistrictByCityId, List<District>>
         {
             private readonly MarketPlaceDbContext _db;
             public async Task<List<District>> Handle(GetDistrictByCityId request, CancellationToken cancellationToken)
             {
-                var data =await _db.Districts.ToListAsync();
+                var data =await _db.Districts.Where(x=>x.CityId==request.CityId).ToListAsync();
                 return data;
                
             }
