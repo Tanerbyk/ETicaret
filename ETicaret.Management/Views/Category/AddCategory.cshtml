@@ -10,6 +10,7 @@
     <div class="form-group">
         <label>Kategori</label>
         <input name="Name" class="form-control" placeholder="Kategori Adı  Giriniz" required="">
+        <span id="NameValid" ></span>
     </div>
     <button type="submit" class="btn btn-primary">Kaydet</button>
 
@@ -47,13 +48,8 @@
                     })
                 }
                 else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'HATA...',
-                        text: 'Böyle Bir Kategori Zaten Mevcut'
-
-
-                    })
+                    document.getElementById("NameValid").innerHTML=item;
+                  
                 }
             },
             error: function(jqXHR, textStatus, error) {
