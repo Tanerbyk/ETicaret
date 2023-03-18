@@ -1,4 +1,5 @@
-﻿@model CategoriesWithProduct
+﻿@using ETicaret.Shared.Application.DTOs;
+@model CategoriesWithProducts
 
 
 @{
@@ -15,7 +16,7 @@
             <div class="card-body">
                 <div class=form-sample>
                     <div class="form-group">
-                        <input type="hidden" name="Id" id="Id" value="@Model.Product.Id" />
+                        <input type="hidden" name="Id" id="Id" />
                         <label>Ürünün Adı</label>
                         <input type="text" name="Name" class="form-control" required value="@Model.Product.Name" />
 

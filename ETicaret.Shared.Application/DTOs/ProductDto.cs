@@ -25,12 +25,7 @@ namespace ETicaret.Shared.Application.DTOs
 
         public Category Category { get; set; }
         public decimal TaxPrice => Convert.ToDecimal(Price * 1.18);
-        public decimal TotalPrice => Math.Truncate(TaxPrice-(decimal)Discount * TaxPrice/100)    ;
-
-
-
-
-
+        public decimal TotalPrice => Math.Truncate(TaxPrice-(decimal)Discount * TaxPrice/100);
 
 
     }

@@ -1,10 +1,18 @@
 ﻿
 using ETicaret.Management;
+using ETicaret.Management.Models;
+using ETicaret.Management.Validators;
 using ETicaret.Shared.Application;
+using ETicaret.Shared.Application.DTOs;
+using ETicaret.Shared.Application.Features.Category.Commands;
 using ETicaret.Shared.Application.Features.Category.Queries;
+using ETicaret.Shared.Application.Features.Product.Commands;
+using ETicaret.Shared.Application.Registeration;
 using ETicaret.Shared.Dal;
 using ETicaret.Shared.Repository.UnitOfWork;
+using FluentValidation;
 using FluentValidation.AspNetCore;
+using FormHelper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
@@ -43,7 +51,7 @@ namespace E_Ticaret.Management
             //services.AddStackExchangeRedisCache(options => { options.Configuration = connstr; });
 
              services.AddControllersWithViews();
-            services.AddAutoMapper(typeof(Startup).Assembly);
+            services.ApplicationRegisteration();
 
 
 
@@ -56,15 +64,18 @@ namespace E_Ticaret.Management
              Location = ResponseCacheLocation.None,
              NoStore = true
          });
-            }).AddFluentValidation(fv =>
-            {
-                fv.DisableDataAnnotationsValidation = true;
-               
             });
 
+            services.AddControllersWithViews()
+                   .AddFormHelper()
+                   .AddFluentValidation();
+
+            services.AddTransient<IValidator<CreateCategoryCommand>, CreateCategoryCommandValidator>();
+            services.AddTransient<IValidator<CategoriesWithProductDTO>, CreateProductCommandValidator>();
 
 
-            services.AddMvc();
+
+
             services.AddMemoryCache();
              
             services.AddHttpClient();

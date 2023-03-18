@@ -1,5 +1,6 @@
-﻿@using ETicaret.Shared.Dal.Concrete
-@model List<Category>
+﻿@using ETicaret.Shared.Application.DTOs;
+@using ETicaret.Shared.Dal.Concrete
+@model List<CategoryDTO>
 
 
 
@@ -43,7 +44,7 @@
             <tr>
                 <th scope="row">@item.Id</th>
                 <td>@item.Name</td>
-                @if (item.IsActive == true)
+                @*@if (item.IsActive == true)
                 {
                     <td>Aktif</td>
                 }
@@ -53,7 +54,7 @@
                 }
 
                 <td>@item.CreateDate</td>
-                <td>@item.ModifiedDate</td>
+                <td>@item.ModifiedDate</td>*@
                 <td><a href="~/Category/UpdateCategory/@item.Id" class="btn btn-primary">Düzenle</a></td>
                 <td><a href="~/Category/DeleteCategory/@item.Id" class="btn btn-warning">Sil</a></td>
             </tr>

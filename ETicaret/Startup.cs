@@ -70,7 +70,6 @@ namespace ETicaret.Web
             //services.AddDefaultIdentity<WebUser>().AddRoles<IdentityRole>().
             //    AddEntityFrameworkStores<WebIdentityContext>().AddDefaultTokenProviders();
 
-
             services.AddMvc();
             //services.AddMvc(config =>
             //{
@@ -82,7 +81,7 @@ namespace ETicaret.Web
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddControllers()
-          .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateCategoryCommand>());
+          .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Program>());
 
 
 

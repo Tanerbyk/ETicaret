@@ -1,25 +1,27 @@
-﻿@model ETicaret.Shared.Dal.Concrete.Category
+﻿@model ETicaret.Shared.Application.Features.Category.Commands.CreateCategoryCommand
 @{
     ViewData["Title"] = "AddCategory";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
-<form onsubmit="return submitForm(this)" class=form-group method="post" asp-controller="Category" asp-action="AddCategory" id="form1">
-
-    <div class="form-group">
-        <label>Kategori</label>
-        <input name="Name" class="form-control" placeholder="Kategori Adı  Giriniz" required="">
-        <span id="NameValid" ></span>
-    </div>
-    <button type="submit" class="btn btn-primary">Kaydet</button>
+                <div class="card-body">
+    <form id="form1" onsubmit="return submitForm(this)" asp-formhelper="true" asp-controller="Category" asp-action="AddCategory" asp-dataType="FormData"
+          enctype="multipart/form-data">
 
 
-</form>
-
-
-
-
+                        <div class="form-group">
+                            <label asp-for="Name"></label>
+                            <input asp-for="Name" type="text" class="form-control">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                     
+                        <hr />
+                        <div class="form-group text-right">
+                            <button class="btn btn-primary" type="submit">Save</button>
+                        </div>
+                    </form>
+                </div>
 <script>
 
     function submitForm(t) {
@@ -31,12 +33,11 @@
             processData: false,
             contentType: false,
             async: true,
-            beforeSend: function(item) { },
-            success: function(item) {
-                if (item == "success") {
+            beforeSend: function (item) { },
+            success: function (item) {
+                if (item == true) {
                     Swal.fire({
                         title: 'Başarılı?',
-                        allowOutsideClick: false,
                         text: "Kategori Ekleme İşlemi Başarıyla Tamamlandı.Devam Etmek için Tamam'a Basın.",
                         icon: item,
                         confirmButtonColor: '#3085d6',
@@ -47,12 +48,9 @@
                         }
                     })
                 }
-                else {
-                    document.getElementById("NameValid").innerHTML=item;
-                  
-                }
+               
             },
-            error: function(jqXHR, textStatus, error) {
+            error: function (jqXHR, textStatus, error) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Hata...',
@@ -65,9 +63,4 @@
     }
 
 </script>
-
-
-
-
-
 

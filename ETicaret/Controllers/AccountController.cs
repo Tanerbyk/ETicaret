@@ -43,8 +43,6 @@ namespace ETicaret.Web.Controllers
             value.FirstName = webUser.FirstName;
             value.LastName = webUser.LastName;
             value.Email = webUser.Email;
-            //var token = await _userManager.GeneratePasswordResetTokenAsync(webUser);
-            //var result = await _userManager.ResetPasswordAsync(webUser, token, value.newpassword);
             
             await _userManager.UpdateAsync(value);
             

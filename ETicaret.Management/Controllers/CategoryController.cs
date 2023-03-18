@@ -1,10 +1,13 @@
-﻿using ETicaret.Shared.Application.Enums;
+﻿using Elasticsearch.Net;
+using ETicaret.Management.Models;
+using ETicaret.Shared.Application.Enums;
 using ETicaret.Shared.Application.Extensions;
 using ETicaret.Shared.Application.Features.Category.Commands;
 using ETicaret.Shared.Application.Features.Category.Queries;
 using ETicaret.Shared.Application.Validators.Category;
 using ETicaret.Shared.Dal.Concrete;
 using ETicaret.Shared.Repository.UnitOfWork;
+using FormHelper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
@@ -32,17 +35,17 @@ namespace ETicaret.Management.Controllers
         }
 
         [HttpPost]
-        public async Task<string> AddCategory(CreateCategoryCommand c)
+
+        public async Task<IActionResult> AddCategory(CreateCategoryCommand c)
         {
-            CreateCategoryRequestValidator validator = new CreateCategoryRequestValidator();
-            FluentValidation.Results.ValidationResult result = validator.Validate(c);
-            if (result.Errors.Any())
+            if (!ModelState.IsValid)
             {
-                var error = result.Errors.FirstOrDefault();
-                return error.ToString();
+                return FormResult.CreateErrorResult("An error occurred!");
+
             }
+
             var data = await _mediator.Send(c);
-            return data;
+            return Ok(data);     
         }
         public async Task<IActionResult> ListCategory()
         {
@@ -73,6 +76,14 @@ namespace ETicaret.Management.Controllers
             return RedirectToAction("ListCategory", "Category", new { data });
 
         }
+
+        public class ErrorViewModel
+        {
+            public IEnumerable<string> Errors { get; set; }
+        }
+
+
+       
 
     }
 }
