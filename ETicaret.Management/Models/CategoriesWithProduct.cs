@@ -1,10 +1,15 @@
-﻿using ETicaret.Shared.Dal.Concrete;
+﻿using ETicaret.Shared.Application.Features.Product.Commands;
+using ETicaret.Shared.Dal.Concrete;
 
 namespace ETicaret.Management.Models
 {
-    public class CategoriesWithProduct
+ 
+    
+
+    public class CategoriesWithProducts
     {
         public List<Category> Categories { get; set; }
+
         public Product Product { get; set; }
     }
 }

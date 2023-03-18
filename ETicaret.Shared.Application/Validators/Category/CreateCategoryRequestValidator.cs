@@ -15,8 +15,9 @@ namespace ETicaret.Shared.Application.Validators.Category
         public CreateCategoryRequestValidator()
         {
             RuleFor(c => c.Name).NotEmpty().WithMessage("Kategori alanı boş bırakılamaz.");
-            RuleFor(c => c.Name).MinimumLength(3).WithMessage("Kategori adı min 3 karakter olmalıdır.");
-            RuleFor(c => c.Name).MaximumLength(15).WithMessage("Kategori adı max 15 karakter olmalıdır.");
+            RuleFor(c => c.Name).MinimumLength(2).WithMessage("Kategori adı min 3 karakter olmalıdır.");
+            RuleFor(c => c.Name).MaximumLength(3).WithMessage("Kategori adı max 15 karakter olmalıdır.");
+            RuleFor(c => c.Name).EmailAddress().WithMessage("Email değil ");
         }
 
     }

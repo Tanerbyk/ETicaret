@@ -8,6 +8,7 @@ using MediatR;
 using System.Text;
 using System.Threading.Tasks;
 using ETicaret.Shared.Application.Features.Category.Queries;
+using Microsoft.VisualStudio.Web.CodeGeneration.Design;
 
 namespace ETicaret.Shared.Application.Registeration
 {
@@ -17,7 +18,9 @@ namespace ETicaret.Shared.Application.Registeration
         public static IServiceCollection ApplicationRegisteration(this IServiceCollection services, params Type[] types)
         {
 
-            services.AddMediatR(types);  
+            var assm = Assembly.GetExecutingAssembly();
+            services.AddMediatR(assm);
+            services.AddAutoMapper(assm);
             return services;
         }
 

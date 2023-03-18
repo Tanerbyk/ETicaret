@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 
 namespace ETicaret.Shared.Application.Features.Category.Commands
 {
-    public class CreateCategoryCommand:IRequest<string>
+    public class CreateCategoryCommand:IRequest<bool>
     {
         public string Name { get; set; }
 
-        public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommand, string>
+        public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommand, bool>
         {
             private readonly MarketPlaceDbContext _db;
             public CreateCategoryCommandHandler(MarketPlaceDbContext db)
             {
                 _db= db;
             }
-            public async Task<string> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
+            public async Task<bool> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
             {
                 try
                 {
@@ -27,17 +27,17 @@ namespace ETicaret.Shared.Application.Features.Category.Commands
                     {
                         var category = await _db.Categories.AddAsync(new Dal.Concrete.Category { Name = request.Name });
                         await _db.SaveChangesAsync();
-                        return "success";
+                        return true;
                     }
                     else
                     {
-                        return "error";
+                        return false;
                     }
                 }
                 catch (Exception ex)
                 {
 
-                    return "Kategori adı boş bırakılamaz." + ex.ToString();
+                    return false;
                 }
              }
         }

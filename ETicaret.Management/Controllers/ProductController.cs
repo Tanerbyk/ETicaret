@@ -1,10 +1,12 @@
 ﻿using ETicaret.Management.Models;
+using ETicaret.Shared.Application.DTOs;
 using ETicaret.Shared.Application.Features.Category.Queries;
 using ETicaret.Shared.Application.Features.Product.Commands;
 using ETicaret.Shared.Application.Features.Product.Queries;
-using ETicaret.Shared.Repository.UnitOfWork;
+using FormHelper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Nest;
 
 namespace ETicaret.Management.Controllers
 {
@@ -31,18 +33,31 @@ namespace ETicaret.Management.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var values = await _mediator.Send(new GetAllCategoryQuery());
-            return View(values);
-
-
+            CategoriesWithProductDTO categoriesWithProduct = new();
+       var data = await _mediator.Send(new GetAllCategoryQuery());
+            categoriesWithProduct.Categories = data;
+            return View(categoriesWithProduct);
         }
 
+        //CategoriesWithProduct categoriesWithProduct = new CategoriesWithProduct
+        //{
+        //    Categories = await _mediator.Send(new GetAllCategoryQuery()),
+        //};
+
+        //return View(categoriesWithProduct);
+    
+
         [HttpPost]
-        public async Task<string> Create(CreateProductCommand c)
+        public async Task<IActionResult> Create(CreateProductCommand c)
         {
 
+            if(!ModelState.IsValid)
+            {
+                return FormResult.CreateErrorResult("An error occurred!");
+            }
+
             var data = await _mediator.Send(c);
-            return data;
+            return Ok(data);
 
 
         }
@@ -51,10 +66,10 @@ namespace ETicaret.Management.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateProduct(int Id)
         {
-            CategoriesWithProduct categoriesWithProduct = new CategoriesWithProduct
+            CategoriesWithProductDTO categoriesWithProduct = new CategoriesWithProductDTO
             {
                 Categories = await _mediator.Send(new GetAllCategoryQuery()),
-                Product = await _mediator.Send(new GetByIdProductQuery { Id = Id })
+               
             };
 
             return View(categoriesWithProduct);

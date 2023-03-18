@@ -38,7 +38,7 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
-
+    <script src="~/lib/formhelper.bundle.min.js"></script>
     <script>
 
         $(document).ready(function () {
@@ -905,7 +905,8 @@
     <!-- ChartJS -->
     <script src="~/Web/plugins/chart.js/Chart.min.js"></script>
     <!-- Sparkline -->
-    <script src="~/Web/plugins/sparklines/sparkline.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.unobtrusive.min.js"></script>
     <!-- JQVMap -->
     <script src="~/Web/plugins/jqvmap/jquery.vmap.min.js"></script>
     <script src="~/Web/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
@@ -959,7 +960,6 @@
         };
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
 
         @await RenderSectionAsync("Scripts", required: false)
 

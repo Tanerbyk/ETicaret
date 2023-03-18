@@ -6,9 +6,10 @@ namespace ETicaret.Shared.Application.Mapping
 {
     public class MappingProfile : Profile
     {
-        public MappingProfile()
+        public MappingProfile() 
         {
-            CreateMap<Product, ProductDto>();
+            CreateMap<Product,ProductDto >();
+            CreateMap<Category,CategoryDTO>();
 
         }
     }
