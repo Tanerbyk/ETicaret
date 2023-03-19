@@ -66,12 +66,11 @@ namespace ETicaret.Management.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateProduct(int Id)
         {
-            CategoriesWithProductDTO categoriesWithProduct = new CategoriesWithProductDTO
-            {
-                Categories = await _mediator.Send(new GetAllCategoryQuery()),
-               
-            };
-
+            CategoriesWithProductDTO categoriesWithProduct = new();
+            var categories = await _mediator.Send(new GetAllCategoryQuery());
+            categoriesWithProduct.Categories = categories;
+            var product = await _mediator.Send(new GetByIdProductQuery { Id=Id});
+            
             return View(categoriesWithProduct);
 
         }
