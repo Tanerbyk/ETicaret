@@ -24,7 +24,6 @@ namespace ETicaret.Shared.Application.Features.Product.Queries
             {
                 
                 var data = await _db.Products.Include(x=>x.Category).ToListAsync();
-                //_db.Addresses.FirstOrDefault(x => x.city == "Ankara");
                 return data;
             }
         }

@@ -29,9 +29,6 @@ namespace ETicaret.Shared.Application.Features.Category.Queries
             {
 
                 var categories =  await _db.Categories.ToListAsync();
-                var d = categories.FirstOrDefault();
-                 var  c = _mapper.Map<CategoryDTO>(d);
-
                 var categoryDTO =  _mapper.Map<List<CategoryDTO>>(categories);
                 return categoryDTO;
                           
