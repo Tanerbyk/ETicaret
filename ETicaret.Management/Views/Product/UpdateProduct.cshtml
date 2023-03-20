@@ -1,5 +1,4 @@
-﻿@using ETicaret.Shared.Application.DTOs;
-@model CategoriesWithProductDTO
+﻿@model ETicaret.Shared.Application.DTOs.UProductDto
 
 
 @{
@@ -9,23 +8,23 @@
 
 
 
-
 <form  onsubmit="return submitForm(this)" asp-controller="Product" asp-action="UpdateProduct" class="form-group" method="post"  enctype="multipart/form-data" id="form2">
     <div class="col12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
                 <div class=form-sample>
                     <div class="form-group">
-                        <input type="hidden" name="Id" id="Id" />
-                        <label>Ürünün Adı</label>
-                        <input type="text" name="Name" class="form-control" required value="@Model.Name" />
+                        <input type="hidden" name="Id"  asp-for="Id" />
+                        <label asp-for="Name">Ürünün Adı</label>
+                        <input  asp-for=Name class="form-control" required />
+                        <span asp-validation-for="Name"></span>
 
                     </div>
 
                     <div class="form-group">
                         <label>Kategori Adı</label>
                         <!select class="form-select " name="CategoryID">
-                            @foreach (var item in Model.Categories)
+                            @foreach (var item in ViewBag.categories)
                             {
                             <!option @(Model.CategoryID==item.Id?"selected":"") class="dropdown-item" itemid="CategoryID" value="@item.Id">@item.Name</!option>
                              <option class="dropdown-item" itemid="CategoryID" value="@item.Id">@item.Name</option>
@@ -37,34 +36,40 @@
 
                     <div class=form-group>
 
-                        <label>Stok</label>
-                        <input type="number" name="Stock" id="Stock" class="form-control" required value="@Model.Stock" />
+                        <label asp-for="Stock">Stok</label>
+                        <input  asp-for=Stock class="form-control" required />
+                        <span asp-validation-for="Stock"></span>
+
 
                     </div>
                     <div class=form-group>
 
-                        <label>İndirim oranı</label>
-                        <input type="number" name="Discount" id="Discount" class="form-control" required value="@Model.Discount"/>
+                        <label asp-for="Discount">İndirim</label>
+                        <input  asp-for=Discount class="form-control"  required />
+                        <span asp-validation-for="Discount"></span>
+
 
                     </div>
                     <div class=form-group>
 
-                        <label>Açıklama</label>
-                        <textarea type="text" name="Description" id="Description" class="form-control" required>
-                          @Model.Description
+                        <label asp-for="Description">Ürünün Açıklaması </label>
+                        <textarea asp-for=Description type="text" name="Description" id="Description" class="form-control" required>
+                          @Model.Description.Trim()
                         </textarea>
 
                     </div>
                     <div class=form-group>
-                        <label>Fiyat</label>
-                        <input type="number" name="Price" id="Price" class="form-control" required value="@Model.Price" />
+                        <label asp-for="Price">Fiyat</label>
+                        <input asp-for=Price class="form-control"  required />
+                        <span asp-validation-for="Price"></span>
                     </div>
 
                      <label>Ürünün Görseli</label>
                     <div class="custom-file">
 
-                        <input type="file" class="custom-file-input" name="fileImage" id="Path" required  value="@Model.fileImage"  />
-                        <label class="custom-file-label" for="customFile">Choose file</label>
+                        <input  asp-for="fileImage" type="file" class="custom-file-input" />
+                        <label  asp-for=fileImage class="custom-file-label" >Choose file</label>
+                        <span asp-validation-for="fileImage"></span>
 
                     </div><br /><br />
 

@@ -72,8 +72,7 @@ namespace E_Ticaret.Management
 
             services.AddTransient<IValidator<CreateCategoryCommand>, CreateCategoryCommandValidator>();
             services.AddTransient<IValidator<CategoriesWithProductDTO>, CreateProductCommandValidator>();
-
-
+            services.AddTransient<IValidator<UProductDto>, ProductValidator>();
 
 
             services.AddMemoryCache();
