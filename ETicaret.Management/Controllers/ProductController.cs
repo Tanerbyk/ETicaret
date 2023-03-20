@@ -55,23 +55,20 @@ namespace ETicaret.Management.Controllers
             {
                 return FormResult.CreateErrorResult("An error occurred!");
             }
-
             var data = await _mediator.Send(c);
             return Ok(data);
-
 
         }
 
 
         [HttpGet]
         public async Task<IActionResult> UpdateProduct(int Id)
-        {
-            CategoriesWithProductDTO categoriesWithProduct = new();
-            var categories = await _mediator.Send(new GetAllCategoryQuery());
-            categoriesWithProduct.Categories = categories;
+        {         
+            ViewBag.categories = await _mediator.Send(new GetAllCategoryQuery());
+           
             var product = await _mediator.Send(new GetByIdProductQuery { Id=Id});
             
-            return View(categoriesWithProduct);
+            return View(product);
 
         }
         [HttpPost]

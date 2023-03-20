@@ -1,4 +1,5 @@
-﻿using ETicaret.Shared.Dal;
+﻿using AutoMapper;
+using ETicaret.Shared.Dal;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
@@ -32,12 +33,14 @@ namespace ETicaret.Shared.Application.Features.Product.Commands
         {
             private readonly MarketPlaceDbContext _db;
             private readonly string _phsyicalPath;
+            private readonly IMapper _mapper;
 
 
-            public UpdateProductCommandHandler(MarketPlaceDbContext db, IOptions<FilePathOptions> options)
+            public UpdateProductCommandHandler(MarketPlaceDbContext db, IOptions<FilePathOptions> options, IMapper mapper)
             {
                 _db = db;
                 _phsyicalPath = System.IO.Path.Combine(options.Value.RootPath, options.Value.GetByKey(FileKeys.Products).Key);
+                _mapper = mapper;
             }
 
             public async Task<string> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
