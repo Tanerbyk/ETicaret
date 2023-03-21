@@ -64,10 +64,8 @@ namespace ETicaret.Management.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateProduct(int Id)
         {         
-            ViewBag.categories = await _mediator.Send(new GetAllCategoryQuery());
-           
-            var product = await _mediator.Send(new GetByIdProductQuery { Id=Id});
-            
+            ViewBag.categories = await _mediator.Send(new GetAllCategoryQuery());          
+            var product = await _mediator.Send(new GetByIdProductQuery { Id=Id});           
             return View(product);
 
         }
