@@ -11,7 +11,6 @@ namespace ETicaret.Shared.Application.Mapping
             CreateMap<Product,ProductDto >();
             CreateMap<Product,UProductDto >();
             CreateMap<Category,CategoryDTO>();
-
         }
     }
 }

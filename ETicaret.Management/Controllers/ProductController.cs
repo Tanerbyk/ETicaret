@@ -39,13 +39,6 @@ namespace ETicaret.Management.Controllers
             return View(categoriesWithProduct);
         }
 
-        //CategoriesWithProduct categoriesWithProduct = new CategoriesWithProduct
-        //{
-        //    Categories = await _mediator.Send(new GetAllCategoryQuery()),
-        //};
-
-        //return View(categoriesWithProduct);
-    
 
         [HttpPost]
         public async Task<IActionResult> Create(CreateProductCommand c)
@@ -60,35 +53,25 @@ namespace ETicaret.Management.Controllers
 
         }
 
-
         [HttpGet]
         public async Task<IActionResult> UpdateProduct(int Id)
         {         
             ViewBag.categories = await _mediator.Send(new GetAllCategoryQuery());          
             var product = await _mediator.Send(new GetByIdProductQuery { Id=Id});           
             return View(product);
-
         }
         [HttpPost]
         public async Task<string> UpdateProduct(UpdateProductCommand p)
         {
-
            var data =  await _mediator.Send(p);
             return data;
-
         }
 
-
-        
         public async Task<IActionResult> DeleteProduct(int id)
         {
             await _mediator.Send(new DeleteProductCommand { Id = id });
             return RedirectToAction("ListProduct");
         }
-
-
-
-
 
     }
 }

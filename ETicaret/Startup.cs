@@ -30,6 +30,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using FluentValidation.AspNetCore;
 using ETicaret.Shared.Application.Features.Category.Commands;
+using ETicaret.Shared.Application.Registeration;
 
 namespace ETicaret.Web
 {
@@ -89,6 +90,8 @@ namespace ETicaret.Web
             services.AddAutoMapper(typeof(Startup).Assembly);
 
             services.Configure<FilePathOptions>(Configuration.GetSection(FilePathOptions.ConfigurationPath));
+            services.ApplicationRegisteration();
+
 
 
             //services.AddScoped<XCookieAuthEvents>();

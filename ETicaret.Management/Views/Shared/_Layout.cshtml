@@ -39,6 +39,8 @@
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
     <script src="~/lib/formhelper.bundle.min.js"></script>
+  
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
 
         $(document).ready(function () {
@@ -47,6 +49,50 @@
         });
 
     </script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="~/Web/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+        $.widget.bridge('uibutton', $.ui.button)
+    </script>
+    <!-- Bootstrap 4 -->
+    <script src="~/Web/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- ChartJS -->
+    <script src="~/Web/plugins/chart.js/Chart.min.js"></script>
+    <!-- Sparkline -->
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.unobtrusive.min.js"></script>
+    <!-- JQVMap -->
+    <script src="~/Web/plugins/jqvmap/jquery.vmap.min.js"></script>
+    <script src="~/Web/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+    <!-- jQuery Knob Chart -->
+    <script src="~/Web/plugins/jquery-knob/jquery.knob.min.js"></script>
+    <!-- daterangepicker -->
+    <script src="~/Web/plugins/moment/moment.min.js"></script>
+    <script src="~/Web/plugins/daterangepicker/daterangepicker.js"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="~/Web/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    <!-- Summernote -->
+    <script src="~/Web/plugins/summernote/summernote-bs4.min.js"></script>
+    <!-- overlayScrollbars -->
+    <script src="~/Web/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/Web/dist/js/adminlte.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="~/Web/dist/js/demo.js"></script>
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <script src="~/Web/dist/js/pages/dashboard.js"></script>
+
+
+    <script src="~/Web/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <!-- bs-custom-file-input -->
+    <script src="~/Web/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+    <!-- AdminLTE App -->
+    <!-- AdminLTE for demo purposes -->
+    <script src="~/Web/dist/js/demo.js"></script>
+
+    <script src="/lib/limonte-sweetalert2/sweetalert2.min.js"></script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
@@ -866,14 +912,7 @@
         <div class="container">
             @RenderBody()
 
-
         </div>
-
-
-
-
-
-
 
 
 
@@ -893,51 +932,7 @@
     </div>
     <!-- ./wrapper -->
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- jQuery UI 1.11.4 -->
-    <script src="~/Web/plugins/jquery-ui/jquery-ui.min.js"></script>
-    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-    <script>
-        $.widget.bridge('uibutton', $.ui.button)
-    </script>
-    <!-- Bootstrap 4 -->
-    <script src="~/Web/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- ChartJS -->
-    <script src="~/Web/plugins/chart.js/Chart.min.js"></script>
-    <!-- Sparkline -->
-    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.unobtrusive.min.js"></script>
-    <!-- JQVMap -->
-    <script src="~/Web/plugins/jqvmap/jquery.vmap.min.js"></script>
-    <script src="~/Web/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
-    <!-- jQuery Knob Chart -->
-    <script src="~/Web/plugins/jquery-knob/jquery.knob.min.js"></script>
-    <!-- daterangepicker -->
-    <script src="~/Web/plugins/moment/moment.min.js"></script>
-    <script src="~/Web/plugins/daterangepicker/daterangepicker.js"></script>
-    <!-- Tempusdominus Bootstrap 4 -->
-    <script src="~/Web/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-    <!-- Summernote -->
-    <script src="~/Web/plugins/summernote/summernote-bs4.min.js"></script>
-    <!-- overlayScrollbars -->
-    <script src="~/Web/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="~/Web/dist/js/adminlte.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="~/Web/dist/js/demo.js"></script>
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="~/Web/dist/js/pages/dashboard.js"></script>
-
-
-    <script src="~/Web/plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap 4 -->
-    <!-- bs-custom-file-input -->
-    <script src="~/Web/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
-    <!-- AdminLTE App -->
-    <!-- AdminLTE for demo purposes -->
-    <script src="~/Web/dist/js/demo.js"></script>
-
-    <script src="/lib/limonte-sweetalert2/sweetalert2.min.js"></script>
+   
 
 
     <!-- Page specific script -->
