@@ -38,7 +38,6 @@ namespace E_Ticaret.Management
         {
             services.AddTransient<MarketPlaceDbContext>();
 
-            services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 
 
 

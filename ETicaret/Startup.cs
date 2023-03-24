@@ -30,6 +30,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using FluentValidation.AspNetCore;
 using ETicaret.Shared.Application.Features.Category.Commands;
+using ETicaret.Shared.Application.Registeration;
 
 namespace ETicaret.Web
 {
@@ -54,11 +55,13 @@ namespace ETicaret.Web
             services.Configure<MailSettings>(options => Configuration.GetSection("MailSettings").Bind(options));
 
             services.AddTransient<IEmailSender, SMTPMailService>();
-            services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddTransient<IBasketService, BasketService>();
             services.AddTransient<MarketPlaceDbContext>();
             services.AddTransient<RabbitMqHelper>();
+            services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.ApplicationRegisteration();
 
             services.AddScoped<ICookieService,CookieService>();
 
@@ -86,9 +89,9 @@ namespace ETicaret.Web
 
 
             services.AddHttpClient();
-            services.AddAutoMapper(typeof(Startup).Assembly);
 
             services.Configure<FilePathOptions>(Configuration.GetSection(FilePathOptions.ConfigurationPath));
+
 
 
             //services.AddScoped<XCookieAuthEvents>();
