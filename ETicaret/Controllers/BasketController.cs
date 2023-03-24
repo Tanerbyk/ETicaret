@@ -12,12 +12,10 @@ namespace ETicaret.Web.Controllers
     public class BasketController : Controller
     {
         private readonly IBasketService _basketService; 
-        private readonly UserManager<WebUser> _userManager;
 
-        public BasketController(IBasketService basketService, UserManager<WebUser> userManager)
+        public BasketController(IBasketService basketService )
         {
             _basketService = basketService;
-            _userManager = userManager;
         }
 
         [HttpPost]
@@ -66,13 +64,6 @@ namespace ETicaret.Web.Controllers
             return RedirectToAction("GetAllProductBasket");
         }
 
-        private string GetUserId(ClaimsPrincipal identity)
-        {
-            if (identity == null)
-                return null;
-
-            var first = identity.FindFirst(ClaimTypes.NameIdentifier);
-            return first?.Value;
-        }
+       
     }
 }

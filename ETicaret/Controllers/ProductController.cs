@@ -40,7 +40,6 @@ namespace ETicaret.Web.Controllers
 
         }
         [HttpGet]
-        [Route("/Product/ProductGetByIdCategory/{id:int}")]
         public async Task<IActionResult> ProductGetByIdCategory(int id)
         {
 
@@ -56,9 +55,8 @@ namespace ETicaret.Web.Controllers
         public async Task<IActionResult> ProductDetail(int id)
         {
             
-            var product =  await _mediator.Send(new GetByIdProductQuery{ Id = id });
-            var productDto = _mapper.Map<ProductDto>(product);
-            return View(productDto);
+            var product =  await _mediator.Send(new GetByIdProductQueryWeb{ Id = id });
+            return View(product);
 
         }
        
