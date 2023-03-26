@@ -2,7 +2,7 @@
 using ETicaret.Shared.Application.Features.Address.Queries;
 using ETicaret.Shared.Dal;
 using ETicaret.Shared.Dal.Concrete;
-using ETicaret.Web.IdentityModel;
+using ETicaret.Shared.Dal.Web;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

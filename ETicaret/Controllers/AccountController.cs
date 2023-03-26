@@ -1,7 +1,7 @@
 ﻿using ETicaret.Shared.Dal;
+using ETicaret.Shared.Dal.Web;
 using ETicaret.Shared.Data;
 using ETicaret.Web.IdentityContext;
-using ETicaret.Web.IdentityModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
