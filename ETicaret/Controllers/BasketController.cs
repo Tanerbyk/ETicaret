@@ -1,7 +1,6 @@
 ﻿using ETicaret.Shared.Application.Extensions;
 using ETicaret.Web.Application.Basket;
 using ETicaret.Web.Application.DTOs;
-using ETicaret.Web.IdentityModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;

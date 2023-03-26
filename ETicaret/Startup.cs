@@ -2,7 +2,7 @@
 using ETicaret.Shared.Data;
 using ETicaret.Shared.Repository.UnitOfWork;
 using ETicaret.Web.IdentityContext;
-using ETicaret.Web.IdentityModel;
+using ETicaret.Shared.Dal.Web;
 using ETicaret.Shared.Application.Services;
 
 using Microsoft.AspNetCore.Builder;
