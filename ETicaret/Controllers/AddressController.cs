@@ -1,4 +1,5 @@
 ﻿using ETicaret.Shared.Application.DTOs;
+using ETicaret.Shared.Application.Features.Address.Commands;
 using ETicaret.Shared.Application.Features.Address.Queries;
 using ETicaret.Shared.Dal;
 using ETicaret.Shared.Dal.Concrete;
@@ -43,72 +44,14 @@ namespace ETicaret.Web.Controllers
         public async Task<IActionResult> Address( )
         {
           var userid=   _userManager.GetUserId(User);
-
-            var userAddress = await _db.Addresses.FirstOrDefaultAsync(x => x.UserId == userid);
-            AddressDto ad = new();
-            ad.Cities = await _db.Cities.ToListAsync();
-            if (userAddress != null)
-            {             
-                ad.Districts = await _db.Districts.Where(x => x.CityId == userAddress.CityId).ToListAsync();
-                ad.CityId = userAddress.CityId;
-                ad.DistrictId = userAddress.DistrictId;
-                ad.FullAddress = userAddress.FullAddress;
-                ad.AddressTitle = userAddress.AddressTitle;
-                ad.AdressDetail = userAddress.AddressDetail;
-
-                //ViewBag.City = new SelectList(_db.Cities, "CityId", "Name");           
-            }
-            else
-            {
-                ad.Districts = await _db.Districts.Where(x => x.CityId == 1).ToListAsync();
-                ad.CityId = 0;
-                ad.DistrictId = 0;
-                ad.FullAddress = "";
-                ad.AddressTitle = "";
-            }
-            return View(ad);
+           var data =    await _mediator.Send(new GetUserAddressQuery { userid = userid });
+            return View(data);
         }
-
+        
         [HttpPost]
-        public IActionResult Address(Address a, string userid)
+        public IActionResult Address(UpdateAddressCommand a)
         {
-            var cid = _db.Addresses.FirstOrDefault(x => x.UserId == userid);
-
-            if (cid != null)
-            {
-                var city = _db.Cities.Include(x => x.District).FirstOrDefault(x => x.CityId == a.CityId);
-                cid.AddressDetail = a.AddressDetail;
-                cid.CityId = a.CityId;
-                cid.DistrictId = a.DistrictId;
-                cid.AddressTitle = a.AddressTitle;
-
-                cid.FullAddress = $"{city.Name} {city.District.FirstOrDefault(x=>x.DistrictId==a.DistrictId).CityName} {a.AddressDetail}";
-
-                _db.Addresses.Update(cid);
-            }
-            else
-            {
-
-                Address s = new Address();
-                s.UserId = userid;
-                s.AddressDetail = a.AddressDetail;
-                s.CityId = a.CityId;
-                s.DistrictId = a.DistrictId;
-                s.AddressTitle = a.AddressTitle;
-                DateTime dt = new DateTime();
-                s.CreateDate = DateTime.Now;
-                s.ModifiedDate = DateTime.Now;
-                s.IsActive = true;
-                s.FullAddress =$"{s.CityId} {s.DistrictId} {s.AddressDetail}";
-
-                _db.Addresses.Add(s);
-
-
-            }
-
-
-
-            _db.SaveChanges();
+            var data = _mediator.Send(a);
             return RedirectToAction("Address", "Address");
 
         }
