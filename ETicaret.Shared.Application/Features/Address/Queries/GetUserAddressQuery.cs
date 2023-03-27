@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using System.Security.Claims;
 using ETicaret.Shared.Dal;
 using ETicaret.Shared.Dal.Web;
-using ETicaret.Shared.Dal.Concrete;
 
 namespace ETicaret.Shared.Application.Features.Address.Queries
 {
@@ -30,10 +29,8 @@ namespace ETicaret.Shared.Application.Features.Address.Queries
             }
 
             public async Task<AddressDto> Handle(GetUserAddressQuery request, CancellationToken cancellationToken)
-            {
-                var userid = _userManager.GetUserId(User);
-
-                var userAddress = await _db.Addresses.FirstOrDefaultAsync(x => x.UserId == userid);
+            {    
+                var userAddress = await _db.Addresses.FirstOrDefaultAsync(x => x.UserId == request.userid);
                 AddressDto ad = new();
                 ad.Cities = await _db.Cities.ToListAsync();
                 if (userAddress != null)
@@ -55,7 +52,7 @@ namespace ETicaret.Shared.Application.Features.Address.Queries
                     ad.FullAddress = "";
                     ad.AddressTitle = "";
                 }
-                return View(ad);
+                return ad;
             }
         }
     }

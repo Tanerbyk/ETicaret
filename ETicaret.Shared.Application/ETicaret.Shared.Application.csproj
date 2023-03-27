@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Features\Address\Queries\GetUserAddressQuery.cs" />
     <Compile Remove="IMemoryCache.cs" />
   </ItemGroup>
 
@@ -40,10 +39,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ETicaret.Web.Dal\ETicaret.Shared.Dal.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Features\Address\Commands\" />
   </ItemGroup>
 
 </Project>
