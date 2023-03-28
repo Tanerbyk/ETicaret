@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Nest;
+using NuGet.Protocol;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,9 +57,10 @@ namespace ETicaret.Web.Controllers
 
         }
 
-        public JsonResult LoadDistrict(int Id)
+        public async Task<JsonResult> LoadDistrict(int Id)
         {
-            var districts = _db.Districts.Where(x => x.CityId == Id).ToList();
+            var districts = await _mediator.Send(new GetDistrictByCityId { CityId = Id });
+
             return Json(new SelectList(districts, "DistrictId", "CityName"));
         }
 
