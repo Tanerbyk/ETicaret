@@ -17,9 +17,15 @@ namespace ETicaret.Shared.Application.Features.Address.Queries
         public class GetDistrictByCityIdHandler : IRequestHandler<GetDistrictByCityId, List<District>>
         {
             private readonly MarketPlaceDbContext _db;
-            public async Task<List<District>> Handle(GetDistrictByCityId request, CancellationToken cancellationToken)
+
+            public GetDistrictByCityIdHandler(MarketPlaceDbContext db)
             {
-                var data =await _db.Districts.Where(x=>x.CityId==request.CityId).ToListAsync();
+                _db = db;
+            }
+
+            public  Task<List<District>> Handle(GetDistrictByCityId request, CancellationToken cancellationToken)
+            {
+                var data = _db.Districts.Where(x=>x.CityId==request.CityId).ToListAsync();
                 return data;
                
             }
