@@ -22,26 +22,17 @@ namespace ETicaret.Web.Controllers
     [Authorize]
     public class AddressController : Controller
     {
-        private readonly MarketPlaceDbContext _db;
         private readonly IMediator _mediator;
         private readonly UserManager<WebUser> _userManager;
 
-
-
-        public AddressController(IMediator mediator, MarketPlaceDbContext db, UserManager<WebUser> userManager)
+        public AddressController(IMediator mediator, UserManager<WebUser> userManager)
         {
-            _db = db;
+            
             _mediator = mediator;
             _userManager = userManager;
         }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
-
+ 
         [HttpGet]
-
         public async Task<IActionResult> Address( )
         {
           var userid=   _userManager.GetUserId(User);
@@ -60,7 +51,6 @@ namespace ETicaret.Web.Controllers
         public async Task<JsonResult> LoadDistrict(int Id)
         {
             var districts = await _mediator.Send(new GetDistrictByCityId { CityId = Id });
-
             return Json(new SelectList(districts, "DistrictId", "CityName"));
         }
 

@@ -39,7 +39,7 @@ namespace ETicaret.Web.Controllers
         {
             var id = _userManager.GetUserId(User);
             var value = _userManager.Users.FirstOrDefault(x=>x.Id==id);
-            
+        
             value.FirstName = webUser.FirstName;
             value.LastName = webUser.LastName;
             value.Email = webUser.Email;
