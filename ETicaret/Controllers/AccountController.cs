@@ -1,7 +1,9 @@
-﻿using ETicaret.Shared.Dal;
+﻿using ETicaret.Shared.Application.Features.Account.Commands;
+using ETicaret.Shared.Dal;
 using ETicaret.Shared.Dal.Web;
 using ETicaret.Shared.Data;
 using ETicaret.Web.IdentityContext;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -14,10 +16,13 @@ namespace ETicaret.Web.Controllers
     {
         
         private readonly UserManager<WebUser> _userManager;
+        private readonly IMediator _mediator;
 
-        public AccountController( UserManager<WebUser> userManager)
+        public AccountController( UserManager<WebUser> userManager, IMediator mediator)
         {      
             _userManager = userManager;
+            _mediator = mediator;
+
 
         } 
 
@@ -35,17 +40,10 @@ namespace ETicaret.Web.Controllers
         }
 
         [HttpPost] 
-        public async Task<IActionResult> UpdateAccount(WebUser webUser )
+        public async Task<IActionResult> UpdateAccount(WebUser webUser ,UpdateAccountCommand account)
         {
-            var id = _userManager.GetUserId(User);
-            var value = _userManager.Users.FirstOrDefault(x=>x.Id==id);
-        
-            value.FirstName = webUser.FirstName;
-            value.LastName = webUser.LastName;
-            value.Email = webUser.Email;
-            
-            await _userManager.UpdateAsync(value);
-            
+            account.UserId = _userManager.GetUserId(User);
+            var data = await _mediator.Send(account);
 
             return RedirectToAction("UpdateAccount", "Account");               
             

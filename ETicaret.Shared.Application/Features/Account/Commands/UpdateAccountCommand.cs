@@ -1,5 +1,9 @@
 ﻿
+using ETicaret.Shared.Dal;
+using ETicaret.Shared.Dal.Concrete;
+using ETicaret.Shared.Dal.Web;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +14,31 @@ namespace ETicaret.Shared.Application.Features.Account.Commands
 {
     public class UpdateAccountCommand : IRequest<bool>
     {
-        public int userId { get; set; }
+        public string UserId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
         public class UpdateAccountCommandHandler : IRequestHandler<UpdateAccountCommand, bool>
         {
-            public Task<bool> Handle(UpdateAccountCommand request, CancellationToken cancellationToken)
+            private readonly MarketPlaceDbContext _db;
+            private readonly UserManager<WebUser> _userManager;
+
+            public UpdateAccountCommandHandler(MarketPlaceDbContext db, UserManager<WebUser> userManager)
             {
-                throw new NotImplementedException();
+                _db = db;
+                _userManager = userManager;
+            }
+
+            public async Task<bool> Handle(UpdateAccountCommand request, CancellationToken cancellationToken)
+            {
+                var user =  _userManager.Users.FirstOrDefault(x => x.Id == request.UserId);
+
+                user.FirstName = request.FirstName;
+                user.LastName = request.LastName;
+                user.Email = request.Email;
+
+                await _userManager.UpdateAsync(user);
+                return true;
             }
         }
     }
