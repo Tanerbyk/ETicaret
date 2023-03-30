@@ -25,17 +25,10 @@ namespace ETicaret.Web.Controllers
 
 
         } 
-
-        public IActionResult Index()
-        {
-           
-            return View();
-        }
-
+ 
         [HttpGet]
         public  IActionResult UpdateAccount()
         {
-           
             return View();
         }
 
@@ -44,16 +37,9 @@ namespace ETicaret.Web.Controllers
         {
             account.UserId = _userManager.GetUserId(User);
             var data = await _mediator.Send(account);
-
-            return RedirectToAction("UpdateAccount", "Account");               
-            
+            return RedirectToAction("UpdateAccount", "Account");                      
         }
-        private void Errors(IdentityResult result)
-        {
-            foreach (IdentityError error in result.Errors)
-                ModelState.AddModelError("", error.Description);
-        }
-
+     
 
 
 
