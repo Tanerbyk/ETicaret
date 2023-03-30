@@ -20,12 +20,12 @@ namespace ETicaret.Shared.Application.Features.Account.Commands
         public string Email { get; set; }
         public class UpdateAccountCommandHandler : IRequestHandler<UpdateAccountCommand, bool>
         {
-            private readonly MarketPlaceDbContext _db;
+
             private readonly UserManager<WebUser> _userManager;
 
-            public UpdateAccountCommandHandler(MarketPlaceDbContext db, UserManager<WebUser> userManager)
+            public UpdateAccountCommandHandler( UserManager<WebUser> userManager)
             {
-                _db = db;
+                
                 _userManager = userManager;
             }
 
@@ -36,7 +36,6 @@ namespace ETicaret.Shared.Application.Features.Account.Commands
                 user.FirstName = request.FirstName;
                 user.LastName = request.LastName;
                 user.Email = request.Email;
-
                 await _userManager.UpdateAsync(user);
                 return true;
             }
