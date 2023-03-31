@@ -26,7 +26,6 @@ namespace ETicaret.Web.Controllers
             return data;
         }
 
-
         public async Task<IActionResult> GetAllProductBasket()
         {
 
