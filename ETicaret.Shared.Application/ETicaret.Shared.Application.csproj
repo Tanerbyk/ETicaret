@@ -7,6 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Features\Account\**" />
+    <Compile Remove="Features\Address\**" />
+    <EmbeddedResource Remove="Features\Account\**" />
+    <EmbeddedResource Remove="Features\Address\**" />
+    <None Remove="Features\Account\**" />
+    <None Remove="Features\Address\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="IMemoryCache.cs" />
   </ItemGroup>
 
