@@ -33,7 +33,6 @@ namespace ETicaret.Web.Controllers
             if (values.BasketProducts.Count > 0)
             {
                 return View(values);
-
             }
             else
             {

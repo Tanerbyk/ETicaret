@@ -31,10 +31,7 @@ namespace ETicaret.Shared.Application.Helpers
             var body = Encoding.UTF8.GetBytes(message);
             _channel.BasicPublish("", routingKey: "mail", basicProperties: null, body: body);
 
-
          await  ConsumeMail(mail);
-
-
 
         }
 
