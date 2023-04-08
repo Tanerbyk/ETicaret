@@ -27,13 +27,12 @@ namespace ETicaret.Web.Controllers
 
         public AddressController(IMediator mediator, UserManager<WebUser> userManager)
         {
-            
             _mediator = mediator;
             _userManager = userManager;
         }
  
         [HttpGet]
-        public async Task<IActionResult> Address( )
+        public async Task<IActionResult> Address()
         {
           var userid=   _userManager.GetUserId(User);
            var data =    await _mediator.Send(new GetUserAddressQuery { userid = userid });

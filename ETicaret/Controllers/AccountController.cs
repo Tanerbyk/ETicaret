@@ -22,8 +22,6 @@ namespace ETicaret.Web.Controllers
         {      
             _userManager = userManager;
             _mediator = mediator;
-
-
         } 
  
         [HttpGet]

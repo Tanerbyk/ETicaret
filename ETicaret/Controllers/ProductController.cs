@@ -21,35 +21,25 @@ namespace ETicaret.Web.Controllers
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
        
-
         public ProductController(IMapper mapper, IMediator mediator)
         {
             _mediator = mediator;
             _mapper = mapper;
-
         }
 
         public async Task<IActionResult> Index()
-        {
-
-     
+        {    
             var products = await _mediator.Send(new GetAllProductQuery());
             var productDto = _mapper.Map<List<ProductDto>>(products);
-
             return View(productDto);
-
         }
         [HttpGet]
         public async Task<IActionResult> ProductGetByIdCategory(int id)
         {
-
             var products = await _mediator.Send(new GetAllProductQuery());
             var productDto = _mapper.Map<List<ProductDto>>(products);
-
             var filter = productDto.Where(x => x.Category.Id == id).ToList();
-
             return View(filter);
-
         }
      
         public async Task<IActionResult> ProductDetail(int id)
