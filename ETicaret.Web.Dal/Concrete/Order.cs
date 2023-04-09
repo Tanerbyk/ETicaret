@@ -9,19 +9,13 @@ namespace ETicaret.Shared.Dal.Concrete
 {
     public class Order : BaseEntity
     {
-        [Key]
         public int Id { get; set; }
+        public int UserId { get; set; }
         public User User { get; set; }
+        public DateTime OrderDate { get; set; }
+        public decimal TotalPrice { get; set; }
+        public List<OrderDetail> OrderDetails { get; set; }
 
-        public int Price { get; set; }
-
-        public int Quantity { get; set; }
-
-        public int Total { get; set; }
-
-        public int  ProductID { get; set; }
-        public  Product Product { get; set; }
-        
 
 
 

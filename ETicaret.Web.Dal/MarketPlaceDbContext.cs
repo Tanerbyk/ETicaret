@@ -28,6 +28,7 @@ namespace ETicaret.Shared.Dal
         public DbSet<Address> Addresses { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<District> Districts { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
 
 
 
