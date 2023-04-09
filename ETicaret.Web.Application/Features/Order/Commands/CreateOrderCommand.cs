@@ -11,6 +11,7 @@ namespace ETicaret.Web.Application.Features.Order.Commands
     {
         public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, bool>
         {
+
             public Task<bool> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
             {
                 throw new NotImplementedException();

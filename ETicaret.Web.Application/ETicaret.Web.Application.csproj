@@ -32,4 +32,8 @@
     <ProjectReference Include="..\ETicaret.Web.Dal\ETicaret.Shared.Dal.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Order\Queries\" />
+  </ItemGroup>
+
 </Project>
