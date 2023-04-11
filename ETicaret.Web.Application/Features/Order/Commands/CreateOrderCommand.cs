@@ -12,10 +12,11 @@ namespace ETicaret.Web.Application.Features.Order.Commands
     public class CreateOrderCommand :  IRequest<bool>
     {
         public int Id { get; set; }
-        public int UserId { get; set; }
-        public DateTime OrderDate { get; set; } = DateTime.Now;
+        public string UserId { get; set; }
         public decimal TotalPrice { get; set; }
         public List<OrderDetail> OrderDetails { get; set; }
+                  
+        
         public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, bool>
         {
             private readonly MarketPlaceDbContext _db;
@@ -25,10 +26,12 @@ namespace ETicaret.Web.Application.Features.Order.Commands
                 _db = db;
             }
 
-            public Task<bool> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
+            public async Task<bool> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
             {
-                throw new NotImplementedException();
+                await _db.Orders.AddAsync(new Shared.Dal.Concrete.Order { Id=request.Id,UserId=request.UserId,TotalPrice=request.TotalPrice,OrderDetails=request.OrderDetails});
+                return true;
             }
         }
     }
 }
+
