@@ -53,6 +53,7 @@ namespace ETicaret.Web.Controllers
             return Json(new SelectList(districts, "DistrictId", "CityName"));
         }
 
+        
 
 
     }

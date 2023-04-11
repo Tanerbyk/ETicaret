@@ -62,5 +62,6 @@ namespace ETicaret.Web.Controllers
         }
 
        
+       
     }
 }
