@@ -12,24 +12,20 @@ namespace ETicaret.Web.Controllers
     {
         private readonly UserManager<WebUser> _userManager;
         private readonly IMediator _mediator;
-        private readonly IBasketService _basketService; 
+        
 
         public OrderController(UserManager<WebUser> userManager, IMediator mediator, IBasketService basketService)
         {
             _userManager = userManager;
             _mediator = mediator;
-            _basketService = basketService;
+           
         }
 
+        [HttpPost]
         public IActionResult CreateOrder(CreateOrderCommand c)
         {
             string a = _userManager.GetUserId(User);
-            c.UserId = a;
-            var basket = _basketService.Get(a);
-           foreach (var item in basket.Result.BasketProducts) {
- 
-                c.OrderDetails.Add(new OrderDetail { ProductId = item.ProductId, Quantity = item.Quantity });
-            }
+            c.UserId = a;      
             var data = _mediator.Send(c);
            return View(data);
 
