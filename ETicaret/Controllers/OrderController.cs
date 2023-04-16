@@ -5,6 +5,7 @@ using ETicaret.Web.Application.Features.Order.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace ETicaret.Web.Controllers
 {
@@ -20,14 +21,23 @@ namespace ETicaret.Web.Controllers
             _mediator = mediator;
            
         }
+        [HttpGet]
+        public IActionResult CreateOrder() { 
+            return View();
+        }
 
         [HttpPost]
-        public IActionResult CreateOrder(CreateOrderCommand c)
+        public async Task<bool> CreateOrder(CreateOrderCommand c)
         {
             string a = _userManager.GetUserId(User);
             c.UserId = a;      
-            var data = _mediator.Send(c);
-           return View(data);
+            var data = await _mediator.Send(c);
+            return data;
+
+        }
+        public  Task<IActionResult> OrderList()
+        {
+            return View();
 
         }
 

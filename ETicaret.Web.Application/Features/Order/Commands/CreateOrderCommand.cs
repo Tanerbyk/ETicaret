@@ -12,19 +12,19 @@ using System.Threading.Tasks;
 
 namespace ETicaret.Web.Application.Features.Order.Commands
 {
-    public class CreateOrderCommand :  IRequest<bool>
+    public class CreateOrderCommand : IRequest<bool>
     {
-        
+
         public string UserId { get; set; }
         public decimal TotalPrice { get; set; }
         public List<OrderDetail> OrderDetails { get; set; }
-                  
-        
+
+
         public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, bool>
         {
             private readonly MarketPlaceDbContext _db;
             private readonly IBasketService _basketService;
-            private readonly UserManager<WebUser> _userManager; 
+            private readonly UserManager<WebUser> _userManager;
 
             public CreateOrderCommandHandler(MarketPlaceDbContext db, IBasketService basketService)
             {
@@ -33,21 +33,27 @@ namespace ETicaret.Web.Application.Features.Order.Commands
             }
 
             public async Task<bool> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
-            {                
+            {
                 var basket = _basketService.Get(request.UserId);
                 List<OrderDetail> ord = new();
-
                 foreach (var item in basket.Result.BasketProducts)
                 {
                     OrderDetail or = new();
                     or.ProductId = item.ProductId;
                     or.Quantity = item.Quantity;
-                   ord.Add(or);
+                    ord.Add(or);
                 }
-                request.TotalPrice = basket.Result.SubTotal;
-                request.OrderDetails = ord;
-                await _db.Orders.AddAsync(new Shared.Dal.Concrete.Order { UserId=request.UserId,TotalPrice= basket.Result.SubTotal,OrderDetails =ord});
-               await _db.SaveChangesAsync();
+
+                Shared.Dal.Concrete.Order order = new Shared.Dal.Concrete.Order()
+                {
+                    OrderDetails = ord,
+                    UserId = request.UserId,
+                    OrderDate = DateTime.Now,
+                    TotalPrice = basket.Result.SubTotal
+
+                };
+                await _db.Orders.AddAsync(order);
+                await _db.SaveChangesAsync();
 
                 return true;
             }

@@ -22,19 +22,10 @@ namespace ETicaret.Shared.Dal.Concrete
         public int PhoneNumber { get; set; }
 
         public int Password { get; set; }
-   
-        public List<Order> Orders { get; set; }
+
+        public Order Order { get; set; }
 
         public List<Comment> Comments { get; set; }
-
-
-
-
-
-
-
-
-
 
 
     }
