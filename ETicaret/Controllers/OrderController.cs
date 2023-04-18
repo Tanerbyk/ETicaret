@@ -2,9 +2,11 @@
 using ETicaret.Shared.Dal.Web;
 using ETicaret.Web.Application.Basket;
 using ETicaret.Web.Application.Features.Order.Commands;
+using ETicaret.Web.Application.Features.Order.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace ETicaret.Web.Controllers
 {
@@ -20,14 +22,26 @@ namespace ETicaret.Web.Controllers
             _mediator = mediator;
            
         }
+        [HttpGet]
+        public IActionResult CreateOrder() { 
+            return View();
+        }
 
         [HttpPost]
-        public IActionResult CreateOrder(CreateOrderCommand c)
+        public async Task<bool> CreateOrder(CreateOrderCommand c)
         {
-            string a = _userManager.GetUserId(User);
-            c.UserId = a;      
-            var data = _mediator.Send(c);
-           return View(data);
+            string userid = _userManager.GetUserId(User);
+            c.UserId = userid;      
+            var data = await _mediator.Send(c);
+            return data;
+
+        }
+        [HttpGet]
+        public async Task<IActionResult> OrderList(GetAllOrdersQuery getAllOrdersQuery)
+        {
+            var userid = _userManager.GetUserId(User);
+            var data = await _mediator.Send(new GetAllOrdersQuery() { UserId=userid});
+            return View(data);
 
         }
 
