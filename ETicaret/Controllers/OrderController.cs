@@ -14,16 +14,16 @@ namespace ETicaret.Web.Controllers
     {
         private readonly UserManager<WebUser> _userManager;
         private readonly IMediator _mediator;
-        
+
 
         public OrderController(UserManager<WebUser> userManager, IMediator mediator, IBasketService basketService)
         {
             _userManager = userManager;
             _mediator = mediator;
-           
+
         }
         [HttpGet]
-        public IActionResult CreateOrder() { 
+        public IActionResult CreateOrder() {
             return View();
         }
 
@@ -31,7 +31,7 @@ namespace ETicaret.Web.Controllers
         public async Task<bool> CreateOrder(CreateOrderCommand c)
         {
             string userid = _userManager.GetUserId(User);
-            c.UserId = userid;      
+            c.UserId = userid;
             var data = await _mediator.Send(c);
             return data;
 
@@ -40,9 +40,19 @@ namespace ETicaret.Web.Controllers
         public async Task<IActionResult> OrderList(GetAllOrdersQuery getAllOrdersQuery)
         {
             var userid = _userManager.GetUserId(User);
-            var data = await _mediator.Send(new GetAllOrdersQuery() { UserId=userid});
+            var data = await _mediator.Send(new GetAllOrdersQuery() { UserId = userid });
             return View(data);
+        }
 
+        public async Task<IActionResult> OrderComplete()
+        {
+            return View();
+        }
+        [HttpGet]
+        public async Task<IActionResult> OrderGetById(int Orderid)
+        {
+            var data = await _mediator.Send(new GetOrderByIdQuery { OrderId = 1 });
+            return View(data);
         }
 
 
