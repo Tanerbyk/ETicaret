@@ -23,7 +23,7 @@ namespace ETicaret.Web.Application.Features.Order.Queries
 
             public async Task<List<Shared.Dal.Concrete.Order>> Handle(GetAllOrdersQuery request, CancellationToken cancellationToken)
             {
-                var data = await _db.Orders.Where(x => x.UserId == request.UserId).ToListAsync();
+                var data = await _db.Orders.Where(x => x.UserId == request.UserId).Include(x=>x.OrderDetails).ToListAsync();
                 return data;
             }
         }
