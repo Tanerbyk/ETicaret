@@ -4,6 +4,7 @@
 @{
     ViewData["Title"] = "OrderGetById";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    int a = 0;
 }
 
 <h1>OrderGetById</h1>
@@ -41,46 +42,38 @@
     </div>
 </div>
 <div class="card border-width-3 border-radius-0 border-color-hover-dark mb-4">
+    <h4 class="font-weight-bold text-uppercase text-4 mb-3">Your Order</h4>
+
     @foreach (var item in Model.OrderDetails)
     {
         <div class="card-body">
-            <h4 class="font-weight-bold text-uppercase text-4 mb-3">Your Order</h4>
             <table class="shop_table cart-totals mb-0">
                 <tbody>
                     <tr>
                         <td colspan="2" class="border-top-0">
-                           @item.Product.Name <strong class="text-color-dark">Product</strong>
+                           @item.Product.Name <strong class="text-color-dark"></strong>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <strong class="d-block text-color-dark line-height-1 font-weight-semibold">
-                                @item.ProductId <span class="product-qty">x1</span>
+                                 <span class="product-qty">@item.Quantity Adet</span>
                             </strong>
-                            <span class="text-1">COLOR BLACK</span>
+                            
                         </td>
                         <td class="text-right align-top">
-                            <span class="amount font-weight-medium text-color-grey">$15</span>
+                            <span class="amount font-weight-medium text-color-grey">@item.Product.Price</span>
                         </td>
                     </tr>
-                    <tr>
-                        <td class="border-top-0 pt-0">
-                            <strong class="d-block text-color-dark line-height-1 font-weight-semibold">
-                                Black Porto Smartwatch <span class="product-qty">x1</span>
-                            </strong>
-                            <span class="text-1">COLOR BLACK</span>
-                        </td>
-                        <td class="border-top-0 text-right align-top pt-0">
-                            <span class="amount font-weight-medium text-color-grey">$15</span>
-                        </td>
-                    </tr>
+                  
                     <tr class="cart-subtotal">
                         <td class="border-top-0">
                             <strong class="text-color-dark">Subtotal</strong>
                         </td>
                         <td class="border-top-0 text-right">
                             <strong>
-                                <span class="amount font-weight-medium">$431</span>
+                                a = @item.Product.Price*@item.Quantity;
+                                <span class="amount font-weight-medium">@a</span>
                             </strong>
                         </td>
                     </tr>

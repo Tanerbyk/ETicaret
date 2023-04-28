@@ -50,12 +50,14 @@ namespace ETicaret.Web.Controllers
         }
         [HttpGet]
         public async Task<IActionResult> OrderGetById(int Orderid)
+        
+        
         {
-            var data = await _mediator.Send(new GetOrderByIdQuery { OrderId = 1 });
+            var data = await _mediator.Send(new GetOrderByIdQuery { OrderId = 6 });
             return View(data);
         }
 
-
+                              
 
 
 
