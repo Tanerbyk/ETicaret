@@ -4,13 +4,53 @@
     ViewData["Title"] = "OrderList";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/Order.css" />
+</head>
+
 
 <h1>OrderList</h1>
 
-@foreach (var item in Model)
-{
-    <h1>@item.Id</h1>
-}
+
+<div class="container">
+	<h1>Siparişlerim</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>Sipariş Numarası</th>
+				<th>Tarih</th>
+				<th>Durum</th>
+				<th>Ürünler</th>
+				<th>Toplam Tutar</th>
+			</tr>
+		</thead>
+		@foreach (var item in Model)
+		{
+			<tbody>
+				<tr>
+					<td>#123456</td>
+					<td>25 Nisan 2023 - 17:35</td>
+					<td><span class="status status--delivered">Teslim Edildi</span></td>
+					<td>
+						<div class="product">
+							<img src="https://cdn.trendyol.com/assets/product/images/320x320/6159705-1b5ce483-c92a-4e35-bf21-6f234d6a0e6f.jpg">
+							<div class="name">Kadın Siyah Mini Elbise</div>
+					<td>
+						<div class="product">
+							<img src="https://cdn.trendyol.com/assets/product/images/320x320/6159705-1b5ce483-c92a-4e35-bf21-6f234d6a0e6f.jpg">
+							<div class="name">Kadın Siyah Mini Elbise</div>
+							<div class="price">349 TL</div>
+						</div>
+					</td>
+					<td><a href="/OrderGetById">Sipariş Detay</a></td>
+				</tr>
+
+			</tbody>
+		}
+		
+	</table>
+</div>
+
 
 
 

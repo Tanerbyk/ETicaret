@@ -43,12 +43,12 @@
 </div>
 <div class="card border-width-3 border-radius-0 border-color-hover-dark mb-4">
     <h4 class="font-weight-bold text-uppercase text-4 mb-3">Your Order</h4>
-
+    <div class="card-body">
+        <table class="shop_table cart-totals mb-0">
+            <tbody>
     @foreach (var item in Model.OrderDetails)
     {
-        <div class="card-body">
-            <table class="shop_table cart-totals mb-0">
-                <tbody>
+       
                     <tr>
                         <td colspan="2" class="border-top-0">
                            @item.Product.Name <strong class="text-color-dark"></strong>
@@ -97,11 +97,11 @@
                             </strong>
                         </td>
                     </tr>
-                </tbody>
-            </table>
-        </div>
+      <br />
     }
-  
+            </tbody>
+        </table>
+    </div>
 </div>
 <div class="row pt-3">
     <div class="col-lg-6 mb-4 mb-lg-0">

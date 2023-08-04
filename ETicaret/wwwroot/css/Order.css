@@ -1,0 +1,73 @@
+﻿
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 24px;
+    margin: 0 0 20px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+    table th, table td {
+        padding: 8px;
+        border: 1px solid #ddd;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    table th {
+        background-color: #f5f5f5;
+        font-weight: bold;
+    }
+
+.status {
+    display: inline-block;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+    border-radius: 4px;
+}
+
+.status--delivered {
+    background-color: #2ecc71;
+}
+
+.status--canceled {
+    background-color: #e74c3c;
+}
+
+.product {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+    .product img {
+        max-width: 80px;
+        margin-right: 10px;
+    }
+
+    .product .name {
+        font-weight: bold;
+    }
+
+    .product .price {
+        margin-left: auto;
+        font-weight: bold;
+    }
+
+.total {
+    margin-top: 20px;
+    text-align: right;
+    font-size: 18px;
+    font-weight: bold;
+}
