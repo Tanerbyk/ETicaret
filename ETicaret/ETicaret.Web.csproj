@@ -359,6 +359,7 @@
     <Folder Include="Areas\x\Data\" />
     <Folder Include="Areas\x\Models\" />
     <Folder Include="Areas\x\Views\" />
+    <Folder Include="Hub\" />
   </ItemGroup>
 
 </Project>
