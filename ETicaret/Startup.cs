@@ -31,6 +31,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using FluentValidation.AspNetCore;
 using ETicaret.Shared.Application.Features.Category.Commands;
 using ETicaret.Shared.Application.Registeration;
+using ETicaret.Web.Data;
 
 namespace ETicaret.Web
 {
@@ -60,10 +61,12 @@ namespace ETicaret.Web
             services.AddTransient<MarketPlaceDbContext>();
             services.AddTransient<RabbitMqHelper>();
             services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
+            
 
             services.ApplicationRegisteration();
 
-            services.AddScoped<ICookieService,CookieService>();
+			services.AddSignalR();
+			services.AddScoped<ICookieService,CookieService>();
 
             var connstr = Configuration.GetValue<string>("RedisConfiguration:Connection") + ",password=" + Configuration.GetValue<string>("RedisConfiguration:Password");
             services.AddStackExchangeRedisCache(options => { options.Configuration = connstr; });
@@ -169,7 +172,11 @@ namespace ETicaret.Web
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
-            });
+				endpoints.MapHub<ChatHub>("/chathub"); // ChatHub'ınızın URL'sini doğru şekilde eşleştirin.
+				endpoints.MapControllerRoute(
+					name: "default",
+					pattern: "{controller=Home}/{action=Index}/{id?}");
+			});
         }
     }
 }

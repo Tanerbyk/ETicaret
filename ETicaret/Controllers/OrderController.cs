@@ -4,17 +4,18 @@ using ETicaret.Web.Application.Basket;
 using ETicaret.Web.Application.Features.Order.Commands;
 using ETicaret.Web.Application.Features.Order.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace ETicaret.Web.Controllers
 {
-    public class OrderController : Controller
+	[Authorize]
+	public class OrderController : Controller
     {
         private readonly UserManager<WebUser> _userManager;
         private readonly IMediator _mediator;
-
 
         public OrderController(UserManager<WebUser> userManager, IMediator mediator, IBasketService basketService)
         {
